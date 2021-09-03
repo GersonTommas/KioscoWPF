@@ -1,0 +1,71 @@
+﻿<Window x:Class="KioscoWPF.VentanaAgregarUsuario"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KioscoWPF"
+        xmlns:options="clr-namespace:KioscoWPF.Properties"
+        xmlns:VM="clr-namespace:KioscoWPF.ViewModels"
+        xmlns:UC="clr-namespace:KioscoWPF.userControl"
+        mc:Ignorable="d"
+        Background="{Binding Source={x:Static options:Settings.Default}, Path=WindowBackground}"
+        Title="{Binding strWindowTitle}" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+    <Window.DataContext>
+        <VM:VMAgregarUsuario />
+    </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Key="F1" Command="{Binding comGuardar}" />
+        <KeyBinding Key="Esc" Command="{Binding comCancelar}" />
+    </Window.InputBindings>
+    
+    <Grid>
+        <GroupBox Header="{Binding strBorderTitle}">
+            <UniformGrid Columns="2">
+                <UC:textBoxCurrency textboxText="{Binding selectedUsuario.Nombre}" labelContent="Nombre" textAlignment="Left" isCurrency="False" enterCommand="{Binding comNextTarget}" Width="200" />
+
+                <UC:textBoxCurrency textboxText="{Binding selectedUsuario.Usuario}" labelContent="Usuario:" textAlignment="Left" isCurrency="False" enterCommand="{Binding comNextTarget}" />
+
+                <UC:textBoxCurrency textboxText="{Binding selectedUsuario.Apellido}" labelContent="Apellido" textAlignment="Left" isCurrency="False" enterCommand="{Binding comNextTarget}" />
+
+                <UC:textBoxCurrency textboxText="{Binding selectedUsuario.Contraseña}" labelContent="Contraseña:" textAlignment="Left" isCurrency="False" enterCommand="{Binding comNextTarget}" />
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Fecha de Ingreso:" />
+                    <DatePicker SelectedDate="{Binding selectedUsuario.FechaIngreso, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" VerticalAlignment="Center" />
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Detalles:" />
+                    <TextBox Text="{Binding selectedUsuario.Detalle, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" />
+                </Grid>
+
+                <Grid HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Nivel:" />
+                    <ComboBox ItemsSource="{Binding listNiveles}" SelectedItem="{Binding selectedUsuario.Nivel, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Center" VerticalAlignment="Center" Width="70" Grid.Column="1" />
+                </Grid>
+                <StackPanel>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="Cancelar" Command="{Binding comCancelar}" />
+                        <Button Content="Guardar" Command="{Binding comGuardar}" />
+                    </StackPanel>
+                </StackPanel>
+            </UniformGrid>
+        </GroupBox>
+    </Grid>
+</Window>

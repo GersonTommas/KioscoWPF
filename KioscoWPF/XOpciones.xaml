@@ -1,0 +1,44 @@
+﻿<Window x:Class="KioscoWPF.XOpciones"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:KioscoWPF"
+        mc:Ignorable="d"
+        xmlns:options="clr-namespace:KioscoWPF.Properties"
+        Background="{Binding Source={x:Static options:Settings.Default}, Path=WindowBackground}"
+        Title="XOpciones" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+    <Window.Resources>
+        <ObjectDataProvider 
+    ObjectInstance="{x:Type Colors}" 
+    MethodName="GetProperties" 
+    x:Key="colorPropertiesOdp" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO" />
+            <RowDefinition Height="AUTO" />
+            <RowDefinition Height="AUTO" />
+            <RowDefinition Height="AUTO" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Background="{Binding windowBackground}" Orientation="Horizontal">
+            <Label Content="Color de Ventanas: " />
+            <ComboBox ItemsSource="{Binding Source={StaticResource colorPropertiesOdp}}" DisplayMemberPath="Name" SelectedItem="{Binding windowBackgroundItem, Mode=OneTime}" SelectedValue="{Binding windowBackground}" SelectedValuePath="Name" Width="150" />
+        </StackPanel>
+
+        <StackPanel Background="{Binding windowBackgroundOK}" Orientation="Horizontal" Grid.Row="1">
+            <Label Content="Color de Ventana OK: " />
+            <ComboBox ItemsSource="{Binding Source={StaticResource colorPropertiesOdp}}" DisplayMemberPath="Name" SelectedItem="{Binding windowBackgroundItem, Mode=OneTime}" SelectedValue="{Binding windowBackgroundOK}" SelectedValuePath="Name" Width="150" />
+        </StackPanel>
+
+        <StackPanel Background="{Binding windowBackgroundNO}" Orientation="Horizontal" Grid.Row="2">
+            <Label Content="Color de Ventana NO: " />
+            <ComboBox ItemsSource="{Binding Source={StaticResource colorPropertiesOdp}}" DisplayMemberPath="Name" SelectedItem="{Binding windowBackgroundItem, Mode=OneTime}" SelectedValue="{Binding windowBackgroundNO}" SelectedValuePath="Name" Width="150" />
+        </StackPanel>
+
+        <Button Content="Guardar" Command="{Binding saveOptions}" HorizontalAlignment="Right" Grid.Row="100" />
+
+    </Grid>
+</Window>

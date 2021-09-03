@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="KioscoWPF.userControl.userControlInfoColors"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KioscoWPF.userControl"
+             x:Name="thisUserControl"
+             mc:Ignorable="d"
+             d:Background="AliceBlue">
+    <UserControl.Resources>
+        <local:textBoxBoolToVisConverter x:Key="UCbolToVisConverter" />
+        <local:textBoxInverseBoolToVisConverter x:Key="UCInvbolToVisConverter" />
+    </UserControl.Resources>
+    
+    <GroupBox Header="Info" VerticalAlignment="Bottom">
+        <StackPanel>
+            <StackPanel Visibility="{Binding ElementName=thisUserControl, Path=hasActivoInactivo, Converter={StaticResource UCbolToVisConverter}}" Grid.Row="0">
+                <StackPanel Visibility="{Binding ElementName=thisUserControl, Path=isActivoFullLine, Converter={StaticResource UCbolToVisConverter}}">
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Fill="{StaticResource NoStockBackground}" Style="{StaticResource ColourRectangle}" />
+                        <Label Content="Inactivo" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Fill="{StaticResource MinStockBackground}" Style="{StaticResource ColourRectangle}" />
+                        <Label Content="Activo" />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Visibility="{Binding ElementName=thisUserControl, Path=isActivoFullLine, Converter={StaticResource UCInvbolToVisConverter}}">
+                    <StackPanel Orientation="Horizontal">
+                        <Border BorderThickness="2" BorderBrush="{StaticResource NoStockBackground}" Height="10" Width="10" Margin="5" />
+                        <Label Content="Inactivo" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Border BorderThickness="2" BorderBrush="{StaticResource MinStockBackground}" Height="10" Width="10" Margin="5" />
+                        <Label Content="Activo" />
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+            <Border BorderBrush="Gray" BorderThickness="0.5" Visibility="{Binding ElementName=thisUserControl, Path=hasActiveAndStock, Converter={StaticResource BooltoVisConvert}}" />
+
+            <StackPanel Visibility="{Binding ElementName=thisUserControl, Path=hasStock, Converter={StaticResource UCbolToVisConverter}}" Grid.Row="1">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Fill="{StaticResource NoStockBackground}" Style="{StaticResource ColourRectangle}" />
+                    <Label Content="Sin Stock" />
+                </StackPanel>
+
+                <StackPanel Visibility="{Binding ElementName=thisUserControl, Path=hasMiddleColors, Converter={StaticResource UCbolToVisConverter}}">
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Fill="{StaticResource LowStockBackground}" Style="{StaticResource ColourRectangle}" />
+                        <Label Content="Bajo Stock" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Fill="{StaticResource MinStockBackground}" Style="{StaticResource ColourRectangle}" />
+                        <Label Content="Minimo Stock" />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Fill="{StaticResource OverStockBackground}" Style="{StaticResource ColourRectangle}" />
+                    <Label Content="Con Stock" />
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Visibility="{Binding ElementName=thisUserControl, Path=hasAgregado, Converter={StaticResource UCbolToVisConverter}}">
+                <Border BorderBrush="Gray" BorderThickness="0.5" />
+
+                <StackPanel Orientation="Horizontal">
+                    <Border BorderThickness="2" BorderBrush="Red" Height="10" Width="10" Margin="5" />
+                    <Label Content="Agregado" />
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </GroupBox>
+</UserControl>

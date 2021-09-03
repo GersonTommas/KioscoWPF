@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="KioscoWPF.userControl.userControlSelecProducto"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KioscoWPF.userControl"
+             mc:Ignorable="d" 
+             x:Name="thisUserControl"
+             d:DesignHeight="450" d:DesignWidth="800" Focusable="False" IsTabStop="False">
+    <Grid x:Name="FirstControl">
+        <Grid.DataContext>
+            <local:VMControlSelecProducto />
+        </Grid.DataContext>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="AUTO" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="AUTO" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <Button Content="{Binding strSearchDescripcionCodigo}" MinWidth="70" Command="{Binding comSearchDescripcionCodigo}" />
+            <TextBox x:Name="FirstTextBox" Text="{Binding strSearchProducto, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MainTextBox}" Width="200" VerticalAlignment="Center" Loaded="FirstTextBox_Loaded">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Return" Command="{Binding ElementName=thisUserControl, Path=DataContext.aComUnSoloProducto}" CommandParameter="{Binding ElementName=dataGridProducts, Path=SelectedItem}" />
+                </TextBox.InputBindings>
+            </TextBox>
+            <Button Content="Limpiar" Command="{Binding comLimpiar}" />
+            <CheckBox Content="Solo Con Stock" IsChecked="{Binding bolSelectorSoloStock}" VerticalAlignment="Center" />
+        </StackPanel>
+
+        <DataGrid x:Name="dataGridProducts" KeyboardNavigation.TabNavigation="None" IsTabStop="True" ItemsSource="{Binding selectorListProductos}" SelectedItem="{Binding selectedSelectorProducto}" IsSynchronizedWithCurrentItem="True" RowStyle="{StaticResource stockGridRow}" Grid.Row="1">
+            <DataGrid.InputBindings>
+                <KeyBinding Key="Return" CommandParameter="{Binding ElementName=dataGridProducts, Path=SelectedItem}" Command="{Binding ElementName=thisUserControl, Path=DataContext.aComSelectorAgregarQuitar}" />
+                <KeyBinding Key="F5" Command="{Binding comAbrirProducto}" CommandParameter="{Binding ElementName=dataGridProducts, Path=SelectedItem}" />
+            </DataGrid.InputBindings>
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="V">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Rectangle>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ColourRectangle}">
+                                        <Setter Property="Fill" Value="Transparent" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Agregado}" Value="True">
+                                                <Setter Property="Fill" Value="{StaticResource AgregadoForeground}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Width="100" Header="Código" Binding="{Binding Codigo}" />
+                <DataGridTextColumn Width="*" Header="Descripción" Binding="{Binding Descripcion}" />
+                <DataGridTextColumn MinWidth="60" Width="auto" Header="Medida" ElementStyle="{StaticResource TextCenter}" Binding="{Binding Medida.fullMedida}" />
+                <DataGridTextColumn MinWidth="50" Header="Stock" ElementStyle="{StaticResource TextCenter}" Binding="{Binding Stock}" />
+                <DataGridTemplateColumn MinWidth="70" Width="auto" Header="Precio" SortMemberPath="PrecioActual">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="$" />
+                                <TextBlock Text="{Binding PrecioActual}" HorizontalAlignment="Right" Grid.Column="1" />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn MinWidth="100" Width="auto" Header="Tag" ElementStyle="{StaticResource TextCenter}" Binding="{Binding Tag.Tag}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

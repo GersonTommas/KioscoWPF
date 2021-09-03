@@ -1,0 +1,362 @@
+Id;Precio;Activo;Stock;Codigo;Descripcion;TagID;MedidaID
+;;1;0;1,00708E+12;Monster;1;1
+;;1;0;7,7909E+12;Coca Retornable;1;1
+;;1;0;7,7909E+12;Sprite Retornable;1;1
+;;1;0;7,7909E+12;Lata Sprite;1;1
+;;1;0;7,7909E+12;Fanta Retornable;1;1
+;;1;0;7,7909E+12;Coca Medio;1;1
+;;1;0;7,7909E+12;Coca Descartable;1;1
+;;1;0;7,7909E+12;Sprite Descartable;1;1
+;;1;0;7,7909E+12;Coca Retornable;1;1
+;;1;0;7,7909E+12;Aquarius Pomelo Grande;1;1
+;;1;0;7,7909E+12;Aquarius Pera Grande;1;1
+;;1;0;7,7909E+12;Aquarius Manzana Grande;1;1
+;;1;0;7,7909E+12;Powerade Azul Grande;1;1
+;;1;0;7,7909E+12;Powerade Manzana Grande;1;1
+;;1;0;7,7909E+12;Crush Lima Limon;1;1
+;;1;0;7,7909E+12;Crush Pomelo;1;1
+;;1;0;7,7909E+12;Coca Zero Descartable;1;1
+;;1;0;7,7909E+12;Coca Zero Retornable;1;1
+;;1;0;7,7909E+12;Fanta Retornable;1;1
+;;1;0;7,7909E+12;Powerade Manzana Medio;1;1
+;;1;0;7,7909E+12;Aquarius Pera;1;1
+;;1;0;7,7909E+12;Aquarius Manzana;1;1
+;;1;0;7,7909E+12;Aquarius Pomelo;1;1
+;;1;0;7,7909E+12;Lata Coca Mini;1;1
+;;1;0;7,7909E+12;Lata Sprite Mini;1;1
+;;1;0;7,7909E+12;High C Naranja;1;1
+;;1;0;7,7909E+12;Ades Manzana;1;1
+;;1;0;7,7909E+12;Coca Mini;1;1
+;;1;0;7,7909E+12;Cepita Fresh Naranja;1;1
+;;1;0;7,7909E+12;Cepita Fresh Pomelo;1;1
+;;1;0;7,7909E+12;Cepita Fresh Naranja Medio;1;1
+;;1;0;7,7909E+12;Cepita Fresh Pomelo Medio;1;1
+;;1;0;7,79129E+12;Sedal Shampoo;1;1
+;;1;0;7,79129E+12;Sedal Acondicionador;1;1
+;;1;0;7,79129E+12;Desodorante Axe;1;1
+;;1;0;77941558;Master Común;1;1
+;;1;0;77900883;Red Point Común;1;1
+;;1;0;77960894;Dolchester Común;1;1
+;;1;0;77910066;Lucky Strike Box;1;1
+;;1;0;77977038;Lucky Mentolado;1;1
+;;1;0;77976505;Lucky  Chico;1;1
+;;1;0;77976994;Lucky Mentolado Chico;1;1
+;;1;0;77953513;Chester Común;1;1
+;;1;0;77953483;Chester Chico;1;1
+;;1;0;77953964;Chester Mentolado Chico;1;1
+;;1;0;77955418;Rothman Chico;1;1
+;;1;0;77918482;Marlboro Box;1;1
+;;1;0;77940315;Marlboro Chico;1;1
+;;1;0;77912879;Philips Morris Común;1;1
+;;1;0;77940735;Philips Morris Mentolado;1;1
+;;1;0;77913418;Philips Morris Chico;1;1
+;;1;0;7,7301E+12;Tabaco Cerrito Chocolate;1;1
+;;1;0;77953957;Chester Mentolado;1;1
+;;1;0;77971913;Philips Mentolado Chico;1;1
+;;1;0;7,7909E+12;Agua Bidon King;1;1
+;;1;0;7,7909E+12;Agua King;1;1
+;;1;0;7,79463E+12;Toallita Lina con Alas;1;1
+;;1;0;7,79094E+12;Protector Diario Doncella;1;1
+;;1;0;7,79077E+12;Toallita Nocturna Calypso;1;1
+;;1;0;7,79463E+12;Protector Diario Lina;1;1
+;;1;0;2,78277E+12;Toallita Calypso Incontinente;1;1
+;;1;0;7,79127E+12;Desodorante Algabo Foot;1;1
+;;1;0;30052765;OCB Premium;1;1
+;;1;0;7,79129E+12;Jabon Suave;1;1
+;;1;0;7,79129E+12;Jabon Lux;1;1
+;;1;0;7,70203E+12;Tampones Mini;1;1
+;;1;0;7,70203E+12;Tampones Regular;1;1
+;;1;0;7,79094E+12;Algodón Doncella;1;1
+;;1;0;7,79835E+12;Candela LED Lampara;1;1
+;;1;0;4,52515E+12;Chupete Lactal;1;1
+;;1;0;7,79816E+12;Colita para pelo Blanca/Negra;1;1
+;;1;0;7,79816E+12;Colita para pelo Color;1;1
+;;1;0;7,79815E+12;Frasco Esteril;1;1
+;;1;0;7,50044E+12;Gillette Prestobarba 2 Filos;1;1
+;;1;0;7,79805E+12;Tetina para Mamadera;1;1
+;;1;0;4,00832E+12;Osram Lamparita;1;1
+;;1;0;7,79101E+12;Preservativo Tulipan;1;1
+;;1;0;7,79826E+12;Cepillo de Dientes Javalí;1;1
+;;1;0;6,91002E+12;Cepillo de Dientes Colgate;1;1
+;;1;0;7,7904E+12;Eccole Pegamento;1;1
+;;1;0;7,89621E+12;Tenedores Simonagio;1;1
+;;1;0;7,89621E+12;Cucharas Simonagio;1;1
+;;1;0;01077923666200621725030010212099378LPZA;Guantes de Latex Medium;1;1
+;;1;0;01077923666201471725050010213105136LPZA;Guantes de Latex Large;1;1
+;;1;0;7,79201E+12;Gasa Syra;1;1
+;;1;0;7,79801E+12;Azufre en Barra;1;1
+;;1;0;7,79059E+12;Fosforos Tres Patitos;1;1
+;;1;0;7,79444E+12;Guantes Plumitas;1;1
+;;1;0;8,0042E+12;Guantes Mapa;1;1
+;;1;0;7,79127E+12;Isopos;1;1
+;;1;0;7,7931E+12;Pasta Dental Colgate;1;1
+;;1;0;7,7931E+12;Pasta Dental Odol;1;1
+;;1;0;77940704;Rexona Odorono;1;1
+;;1;0;7,79129E+12;Desodorante Rexona Men V8;1;1
+;;1;0;7,79129E+12;Desodorante Rexona Men 72hs;1;1
+;;1;0;7,79129E+12;Desodorante Rexona Men Hombre;1;1
+;;1;0;1,79716E+12;Desodorante Rexona 72hs;1;1
+;;1;0;7,79129E+12;Desodorante Rexona Active Motion;1;1
+;;1;0;7,79129E+12;Desodorante Rexona Antibacterial;1;1
+;;1;0;7,79129E+12;Desodorante Dove Go Fresh;1;1
+;;1;0;6,96188E+12;Esponja Cocina;1;1
+;;1;0;7,79335E+12;Washington Negro;1;1
+;;1;0;7,79335E+12;Washington Premium Marron;1;1
+;;1;0;7,79335E+12;Washington Marron Militar;1;1
+;;1;0;77900302;Repelente Off Crema;1;1
+;;1;0;7,79052E+12;Repelente Off Aerosol;1;1
+;;1;0;7,79129E+12;Shampoo Sedal Sachet;1;1
+;;1;0;7,79129E+12;Acondicionador Sedal Sachet;1;1
+;;1;0;7,79405E+12;Royer Doreé Hair Spray;1;1
+;;1;0;7,79812E+12;Bicarbonato de Sodio;1;1
+;;1;0;7,79301E+12;Issue Activador en Crema;1;1
+;;1;0;7,79301E+12;Issue Coloración en Crema Rojo Intenso;1;1
+;;1;0;7,79301E+12;Issue Coloración en Crema Rubio Loiro;1;1
+;;1;0;7,79301E+12;Issue Coloración en Crema Negro;1;1
+;;1;0;7,79301E+12;Issue Polvo Decolorante;1;1
+;;1;0;7,79807E+12;Agua Oxigenada Sanadrog;1;1
+;;1;0;7,79405E+12;Crema Oxidante Doreé;1;1
+;;1;0;7,79405E+12;Crema Oxidante Hierba Profesional;1;1
+;;1;0;7,7972E+12;Paño Extra Absorvente;1;1
+;;1;0;7,79405E+12;Crema Hidratante con Aloe Vera;1;1
+;;1;0;8,433E+12;Corta Uñas;1;1
+;;1;0;7,79405E+12;Quita Esmalte Doreé;1;1
+;;1;0;7,55E+12;Hilo de Coser;1;1
+;;1;0;7,90919E+12;Crema Hidratante Avon Encanto;1;1
+;;1;0;7,79813E+12;Pañuelos Descartables;1;1
+;;1;0;7,79811E+12;Secador de Piso;1;1
+;;1;0;7,79463E+12;Pañales Huggies XXG;1;1
+;;1;0;7,7904E+12;Boligoma;1;1
+;;1;0;7,79463E+12;Pañales Huggies XG;1;1
+;;1;0;7,79288E+12;Queso Rallado La Quesera;1;1
+;;1;0;7,79074E+12;Queso Rallado La Serenisima;1;1
+;;1;0;7,79857E+12;Esencia de Vainilla;1;1
+;;1;0;7,79218E+12;Biscochuelo Mama Cocina;1;1
+;;1;0;7,79809E+12;Biscochuelo Nevares;1;1
+;;1;0;7,61303E+12;Nesquik;1;1
+;;1;0;7,794E+12;Hellmans Mayonesa;1;1
+;;1;0;7,7929E+12;Cheddar Dos Anclas;1;1
+;;1;0;7,79477E+12;Yovinessa Aceitunas con Morron;1;1
+;;1;0;7,79168E+12;Castell Aceitunas Descarozadas;1;1
+;;1;0;7,794E+12;Savora;1;1
+;;1;0;7,79187E+12;Mayonesa Natura;1;1
+;;1;0;7,794E+12;Hellmans Ketchup;1;1
+;;1;0;7,794E+12;Savora Chica;1;1
+;;1;0;7,79007E+12;Exquisita Gelatina - Cereza;1;1
+;;1;0;7,79007E+12;Exquisita Gelatina - Frutilla;1;1
+;;1;0;7,798E+12;Pimienta Blanca;1;1
+;;1;0;7,798E+12;Rubino Provenzal;1;1
+;;1;0;7,6222E+12;Royal Gelatina - Sin Savor;1;1
+;;1;0;7,6223E+12;Royal Flan - Dulce de Leche;1;1
+;;1;0;7,79097E+12;Ravana Postre - Vainilla;1;1
+;;1;0;7,79816E+12;Especias 537 - Ají Molido;1;1
+;;1;0;7,79816E+12;Especias 537 - Pimienta Molida;1;1
+;;1;0;7,79097E+12;Ravana Postre - Caramelo;1;1
+;;1;0;7,79097E+12;Ravana Postre - Musse de Chocolate;1;1
+;;1;0;7,79816E+12;Especias 537 - Adobo Para Pizza;1;1
+;;1;0;7,79816E+12;Especias 537 - Oregano;1;1
+;;1;0;7,79816E+12;Especias 537 - Pimentón;1;1
+;;1;0;7,794E+12;Caldo de Gallina;1;1
+;;1;0;7,79017E+12;Té La Morenita;1;1
+;;1;0;7,79039E+12;Mate Cocido Unión;1;1
+;;1;0;7,79017E+12;Café en Saquitos La Morenita;1;1
+;;1;0;7,79015E+12;Café Molido La Virginia;1;1
+;;1;0;7,61329E+12;Café Dolca - Nestlé;1;1
+;;1;0;7,61329E+12;Café Dolca Suave - Nestlé;1;1
+;;1;0;7,79049E+12;Hileret Clasico;1;1
+;;1;0;7,79039E+12;Té de Boldo - Taragui;1;1
+;;1;0;7,79039E+12;Té de Tilo - Taragui;1;1
+;;1;0;7,79039E+12;Té de Manzanilla - Taragui;1;1
+;;1;0;7,79518E+12;Noel Salsa Pizza;1;1
+;;1;0;7,79518E+12;Noel Pure de Tomate;1;1
+;;1;0;7,79004E+12;De la Huerta Pure de Tomate;1;1
+;;1;0;7,79747E+12;Marolio Tomates Pelados;1;1
+;;1;0;7,794E+12;Caldito de Verdura;1;1
+;;1;0;7,79079E+12;Inca Jardinera;1;1
+;;1;0;7,89115E+12;Maicena;1;1
+;;1;0;7,79747E+12;Marolio Arverjas;1;1
+;;1;0;7,79518E+12;Noel Arverjas en Lata;1;1
+;;1;0;7,79189E+12;Cumaná Pimiontos Morrones;1;1
+;;1;0;7,7907E+12;Abeto Duraznos en Lata;1;1
+;;1;0;7,79189E+12;Cumaná Atun Desmenuzado al Natural;1;1
+;;1;0;7,79189E+12;Cumaná Atun Desmenuzada en Aceite y Agua;1;1
+;;1;0;7,79008E+12;Miel Granja Rosalia;1;1
+;;1;0;7,79008E+12;Miel Granja Rosalia;1;1
+;;1;0;7,79008E+12;Dulce de Leche Sancor;1;1
+;;1;0;7,79074E+12;Dulce de Leche La Serenisima;1;1
+;;1;0;7,6223E+12;Tang de Pera;1;1
+;;1;0;7,6222E+12;Tang de Uva;1;1
+;;1;0;7,6223E+12;Tang de Manzana;1;1
+;;1;0;7,6223E+12;Tang de Naranja;1;1
+;;1;0;7,62221E+12;Clight de Naranja;1;1
+;;1;0;7,79058E+12;Noel Naranja;1;1
+;;1;0;7,79058E+12;Noel Manzana;1;1
+;;1;0;7,62221E+12;Clight de Anana;1;1
+;;1;0;7,62221E+12;Clight de Pera;1;1
+;;1;0;7,79058E+12;Noel Multifruta;1;1
+;;1;0;7,79058E+12;Noel Limonada;1;1
+;;1;0;7,62221E+12;Clight de Pomelo Rosado;1;1
+;;1;0;7,73091E+12;Rinde 2 - Manzana;1;1
+;;1;0;7,73091E+12;Rinde 2 - Naranja;1;1
+;;1;0;7,73091E+12;Rinde 2 - Multifruta;1;1
+;;1;0;7,73091E+12;Rinde 2 - Limon;1;1
+;;1;0;7,73091E+12;Rinde 2 - Anana Piña;1;1
+;;1;0;7,79043E+12;Fideos 308;1;1
+;;1;0;7,79007E+12;Spaguetti Luchetti;1;1
+;;1;0;7,79007E+12;Coditos Luchetti;1;1
+;;1;0;7,79007E+12;Tirabuzón Luchetti;1;1
+;;1;0;7,79007E+12;Letritas Luchetti;1;1
+;;1;0;7,79007E+12;Mostachole Luchetti;1;1
+;;1;0;7,79183E+12;Arroz Moneda;1;1
+;;1;0;7,7922E+12;Lentejas Los Filos;1;1
+;;1;0;7,79805E+12;Lentejas La Abadía;1;1
+;;1;0;7,79142E+12;Pan Rallado Sequito;1;1
+;;1;0;7,79218E+12;Rebozador Mama Cocina;1;1
+;;1;0;7,7929E+12;Sal Fina Dos Anclas;1;1
+;;1;0;7,791E+12;Sal Gruesa Celusal;1;1
+;;1;0;7,79058E+12;Polenta Presto Pronta;1;1
+;;1;0;7,79305E+12;Alcohol Etílico Villa Iris;1;1
+;;1;0;7,79814E+12;Jugo de Limón Silva;1;1
+;;1;0;7,79814E+12;Vinagre de Alcohol Silva;1;1
+;;1;0;7,79218E+12;Aceite Girasol Pureza;1;1
+;;1;0;7,79052E+12;Tabletas Insectisidas Fuji;1;1
+;;1;0;7,79052E+12;Espirales Fuji;1;1
+;;1;0;7,79279E+12;Virulana de Acero Limpilana;1;1
+;;1;0;7,79129E+12;Jabon en Pan Ala;1;1
+;;1;0;7,79631E+12;Jabon en Pan Seiseme;1;1
+;;1;0;7,79129E+12;Jabon en Polvo Ala Matic;1;1
+;;1;0;7,79129E+12;Jabon en Polvo Ala - Lavado a Mano;1;1
+;;1;0;7,79129E+12;Jabon en Polvo Ala Matic Chico;1;1
+;;1;0;7,89997E+12;Chocolate Blanco con Galletitas Hershey's;1;1
+;;1;0;7,89997E+12;Chocolate Negro Hershey's;1;1
+;;1;0;7,79058E+12;Chocolate Aereado Con Almendras Cofler;1;1
+;;1;0;7,79058E+12;Chocolate Aereado Con Leche Cofler;1;1
+;;1;0;7,79058E+12;Chocolate Aereado Blanco Cofler;1;1
+;;1;0;7,79058E+12;Chocolate Aereado Combinado Cofler;1;1
+;;1;0;7,79058E+12;Chocolate Aereado Bonobon Cofler;1;1
+;;1;0;7,79021E+12;Chocolate con Maní Felfort;1;1
+;;1;0;7,79461E+12;Chocolate con Almendras y Mani Hamlet;1;1
+;;1;0;55264198;Chocolate con Maní Cofler Block;1;1
+;;1;0;77922120;Chocolate con Maní Cofler Block Grande;1;1
+;;1;0;7,79074E+12;Manteca La Serenisima;1;1
+;;1;0;7,79074E+12;Manteca La Serenisima;1;1
+;;1;0;7,79074E+12;Crema para Batir Armonía;1;1
+;;1;0;7,79074E+12;Crema para Batir La Serenisima;1;1
+;;1;0;77974686;Danet Dulce de Leche;1;1
+;;1;0;7,79134E+12;Danet Chocolate;1;1
+;;1;0;77974709;Danet Flan con Caramelo;1;1
+;;1;0;7,79058E+12;Viborita Mogul;1;1
+;;1;0;7,79081E+12;Levadura Fresca Calza;1;1
+;;1;0;7,7928E+12;Brahma;1;1
+;;1;0;7,79813E+12;Valente Vainilla;1;1
+;;1;0;7,79518E+12;Noel Durazno;1;1
+;;1;0;7,6223E+12;Cerealita;1;1
+;;1;0;7,79027E+12;Media tarde;1;1
+;;1;0;7,79518E+12;Noel Durazno Light;1;1
+;;1;0;7,79809E+12;Rapshodia minitorta;1;1
+;;1;0;7,79004E+12;Traviata x3;1;1
+;;1;0;7,79345E+12;Capri Vainillas;1;1
+;;1;0;7,79813E+12;Sinfonia  Limón;1;1
+;;1;0;7,79813E+12;Sinfonia  Frutilla;1;1
+;;1;0;7,79813E+12;Sinfonia Clasica;1;1
+;;1;0;7,79004E+12;Chocolina Original;1;1
+;;1;0;7,79063E+12;Surtido Fauna;1;1
+;;1;0;7,79004E+12;Vocación Clásica;1;1
+;;1;0;7,6222E+12;Pepitos Original;1;1
+;;1;0;7,79813E+12;Gaona Magdalens Dulce de leche;1;1
+;;1;0;7,79804E+12;Celosas Traidicionales;1;1
+;;1;0;7,79004E+12;Surtido Bagley;1;1
+;;1;0;7,79132E+12;Mini Mantecadas;1;1
+;;1;0;7,79805E+12;Terepin;1;1
+;;1;0;7,79132E+12;Mini Pitusas Vainilla;1;1
+;;1;0;7,79132E+12;Mini Pitusas Chocolate;1;1
+;;1;0;7,79132E+12;Suavecitas;1;1
+;;1;0;7,79132E+12;Morochitas;1;1
+;;1;0;7,79574E+12;Don Satur grasa;1;1
+;;1;0;7,79574E+12;Don Satur Agri;1;1
+;;1;0;7,79345E+12;Hojalmar Triangulos;1;1
+;;1;0;7,79389E+12;Fargo Pan Hamburguesas;1;1
+;;1;0;7,79389E+12;Pan Lactal;1;1
+;;1;0;7,79218E+12;Cañuelas Harina 000;1;1
+;;1;0;7,79218E+12;Pureza Harina Pizza;1;1
+;;1;0;7,79254E+12;Azucar Ledesma;1;1
+;;1;0;7,79892E+12;Azucar Fugaz;1;1
+;;1;0;7,79039E+12;Mini Union Suave;1;1
+;;1;0;7,79039E+12;Union Suave;1;1
+;;1;0;7,79039E+12;Taragui;1;1
+;;1;0;7,79228E+12;Cachamate Mezcla de Hierbas;1;1
+;;1;0;7,79071E+12;Cbsé Hierbas Serranas;1;1
+;;1;0;7,79039E+12;Mañanitas;1;1
+;;1;0;7,79005E+12;Skarchitos;1;1
+;;1;0;7,79805E+12;Nikitos Cereal de maiz;1;1
+;;1;0;7,79452E+12;Krachitos Jamón Serrano;1;1
+;;1;0;7,79452E+12;Krachitos Tradicional ;1;1
+;;1;0;7,79813E+12;Crazy Pop;1;1
+;;1;0;77958921;Bon o Bon ;1;1
+;;1;0;7,79058E+12;Rocklets;1;1
+;;1;0;7,79804E+12;Pipa Grande;1;1
+;;1;0;7,89662E+12;Ring Pop;1;1
+;;1;0;7,79058E+12;Mogul Tiburon;1;1
+;;1;0;7,79038E+12;Flynn Paff Gomita;1;1
+;;1;0;7,79286E+12;Chupetóncito;1;1
+;;1;0;7,79004E+12;Vocación Clasicas;1;1
+;;1;0;78931053;Kinder sorpresa nena;1;1
+;;1;0;40084107;Kinder Sorpresa nene;1;1
+;;1;0;77907509;Dos Corazones;1;1
+;;1;0;77915481;Alf Pepitos!;1;1
+;;1;0;7,79364E+12;Bayaspirina Forte tira;1;1
+;;1;0;7,79364E+12;Bayaspirina Aspirina;1;1
+;;1;0;7,79364E+12;Aspirineta;1;1
+;;1;0;7,79364E+12;Cafiaspirina Plus;1;1
+;;1;0;7,79364E+12;Cafiaspirina ;1;1
+;;1;0;7,79814E+12;Tafirol Fuerte;1;1
+;;1;0;7,79038E+12;Anaflex Plus;1;1
+;;1;0;7,79364E+12;Actron ;1;1
+;;1;0;7,79364E+12;Actron;1;1
+;;1;0;7,79038E+12;Anaflex ;1;1
+;;1;0;7,79629E+12;Alernix 24;1;1
+;;1;0;7,79531E+12;Buscapina;1;1
+;;1;0;7,79535E+12;Dorixina;1;1
+;;1;0;7,79535E+12;Sertal Compuesto;1;1
+;;1;0;7,79803E+12;Amoxilina;1;1
+;;1;0;7,79084E+12;Omepraxol;1;1
+;;1;0;7,50631E+12;Te Vick Forte;1;1
+;;1;0;7,79464E+12;Uvasal;1;1
+;;1;0;7,79464E+12;Alikal;1;1
+;;1;0;4,0059E+12;Curitas;1;1
+;;1;0;7,79629E+12;Geniol ;1;1
+;;1;0;7,79152E+12;Prime Tachas;1;1
+;;1;0;7,79152E+12;Prime Anatomico;1;1
+;;1;0;7,79152E+12;Prime Mega;1;1
+;;1;0;7,79152E+12;Prime Texturado;1;1
+;;1;0;7,79059E+12;Caja chica Forforo;1;1
+;;1;0;7,79152E+12;Cartas El Padrino ;1;1
+;;1;0;7,79152E+12;Cartas El Padrino ;1;1
+;;1;0;8,69015E+12;Gomitas Huevo;1;1
+;;1;0;7,79819E+12;Gongys;1;1
+;;1;0;7,79818E+12;Woopys;1;1
+;;1;0;7,79315E+12;Imperial Apa;1;1
+;;1;0;7,79809E+12;Smack;1;1
+;;1;0;77969354;Chocolatin Negro;1;1
+;;1;0;7,79058E+12;Misky Gomitas;1;1
+;;1;0;77953124;Cofler Block;1;1
+;;1;0;7,79059E+12;Ranchera Velas;1;1
+;;1;0;7,79129E+12;Rexona Jabon Tocador;1;1
+;;1;0;7,79129E+12;Sedal Co-Creations Accondicionador;1;1
+;;1;0;7,79129E+12;Sedal Recarga Natural Shampoo;1;1
+;;1;0;7,79129E+12;Sedal Co-Creations Shampoo;1;1
+;;1;0;6,0013E+12;Ziploc Bolsas;1;1
+;;1;0;7,79038E+12;Flynn Paff gomita;1;1
+;;1;0;7,79058E+12;Mogul Dinos;1;1
+;;1;0;7,79031E+12;Pep Palitos;1;1
+;;1;0;77965233;Pipa chica;1;1
+;;1;0;77956699;Trishot;1;1
+;;1;0;7,6223E+12;Milka Torta Oreo;1;1
+;;1;0;77903778;Milka Dulce De Leche;1;1
+;;1;0;7,6223E+12;Milka Mouse Blanco;1;1
+;;1;0;77903785;Milka Mouse;1;1
+;;1;0;7,79004E+12;Aguila Minitorta Blanco;1;1
+;;1;0;7,79004E+12;Aguila Minitorta Clásica ;1;1
+;;1;0;77980281;Guaymallen Menbrillo;1;1
+;;1;0;77976291;Tita;1;1
+;;1;0;7,79125E+12;Cadbury Frutilla;1;1

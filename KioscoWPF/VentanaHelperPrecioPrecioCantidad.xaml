@@ -1,0 +1,42 @@
+﻿<Window x:Class="KioscoWPF.VentanaHelperPrecioPrecioCantidad"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KioscoWPF"
+        xmlns:options="clr-namespace:KioscoWPF.Properties"
+        xmlns:VM="clr-namespace:KioscoWPF.ViewModels"
+        xmlns:UC="clr-namespace:KioscoWPF.userControl"
+        mc:Ignorable="d"
+        Background="{Binding Source={x:Static options:Settings.Default}, Path=WindowBackground}"
+        Title="VentanaHelperPrecioPrecioCantidad" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" ResizeMode="NoResize" WindowStyle="None">
+    <Window.DataContext>
+        <VM:VMHelperPrecioPrecioCantidad />
+    </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Key="F1" Command="{Binding comResultado}" />
+        <KeyBinding Key="Esc" Command="{Binding comCancelar}" />
+    </Window.InputBindings>
+    <Border BorderThickness="1" BorderBrush="Green" Margin="2" Background="AliceBlue">
+        <UniformGrid Columns="4" Rows="1">
+            <UC:textBoxCurrency textboxText="{Binding intCantidad}" labelContent="Cantidad:" isMaster="True" textAlignment="Center" isCurrency="False" isHeaderTop="True" enterCommand="{Binding comNextTarget}" />
+
+            <UC:textBoxCurrency textboxText="{Binding doublePrecioPagado}" labelContent="Precio Pagado:" isHeaderTop="True" enterCommand="{Binding comNextTarget}" />
+
+            <UC:textBoxCurrency textboxText="{Binding doublePrecioVenta}" labelContent="Precio de Venta:" isHeaderTop="True" enterCommand="{Binding comResultado}" />
+
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Total: " />
+                    <Label Content="{Binding doubleTotalPagado}" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Sugerido: " />
+                    <Label Content="{Binding doublePrecioSugerido}" />
+                </StackPanel>
+            </StackPanel>
+            
+        </UniformGrid>
+    </Border>
+</Window>

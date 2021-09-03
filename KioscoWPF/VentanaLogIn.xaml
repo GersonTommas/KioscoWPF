@@ -1,0 +1,34 @@
+﻿<Window x:Class="KioscoWPF.VentanaLogIn"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KioscoWPF"
+        xmlns:options="clr-namespace:KioscoWPF.Properties"
+        xmlns:VM="clr-namespace:KioscoWPF.ViewModels"
+        Background="{Binding Source={x:Static options:Settings.Default}, Path=WindowBackground}"
+        Title="IDQ" SizeToContent="WidthAndHeight" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" FocusManager.FocusedElement="{Binding ElementName=pass}">
+    <Window.DataContext>
+        <VM:VMLogIn />
+    </Window.DataContext>
+    <StackPanel Margin="10">
+        <Border BorderThickness="1" BorderBrush="Gray" CornerRadius="3" Width="230" Height="230" Margin="5">
+            <Image Source="Pack://application:,,,/resources/Images/Logo02.png" Margin="5" Stretch="Uniform" />
+        </Border>
+
+        <GroupBox Header="Iniciar Sesion" Width="200">
+            <StackPanel>
+                <Label Content="Usuario:" Focusable="False" />
+                <ComboBox Margin="5,0,5,5" Height="20" ItemsSource="{Binding listUsuarios}" SelectedItem="{Binding selectedUser}" DisplayMemberPath="Usuario" />
+                <Label Content="Contraseña:" />
+                <PasswordBox x:Name="pass" Margin="5,0,5,5" Height="20" >
+                    <PasswordBox.InputBindings>
+                        <KeyBinding Command="{Binding comIniciar}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=PasswordBox}}" Key="Return" />
+                    </PasswordBox.InputBindings>
+                </PasswordBox>
+                <Button Content="test" Command="{Binding comTest}" Visibility="Collapsed" />
+            </StackPanel>
+        </GroupBox>
+
+    </StackPanel>
+</Window>

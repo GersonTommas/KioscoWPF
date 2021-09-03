@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="KioscoWPF.userControl.userControlInfoCommands"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KioscoWPF.userControl"
+             mc:Ignorable="d" 
+             x:Name="thisUserControl"
+             d:Background="AliceBlue" VerticalAlignment="Top">
+    <UserControl.Resources>
+        <local:textBoxBoolToVisConverter x:Key="UCbolToVisConverter" />
+        <local:textBoxInverseBoolToVisConverter x:Key="UCInvbolToVisConverter" />
+        <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+    </UserControl.Resources>
+    
+    <GroupBox Header="Comandos" VerticalAlignment="Top" Grid.Column="1">
+        <StackPanel>
+            <StackPanel HorizontalAlignment="Center">
+                <Grid Visibility="{Binding ElementName=thisUserControl, Path=hasGuardar, Converter={StaticResource UCbolToVisConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="F1: "/>
+                    <TextBlock Text="Guardar" Grid.Column="1" />
+                </Grid>
+                <Grid Visibility="{Binding ElementName=thisUserControl, Path=hasTag, Converter={StaticResource UCbolToVisConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="F2: "/>
+                    <TextBlock Text="Nuevo Tag" Grid.Column="1" />
+                </Grid>
+                <Grid Visibility="{Binding ElementName=thisUserControl, Path=hasMedidas, Converter={StaticResource UCbolToVisConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="F3: "/>
+                    <TextBlock Text="Nueva Medida" Grid.Column="1" />
+                </Grid>
+                <Grid Visibility="{Binding ElementName=thisUserControl, Path=hasProductos, Converter={StaticResource UCbolToVisConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="F4: "/>
+                    <TextBlock Text="Productos" Grid.Column="1" />
+                </Grid>
+                <Grid Visibility="{Binding ElementName=thisUserControl, Path=hasAbrirProducto, Converter={StaticResource UCbolToVisConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="F5: " />
+                    <TextBlock Text="Abrir Producto" Grid.Column="1" />
+                </Grid>
+                <Grid Visibility="{Binding ElementName=thisUserControl, Path=hasSeleccionar, Converter={StaticResource UCbolToVisConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Enter: "/>
+                    <TextBlock Text="Agregar" Grid.Column="1" />
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Esc: "/>
+                    <TextBlock Text="Cancelar" Grid.Column="1" />
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+    </GroupBox>
+</UserControl>

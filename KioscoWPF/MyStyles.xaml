@@ -1,0 +1,327 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:KioscoWPF">
+
+    
+    <!--               -   Converters  -                        -->
+    <local:BoolToVisConverter x:Key="BooltoVisConvert" />
+    <local:InverseBoolToVisConverter x:Key="InvBoolToVisConvert" />
+    <local:InverseBoolConverter x:Key="InvBoolConvert" />
+    <local:IntToBoolConverter x:Key="IntToBoolConvert" />
+    <local:ProductStockComparerEqual x:Key="ProdStockCompareEqual" />
+    <local:doubleInverterConverter x:Key="doubleInverterConvert" />
+
+
+
+    <!--                    -   Colors  -                         -->
+    <SolidColorBrush x:Key="NoStockBackground" Color="LightPink" />
+    <SolidColorBrush x:Key="LowStockBackground" Color="Orange" />
+    <SolidColorBrush x:Key="MinStockBackground" Color="LightBlue" />
+    <SolidColorBrush x:Key="OverStockBackground" Color="DarkSeaGreen" />
+
+    <SolidColorBrush x:Key="AgregadoForeground" Color="Red" />
+    
+
+    
+    
+    
+    
+    <!--        TextBox Template        -->
+    <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+    <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+    <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+    <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
+    <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
+    <ControlTemplate x:Key="roundedTextBox" TargetType="{x:Type TextBoxBase}">
+        <Border x:Name="border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="3" SnapsToDevicePixels="True">
+            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.MouseOver.Border}"/>
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="true">
+                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    
+    
+    
+    
+    <!--            Button Template         -->
+    <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+    <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+    <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+    <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+    <ControlTemplate x:Key="roundedButton" TargetType="{x:Type ButtonBase}">
+        <Border x:Name="border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="3" SnapsToDevicePixels="true">
+            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Button.IsDefaulted" Value="true">
+                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="true">
+                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    
+    
+    
+    <local:ProductStockComparerMax x:Key="ProdStockCompareMax" />
+    <local:ProductStockComparerMin x:Key="ProdStockCompareMin" />
+    <local:ProductStockComparerZero x:Key="ProdStockCompareZero" />
+    
+    
+    
+    
+    <Style x:Key="HeaderCenter" TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+    <Style x:Key="HeaderLeft" TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    </Style>
+    <Style x:Key="TextRight" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Right" />
+    </Style>
+    <Style x:Key="TextCenter" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
+    
+    
+
+    <!--          Default Button          -->
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="Template" Value="{DynamicResource roundedButton}" />
+    </Style>
+
+    <!--           Default ComboBox             -->
+    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsEditable" Value="False" />
+    </Style>
+    
+    <!--            Default CheckBox            -->
+    <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+    </Style>
+
+        <!--           Default DataGrid             -->
+    <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
+        <Setter Property="AutoGenerateColumns" Value="False" />
+        <Setter Property="Background" Value="White" />
+        <Setter Property="CanUserAddRows" Value="False" />
+        <Setter Property="CanUserDeleteRows" Value="False" />
+        <Setter Property="CanUserReorderColumns" Value="False" />
+        <Setter Property="CanUserResizeRows" Value="False" />
+        <Setter Property="CanUserSortColumns" Value="True" />
+        <Setter Property="ColumnHeaderStyle" Value="{StaticResource HeaderCenter}" />
+        <Setter Property="GridLinesVisibility" Value="None" />
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="RowHeaderWidth" Value="0" />
+        <Setter Property="SelectionMode" Value="Single" />
+        <Setter Property="SelectionUnit" Value="FullRow" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    </Style>
+    
+    
+    <!--            Defualt DataGridRow             -->
+    <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource {x:Type DataGridRow}}">
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="BorderBrush" Value="Black" />
+                <Setter Property="BorderThickness" Value="1" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--            Defualt DataGridCell            -->
+    <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground}"/>
+                <Setter Property="Background" Value="{x:Null}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    
+    <!--            Default GroupBox            -->
+    <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource {x:Type GroupBox}}">
+        <Setter Property="BorderBrush" Value="Gray"/>
+        <Setter Property="Margin" Value="2"/>
+    </Style>
+    
+    <!--            Default MenuItem            -->
+    <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
+        <Setter Property="IsTabStop" Value="False" />
+    </Style>
+
+    <!--            Defualt TabControl          -->
+    <Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource {x:Type TabControl}}">
+        <Setter Property="Margin" Value="5" />
+    </Style>
+
+    <!--            Defautl TabItem             -->
+    <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
+        <Setter Property="IsTabStop" Value="False" />
+    </Style>
+
+    <!--            Default Image               >
+    <Style TargetType="{x:Type Image}">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+    </Style>
+
+    <!            Default Label               >
+    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+    </Style>
+
+    <!           Default RadioButton          >
+    <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type RadioButton}}">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!            Default TextBox             >
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template" Value="{DynamicResource roundedTextBox}" />
+    </Style>
+    -->
+
+
+    <!--                - Custom DataGridRow(fullStockGridRow)        -->
+    <Style x:Key="fullStockGridRow" TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
+        <Setter Property="Background" Value="{StaticResource OverStockBackground}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=stockVsMinimo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Value="1">
+                <Setter Property="Background" Value="{StaticResource NoStockBackground}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=stockVsMinimo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Value="2">
+                <Setter Property="Background" Value="{StaticResource LowStockBackground}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=stockVsMinimo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Value="3">
+                <Setter Property="Background" Value="{StaticResource MinStockBackground}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--                - Custom DataGridRow(stockGridRow)        -->
+    <Style x:Key="stockGridRow" TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
+        <Setter Property="Background" Value="{StaticResource OverStockBackground}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=stockVsMinimo, UpdateSourceTrigger=PropertyChanged}" Value="1">
+                <Setter Property="Background" Value="{StaticResource NoStockBackground}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    
+    <!--              - Custom Label -            -->
+    <Style x:Key="LabelSobreTextBox" TargetType="{x:Type Label}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+    </Style>
+
+    <Style x:Key="SignoPesos" TargetType="{x:Type Label}">
+        <Setter Property="Content" Value="$" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Margin" Value="1,0,0,0" />
+        <Setter Property="Foreground" Value="Gray" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+    </Style>
+    
+    <!--           - Custom Rectangle -             -->
+    <Style x:Key="ColourRectangle" TargetType="{x:Type Rectangle}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="Width" Value="10" />
+        <Setter Property="Height" Value="10" />
+        <Setter Property="Margin" Value="5" />
+    </Style>
+
+    <!--              - Custom TextBox -            -->
+    <Style x:Key="MainTextBox" TargetType="{x:Type TextBox}">
+        <Setter Property="Template" Value="{DynamicResource roundedTextBox}" />
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding resetFocus, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                <Setter Property="FocusManager.FocusedElement" Value="{Binding RelativeSource={RelativeSource Self}}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--                - Custom DataGridCell           -->
+    <Style x:Key="dataGridColumnActivo" TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle>
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ColourRectangle}">
+                                <Setter Property="Fill" Value="Transparent" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Activo}" Value="False">
+                                        <Setter Property="Fill" Value="{StaticResource AgregadoForeground}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

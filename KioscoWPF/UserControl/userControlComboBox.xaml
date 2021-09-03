@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="KioscoWPF.userControl.userControlComboBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KioscoWPF.userControl"
+             mc:Ignorable="d" 
+             x:Name="thisUserControl"
+             d:Background="AliceBlue">
+    <UserControl.Resources>
+        <local:textBoxBoolToVisConverter x:Key="UCbolToVisConverter" />
+        <local:textBoxInverseBoolToVisConverter x:Key="UCInvbolToVisConverter" />
+        <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="{Binding}" Visibility="{Binding ElementName=thisUserControl, Path=isLabelOn, Converter={StaticResource UCbolToVisConverter}}"/>
+        <ComboBox />
+    </Grid>
+</UserControl>

@@ -1,0 +1,1161 @@
+﻿<Window x:Class="KioscoWPF.VentanaPrincipal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KioscoWPF"
+        xmlns:options="clr-namespace:KioscoWPF.Properties"
+        xmlns:VM="clr-namespace:KioscoWPF.ViewModels"
+        xmlns:UC="clr-namespace:KioscoWPF.userControl"
+        mc:Ignorable="d"
+        Background="{Binding Source={x:Static options:Settings.Default}, Path=WindowBackground}"
+        Title="IDQ - TGSoftware" MinHeight="450" MinWidth="800" Width="800" Height="600" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Window.DataContext>
+        <VM:VMVentanaPrincipal />
+    </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Key="F1" Command="{Binding comVenta}" />
+        <KeyBinding Key="F2" Command="{Binding comIngreso}" />
+        <KeyBinding Key="F3" Command="{Binding comConsumir}" />
+        <KeyBinding Key="F12" Command="{Binding comRetiro}" />
+    </Window.InputBindings>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Archivo">
+                <MenuItem Header="Nuevo">
+                    <MenuItem Header="F1 - Venta" Command="{Binding comVenta}" />
+                    <MenuItem Header="F2 - Ingreso" Command="{Binding comIngreso}" />
+                    <MenuItem Header="F3 - Consumo" Command="{Binding comConsumir}" />
+                </MenuItem>
+                <MenuItem Header="Salir" />
+            </MenuItem>
+
+            <MenuItem Header="Ver">
+                <MenuItem Header="Ventas" IsCheckable="True" IsChecked="{Binding Source={x:Static options:Settings.Default}, Path=MenuVentas}" />
+                <MenuItem Header="Ingreso" IsCheckable="True" IsChecked="{Binding Source={x:Static options:Settings.Default}, Path=MenuIngresos}" />
+                <MenuItem Header="Consumo" IsCheckable="True" IsChecked="{Binding Source={x:Static options:Settings.Default}, Path=MenuConsumos}" />
+                <MenuItem Header="Deudas" IsCheckable="True" IsChecked="{Binding Source={x:Static options:Settings.Default}, Path=MenuDeudas}" />
+                <MenuItem Header="Usuarios" IsCheckable="True" IsChecked="{Binding Source={x:Static options:Settings.Default}, Path=MenuUsuarios}" />
+                <MenuItem Header="Tags" IsCheckable="True" IsChecked="{Binding Source={x:Static options:Settings.Default}, Path=MenuTags}" />
+                <MenuItem Header="Medidas" IsCheckable="True" IsChecked="{Binding Source={x:Static options:Settings.Default}, Path=MenuMedidas}" />
+                <MenuItem Header="Retiros" IsCheckable="True" IsChecked="{Binding Source={x:Static options:Settings.Default}, Path=MenuRetiros}" />
+                <MenuItem Header="Conteos" IsCheckable="True" IsChecked="{Binding Source={x:Static options:Settings.Default}, Path=MenuCaja}" />
+                <MenuItem Header="Proveedores" IsCheckable="True" IsChecked="{Binding Source={x:Static options:Settings.Default}, Path=MenuProveedores}" />
+                <MenuItem Header="Sacado" IsCheckable="True" IsChecked="{Binding Source={x:Static options:Settings.Default}, Path=MenuSacado}" Visibility="Collapsed" />
+            </MenuItem>
+
+            <MenuItem Header="Opciones">
+                <MenuItem Header="Ventana" Command="{Binding comOpciones}" />
+            </MenuItem>
+        </Menu>
+
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="AUTO" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="AUTO" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="AUTO" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+                
+                <StackPanel>
+                    <Label Content="{Binding usuarioActivo.Usuario}" FontSize="20" Margin="5"/>
+                    <Button Content="Cerrar Sesión" Command="{Binding comCerrarSesion}" />
+                </StackPanel>
+                <StackPanel VerticalAlignment="Center">
+                    <UC:textBoxCurrency textboxText="{Binding CajaActual.CajaActual, Mode=OneWay}" labelContent="Efectivo:" isReadOnly="True" />
+                    <UC:textBoxCurrency textboxText="{Binding CajaActual.MercadoPago, Mode=OneWay}" isReadOnly="True" labelContent="MercadoPago:" />
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5" Grid.ColumnSpan="2">
+
+
+                <GroupBox Header="Administrador" Visibility="{Binding visAdmin}">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="Retiro" Command="{Binding comRetiro}" />
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Consumo">
+                    <Button Content="Consumir" Command="{Binding comConsumir}" />
+                </GroupBox>
+
+                <GroupBox Header="Acciones">
+                    <StackPanel Orientation="Horizontal" >
+                        <Button Content="Venta" Command="{Binding comVenta}"/>
+                        <Button Content="Ingreso" Command="{Binding comIngreso}"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox>
+                    <Label Content="{Binding strClock}" FontSize="30" />
+                </GroupBox>
+            </StackPanel>
+
+
+
+            <TabControl Margin="5" Grid.Row="1">
+
+                <TabItem Header="Productos">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="AUTO" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="AUTO" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="AUTO" />
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="{Binding stockStrCodigoDescripcion}" MinWidth="70" Command="{Binding comStockCodigoDescripcion}" />
+                            <UC:textBoxCurrency textboxText="{Binding stockStrSearch}" isLabelOn="False" isMaster="True" textAlignment="Left" isCurrency="False" VerticalAlignment="Center" Width="200"/>
+
+                            <GroupBox Header="Mostrar">
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox Content="{Binding stockStrInactivos}" IsThreeState="True" IsChecked="{Binding stockBolInactivos}" Margin="5"/>
+                                </StackPanel>
+                            </GroupBox>
+                        </StackPanel>
+
+                        <DataGrid ItemsSource="{Binding stockListProductosView}" SelectedItem="{Binding stockSelectedProducto}" RowStyle="{StaticResource fullStockGridRow}" Grid.Row="1">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="Auto" Header="A" CellStyle="{StaticResource dataGridColumnActivo}" />
+                                <DataGridTextColumn MinWidth="100" Width="100" Header="Código" Binding="{Binding Codigo}" CanUserSort="True" SortMemberPath="Codigo" />
+                                <DataGridTextColumn Width="*" Header="Descripción" Binding="{Binding Descripcion}" />
+                                <DataGridTextColumn MinWidth="60" Header="Stock" Binding="{Binding Stock}" />
+                                <DataGridTextColumn MinWidth="60" Width="auto" Header="Medida" SortMemberPath="TipoShort" ElementStyle="{StaticResource TextCenter}" Binding="{Binding Medida.fullMedida}" />
+                                <DataGridTemplateColumn MinWidth="70" Width="auto" Header="Precio" SortMemberPath="PrecioActual">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="$" />
+                                                <TextBlock Text="{Binding PrecioActual}" HorizontalAlignment="Right" Grid.Column="1" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn MinWidth="100" Width="auto" Header="Tag" ElementStyle="{StaticResource TextCenter}" Binding="{Binding Tag.fullTag}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <UC:textBoxCurrency textboxText="{Binding stockIntProductosTotal, Mode=OneWay}" labelContent="Total de Productos:" isReadOnly="True" isCurrency="False" textAlignment="Center" HorizontalAlignment="Right" Grid.Row="2" />
+
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="AUTO" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <StackPanel>
+                                <GroupBox Header="Editar">
+                                    <StackPanel>
+                                        <Button Content="Nuevo Producto" Command="{Binding comStockNuevoProducto}" HorizontalAlignment="Center" />
+                                        <Button Content="Cambiar Precio" Command="{Binding comStockCambiarPrecio}" HorizontalAlignment="Center" Visibility="Collapsed" />
+                                        <Button Content="Editar Producto" Command="{Binding comStockEditarProducto}" HorizontalAlignment="Center" />
+                                        <Button Content="Cambiar Estado" Command="{Binding comStockDesactivarProducto}" HorizontalAlignment="Center" Visibility="Collapsed" />
+                                        <Button Content="Modificar Stock" Command="{Binding comStockModificarStock}" HorizontalAlignment="Center" />
+                                        <Button Content="Abrir Bolsa xD"  Command="{Binding comStockAbrirProducto}" HorizontalAlignment="Center" />
+                                    </StackPanel>
+                                </GroupBox>
+
+                                <GroupBox Header="Detalles">
+                                    <StackPanel>
+                                        <Button Content="Detalle" Command="{Binding comStockDetalleProducto}" HorizontalAlignment="Center" />
+                                    </StackPanel>
+                                </GroupBox>
+                            </StackPanel>
+
+
+                            <UC:userControlInfoColors isActivoFullLine="False" hasActivoInactivo="True" hasActiveAndStock="True" hasMiddleColors="True" Grid.Row="1" />
+                        </Grid>
+                    </Grid>
+                </TabItem>
+
+
+
+                <TabItem Header="Ventas" Visibility="{Binding Source={x:Static options:Settings.Default}, Path=MenuVentas, Converter={StaticResource BooltoVisConvert}}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="3*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="AUTO" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="AUTO" />
+                        </Grid.RowDefinitions>
+
+                        <ComboBox ItemsSource="{Binding ventasListFechas, Mode=OneWay}" SelectedItem="{Binding ventasSelectedFecha}" DisplayMemberPath="Fecha" IsTabStop="True" />
+
+                        <Grid Grid.Row="1" Grid.RowSpan="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="AUTO" />
+                            </Grid.RowDefinitions>
+
+                            <DataGrid ItemsSource="{Binding ventasSelectedFecha.ventasPerFechaView, Mode=OneWay}" SelectedItem="{Binding ventasSelectedVenta}">
+                                <DataGrid.Columns>
+                                    <DataGridTemplateColumn Width="AUTO">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Rectangle>
+                                                        <Rectangle.Style>
+                                                            <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ColourRectangle}">
+                                                                <Setter Property="Fill" Value="{StaticResource OverStockBackground}" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding isVentaDeuda}" Value="1">
+                                                                        <Setter Property="Fill" Value="{StaticResource LowStockBackground}" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding isVentaDeuda}" Value="2">
+                                                                        <Setter Property="Fill" Value="{StaticResource AgregadoForeground}" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Rectangle.Style>
+                                                    </Rectangle>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Tipo" Width="AUTO">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <TextBlock>
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Setter Property="Text" Value="Venta" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding isVentaDeuda}" Value="1">
+                                                                        <Setter Property="Text" Value="Parcial" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding isVentaDeuda}" Value="2">
+                                                                        <Setter Property="Text" Value="Deuda" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="Hora" Width="*" Binding="{Binding Hora}" />
+                                    <DataGridTextColumn Header="Deudor" Binding="{Binding Deudor.Nombre}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1">
+                                <Label Content="Ventas: " />
+                                <UC:textBoxCurrency textboxText="{Binding doubleVentasDiariasPesos, Mode=OneWay}" labelContent="{Binding ventasSelectedFecha.TotalCantidadVentasDiario, Mode=OneWay}" isReadOnly="True" Width="70" VerticalAlignment="Top" />
+                                <Label Content="{Binding doubleVentasDiariasPesos}" />
+                            </StackPanel>
+                        </Grid>
+
+                        <DataGrid ItemsSource="{Binding ventasSelectedVenta.VentaProductosPerVenta, Mode=OneWay}" Grid.Column="1" Grid.RowSpan="2">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn MinWidth="70" Header="Código" Binding="{Binding Producto.Codigo}" Visibility="Collapsed"/>
+                                <DataGridTextColumn Width="*" Header="Descripción" Binding="{Binding Producto.Descripcion}"/>
+                                <DataGridTemplateColumn MinWidth="90" Width="auto" Header="Precio Venta U.">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="$" />
+                                                <TextBlock Text="{Binding Precio}" TextAlignment="Right" Grid.Column="1" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn MinWidth="60" Width="auto" Header="Cantidad" ElementStyle="{StaticResource TextCenter}" Binding="{Binding Cantidad}" />
+                                <DataGridTemplateColumn MinWidth="70" Width="auto" Header="Total" >
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="$" />
+                                                <TextBlock Text="{Binding PrecioTotal}" TextAlignment="Right" Grid.Column="1" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <Grid Grid.Column="1" Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="AUTO" />
+                            </Grid.ColumnDefinitions>
+
+                            <UC:textBoxCurrency textboxText="{Binding ventasSelectedVenta.Deudor.Nombre, Mode=OneWay}" labelContent="Cliente:" isReadOnly="True" textAlignment="Left" isCurrency="False" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding ventaVisDeudor}" />
+
+                            <StackPanel HorizontalAlignment="Right" Grid.Column="2">
+                                <UC:textBoxCurrency textboxText="{Binding ventasSelectedVenta.PrecioTotal, Mode=OneWay}" labelContent="Total:" isReadOnly="True" HorizontalAlignment="Right"  />
+                                <UC:textBoxCurrency textboxText="{Binding ventasSelectedVenta.Caja.CajaActual, Mode=OneWay}" labelContent="Pagado Pesos:" isReadOnly="True" HorizontalAlignment="Right" />
+                                <UC:textBoxCurrency textboxText="{Binding ventasSelectedVenta.Caja.MercadoPago, Mode=OneWay}" labelContent="MercadoPago:" isReadOnly="True" HorizontalAlignment="Right" />
+                                <UC:textBoxCurrency textboxText="{Binding ventasSelectedVenta.Caja.Vuelto, Mode=OneWay}" labelContent="Vuelto:" isReadOnly="True" HorizontalAlignment="Right" />
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+
+                </TabItem>
+
+
+
+                <TabItem Header="Ingreso" Visibility="{Binding Source={x:Static options:Settings.Default}, Path=MenuIngresos, Converter={StaticResource BooltoVisConvert}}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="3*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="AUTO" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="AUTO" />
+                        </Grid.RowDefinitions>
+
+                        <ComboBox ItemsSource="{Binding ingresosListFechas}" SelectedItem="{Binding ingresosSelectedFecha}" DisplayMemberPath="Fecha" Margin="5" />
+
+                        <DataGrid ItemsSource="{Binding ingresosSelectedFecha.IngresosPerFecha}" SelectedItem="{Binding ingresosSelectedIngreso}" Grid.Row="1" Grid.RowSpan="2">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="*" Header="Nombre" Binding="{Binding Proveedor.Nombre}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        
+
+                        <DataGrid ItemsSource="{Binding ingresosSelectedIngreso.IngresoProductosPerIngreso}" Grid.Column="1" Grid.Row="1">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn MinWidth="70" Header="Código" Binding="{Binding Producto.Codigo}" />
+                                <DataGridTextColumn Width="*" Header="Descripción" Binding="{Binding Producto.Descripcion}"/>
+                                <DataGridTemplateColumn MinWidth="90" Width="auto" Header="Precio Unitario">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="$" />
+                                                <TextBlock Text="{Binding PrecioActual}" TextAlignment="Right" Grid.Column="1" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn MinWidth="60" Width="auto" Header="Cantidad" ElementStyle="{StaticResource TextCenter}" Binding="{Binding Cantidad}" />
+                                <DataGridTemplateColumn MinWidth="70" Width="auto" Header="Total Pagado" >
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="$" />
+                                                <TextBlock Text="{Binding PrecioTotal}" TextAlignment="Right" Grid.Column="1" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <Grid Grid.Row="2" Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="AUTO" />
+                            </Grid.ColumnDefinitions>
+
+                            <UC:textBoxCurrency textboxText="{Binding ingresosSelectedIngreso.ingresosCantidadProductosPerIngreso, Mode=OneWay}" labelContent="Total Entrads:" isReadOnly="True" isCurrency="False" textAlignment="Center" Grid.Column="1" />
+                        </Grid>
+                    </Grid>
+                </TabItem>
+
+
+
+                <TabItem Header="Sacado" Visibility="Collapsed">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="AUTO" />
+                        </Grid.ColumnDefinitions>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Usuario:" VerticalAlignment="Center" Margin="5"/>
+                                <ComboBox ItemsSource="{Binding globalListUsuarios, Mode=OneWay}" DisplayMemberPath="Usuario" SelectedItem="{Binding sacadoSelectedUsuario}" Width="200" VerticalAlignment="Center" />
+                            </StackPanel>
+
+
+                            <DataGrid ItemsSource="{Binding listSacado, Mode=OneWay}" SelectedItem="{Binding selectedSacado}" Margin="5" Grid.Row="1">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn MinWidth="80" Header="Fecha" Binding="{Binding Fecha}"/>
+                                    <DataGridTextColumn MinWidth="80" Header="Código" Binding="{Binding Producto.Codigo}"/>
+                                    <DataGridTextColumn Width="*" Header="Descripción" Binding="{Binding Producto.Descripcion}"/>
+                                    <DataGridTemplateColumn MinWidth="80" Width="AUTO" Header="Precio">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="$" />
+                                                    <TextBlock Text="{Binding Precio}" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="Cantidad" Binding="{Binding Cantidad}" />
+                                    <DataGridTemplateColumn MinWidth="100" Width="AUTO" Header="Total">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="$" />
+                                                    <TextBlock Text="{Binding PrecioTotal}" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+
+
+                            <StackPanel HorizontalAlignment="Right" Grid.Row="2">
+                                <UC:textBoxCurrency textboxText="{Binding TotalSacado, Mode=OneWay}" labelContent="Total:" isReadOnly="True" HorizontalAlignment="Right" />
+                                <UC:textBoxCurrency textboxText="{Binding sacadoSelectedUsuario.Resto, Mode=OneWay}" labelContent="A Cuenta:" isReadOnly="True" HorizontalAlignment="Right" />
+                            </StackPanel>
+                        </Grid>
+
+                        <GroupBox Header="Modificar" VerticalAlignment="Top" Grid.Column="1">
+                            <StackPanel>
+                                <Button Content="Agregar" HorizontalAlignment="Center" Command="{Binding comAgregarSacado}" />
+                                <Button Content="Pagar" HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </GroupBox>
+                    </Grid>
+
+                </TabItem>
+
+
+
+                <TabItem Header="Consumos" Visibility="{Binding Source={x:Static options:Settings.Default}, Path=MenuConsumos, Converter={StaticResource BooltoVisConvert}}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="AUTO" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="AUTO" />
+                        </Grid.RowDefinitions>
+
+                        <DataGrid ItemsSource="{Binding consumosListFechas}" SelectedItem="{Binding consumosSelectedFecha}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="*" Header="Fecha" Binding="{Binding Fecha}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <DataGrid ItemsSource="{Binding consumosSelectedFecha.ConsumosProductosPerFecha, Mode=OneWay}" Grid.Column="1">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="*" Header="Descripción" Binding="{Binding Producto.Descripcion}" />
+                                <DataGridTextColumn MinWidth="100" Header="Cantidad" Binding="{Binding Cantidad}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <UC:textBoxCurrency textboxText="{Binding consumosSelectedFecha.TotalCantidadConsumosDiario, Mode=OneWay}" labelContent="Productos Consumidos:" isReadOnly="True" textAlignment="Center" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="1" />
+                    </Grid>
+                </TabItem>
+
+
+
+                <TabItem Header="Deudas" Visibility="{Binding Source={x:Static options:Settings.Default}, Path=MenuDeudas, Converter={StaticResource BooltoVisConvert}}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="AUTO" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="AUTO" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="AUTO" />
+                        </Grid.RowDefinitions>
+
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="AUTO" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid>
+
+
+
+                                <StackPanel Orientation="Horizontal">
+                                    <ComboBox ItemsSource="{Binding deudasListDeudores}" DisplayMemberPath="Nombre" SelectedItem="{Binding deudasSelectedDeudor}" IsSynchronizedWithCurrentItem="True" Width="250" HorizontalAlignment="Left"/>
+
+                                    <UC:textBoxCurrency textboxText="{Binding deudasListDeudores/Nivel, Mode=OneWay}" labelContent="Nivel:" textAlignment="Center" isReadOnly="True" isCurrency="False" textWidth="30"/>
+                                    <UC:textBoxCurrency textboxText="{Binding deudasListDeudores/Resto, Mode=OneWay}" labelContent="Resto:" isReadOnly="True" HorizontalAlignment="Left" />
+                                    <UC:textBoxCurrency textboxText="{Binding deudasListDeudores/doubleFaltanteTotal, Mode=OneWay}" labelContent="Deuda Total:" isReadOnly="True" HorizontalAlignment="Left" />
+                                    
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+
+
+
+                        <TabControl VerticalAlignment="Stretch" Grid.Row="1" >
+
+                            <TabItem Header="Lista">
+                                <Grid>
+                                    <DataGrid ItemsSource="{Binding deudasSelectedDeudor.ventasProductosPendientesPerDeudorView}">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Width="70" Header="Código" Binding="{Binding Producto.Codigo}" Visibility="Collapsed" />
+                                            <DataGridTextColumn Width="AUTO" Header="Fecha" Binding="{Binding Venta.Fecha.Fecha}" />
+                                            <DataGridTextColumn Width="*" Header="Detalle" Binding="{Binding Producto.Descripcion}" />
+                                            <DataGridTemplateColumn MinWidth="70" Width="auto" Header="Precio">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="auto" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock Text="$" />
+                                                            <TextBlock Text="{Binding PrecioFinal}" TextAlignment="Right" Grid.Column="1" />
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTextColumn Width="60" Header="Cantidad" ElementStyle="{StaticResource TextCenter}" Binding="{Binding CantidadFaltante}" />
+                                            <DataGridTemplateColumn MinWidth="70" Width="auto" Header="Total">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="auto" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock Text="$" />
+                                                            <TextBlock Text="{Binding TotalFaltante}" TextAlignment="Right" Grid.Column="1" />
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+                            </TabItem>
+                            
+                            
+                            <TabItem Header="Fecha">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="AUTO" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="AUTO" />
+                                    </Grid.RowDefinitions>
+
+                                    <ComboBox ItemsSource="{Binding deudasListFechas}" SelectedItem="{Binding deudasSelectedFecha}" DisplayMemberPath="Fecha" Width="150" HorizontalAlignment="Left" />
+
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="4*" />
+                                    </Grid.ColumnDefinitions>
+
+                                        <DataGrid ItemsSource="{Binding deudasListVentasPerFecha}" SelectedItem="{Binding deudasSelectedVenta}">
+                                            <DataGrid.Columns>
+                                                <DataGridTemplateColumn Header="P" Width="AUTO">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Grid>
+                                                                <Rectangle>
+                                                                    <Rectangle.Style>
+                                                                        <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ColourRectangle}">
+                                                                            <Setter Property="Fill" Value="{StaticResource AgregadoForeground}" />
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{Binding isVentaPagado}" Value="0">
+                                                                                    <Setter Property="Fill" Value="{StaticResource OverStockBackground}" />
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding isVentaPagado}" Value="1">
+                                                                                    <Setter Property="Fill" Value="{StaticResource LowStockBackground}" />
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </Rectangle.Style>
+                                                                </Rectangle>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTextColumn Width="*" Binding="{Binding Hora}" />
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+
+                                        <DataGrid ItemsSource="{Binding deudasSelectedVenta.VentaProductosPerVenta}" Grid.Column="1" Grid.Row="1">
+                                            <DataGrid.Columns>
+                                                <DataGridTemplateColumn Header="P" Width="AUTO">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Grid>
+                                                                <Rectangle>
+                                                                    <Rectangle.Style>
+                                                                        <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ColourRectangle}">
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{Binding isDeudaPagada}" Value="0">
+                                                                                    <Setter Property="Fill" Value="{StaticResource OverStockBackground}" />
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding isDeudaPagada}" Value="1">
+                                                                                    <Setter Property="Fill" Value="{StaticResource LowStockBackground}" />
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding isDeudaPagada}" Value="2">
+                                                                                    <Setter Property="Fill" Value="{StaticResource AgregadoForeground}" />
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </Rectangle.Style>
+                                                                </Rectangle>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTextColumn Width="70" Header="Código" Binding="{Binding Producto.Codigo}" Visibility="Collapsed" />
+                                                <DataGridTextColumn Width="*" Header="Detalle" Binding="{Binding Producto.Descripcion}" />
+                                                <DataGridTemplateColumn MinWidth="70" Width="auto" Header="Precio">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="auto" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <TextBlock Text="$" />
+                                                                <TextBlock Text="{Binding PrecioFinal}" TextAlignment="Right" Grid.Column="1" />
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTextColumn Width="60" Header="Vendido" ElementStyle="{StaticResource TextCenter}" Binding="{Binding Cantidad}" />
+                                                <DataGridTextColumn Width="60" Header="Pendiente" ElementStyle="{StaticResource TextCenter}" Binding="{Binding CantidadDeuda}" />
+                                                <DataGridTextColumn Width="60" Header="Faltante" ElementStyle="{StaticResource TextCenter}" Binding="{Binding CantidadFaltante}" />
+                                                <DataGridTemplateColumn MinWidth="70" Width="auto" Header="Deuda">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="auto" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <TextBlock Text="$" />
+                                                                <TextBlock Text="{Binding TotalFaltante}" TextAlignment="Right" Grid.Column="1" />
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </Grid>
+
+                                    <UC:textBoxCurrency textboxText="{Binding deudasSelectedVenta.DeudaTotalVenta, Mode=OneWay}" labelContent="Total:" isReadOnly="True" HorizontalAlignment="Right" Grid.Row="2" />
+                                </Grid>
+                            </TabItem>
+
+                            <TabItem Header="Pagos">
+                                <Grid>
+                                    <DataGrid ItemsSource="{Binding deudasListPagosPerDeudor}">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Width="*" Header="Fecha" Binding="{Binding Fecha.Fecha}" />
+                                            <DataGridTextColumn Width="*" Header="Efectivo" Binding="{Binding CajaActual}" />
+                                            <DataGridTextColumn Width="*" Header="MercadoPago" Binding="{Binding MercadoPago}" />
+                                            <DataGridTextColumn Width="*" Header="Vuelto" Binding="{Binding Vuelto}" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+                            </TabItem>
+                        </TabControl>
+
+                        <StackPanel Grid.Column="1" Grid.Row="1">
+                            <GroupBox>
+                                <StackPanel>
+                                    <Button Content="Nuevo Cliente" HorizontalAlignment="Center" Command="{Binding comNuevoDeudor}"/>
+                                    <Button Content="Editar Cliente" HorizontalAlignment="Center" Command="{Binding comEditarDeudor}"/>
+                                </StackPanel>
+                            </GroupBox>
+
+                            <GroupBox Header="Pagar">
+                                <StackPanel>
+                                    <Button Content="Pagar" Command="{Binding comDeduasPagar}" HorizontalAlignment="Center" />
+                                </StackPanel>
+                            </GroupBox>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+
+
+
+                <TabItem Header="Usuarios" Visibility="{Binding Source={x:Static options:Settings.Default}, Path=MenuUsuarios, Converter={StaticResource BooltoVisConvert}}">
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="AUTO" />
+                        </Grid.ColumnDefinitions>
+
+                        <DataGrid ItemsSource="{Binding globalListUsuarios, Mode=OneWay}" SelectedItem="{Binding usuariosSelectedUsuario}">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="A">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Rectangle>
+                                                <Rectangle.Style>
+                                                    <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ColourRectangle}">
+                                                        <Setter Property="Fill" Value="Transparent" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Activo}" Value="False">
+                                                                <Setter Property="Fill" Value="{StaticResource AgregadoForeground}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Rectangle.Style>
+                                            </Rectangle>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn MinWidth="30" Width="AUTO" Header="Id" Binding="{Binding Id}" />
+                                <DataGridTextColumn MinWidth="100" Header="Nombre" Binding="{Binding Nombre}" />
+                                <DataGridTextColumn MinWidth="100" Header="Apellido" Binding="{Binding Apellido}" />
+                                <DataGridTextColumn MinWidth="100" Width="AUTO" Header="Usuario" Binding="{Binding Usuario}" />
+                                <DataGridTextColumn Width="*" Header="Descripción" Binding="{Binding Descripcion}" />
+                                <DataGridTextColumn MinWidth="80" Width="AUTO" Header="Ingreso" Binding="{Binding Fecha}" />
+                                <DataGridTextColumn MinWidth="70" Header="Nivel" ElementStyle="{StaticResource TextCenter}" Binding="{Binding Nivel}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <GroupBox Header="Edición" VerticalAlignment="Top" Grid.Column="1">
+                            <StackPanel>
+                                <Button Content="Nuevo" Grid.Row="2" Command="{Binding comUsuariosNuevoUsuario}" HorizontalAlignment="Center" />
+                                <Button Content="Editar" Command="{Binding comUsuariosEditarUsuario}" HorizontalAlignment="Center" />
+                                <Button Content="Cambiar Estado" Command="{Binding comUsuariosDesactivarUsuario}" HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </GroupBox>
+                    </Grid>
+                </TabItem>
+
+
+
+                <TabItem Header="Tags" Visibility="{Binding Source={x:Static options:Settings.Default}, Path=MenuTags, Converter={StaticResource BooltoVisConvert}}">
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="AUTO" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="AUTO" />
+                        </Grid.ColumnDefinitions>
+
+                        <DataGrid ItemsSource="{Binding tagsListTags}" SelectedItem="{Binding tagsSelectedTag}">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="A">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Rectangle>
+                                                <Rectangle.Style>
+                                                    <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ColourRectangle}">
+                                                        <Setter Property="Fill" Value="Transparent" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Activo}" Value="False">
+                                                                <Setter Property="Fill" Value="{StaticResource AgregadoForeground}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Rectangle.Style>
+                                            </Rectangle>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Width="*" Header="Tag" Binding="{Binding Tag}" SortMemberPath="{Binding Path=.}" />
+                                <DataGridTextColumn Width="auto" Header="Minimo" HeaderStyle="{StaticResource HeaderCenter}" Binding="{Binding Minimo}" SortDirection="Descending" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <UC:textBoxCurrency textboxText="{Binding tagsIntTotalTags, Mode=OneWay}" labelContent="Total Tags:" isReadOnly="True" textAlignment="Center" isCurrency="False" HorizontalAlignment="Right" Grid.Row="1" />
+                        
+                        <GroupBox Grid.Column="1" VerticalAlignment="Top">
+                            <StackPanel>
+                                <Button Content="Agregar" Command="{Binding comTagsNuevoTag}" HorizontalAlignment="Center" />
+                                <Button Content="Editar" Command="{Binding comTagsEditarTag}" HorizontalAlignment="Center"/>
+                                <Button Content="Alarma" Command="{Binding comTagsAlarmaTag}" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </Grid>
+                </TabItem>
+
+
+
+                <TabItem Header="Medidas" Visibility="{Binding Source={x:Static options:Settings.Default}, Path=MenuMedidas, Converter={StaticResource BooltoVisConvert}}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="AUTO" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="AUTO" />
+                        </Grid.ColumnDefinitions>
+
+                        <DataGrid ItemsSource="{Binding medidasListMedidas}" SelectedItem="{Binding medidasSelectedMedida}">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="A">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Rectangle>
+                                                <Rectangle.Style>
+                                                    <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ColourRectangle}">
+                                                        <Setter Property="Fill" Value="Transparent" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Activo}" Value="False">
+                                                                <Setter Property="Fill" Value="{StaticResource AgregadoForeground}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Rectangle.Style>
+                                            </Rectangle>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Width="*" Header="Medida" Binding="{Binding fullMedida}" />
+                                <DataGridTextColumn Width="AUTO" Header="Tipo" Binding="{Binding TipoShort}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <UC:textBoxCurrency textboxText="{Binding medidasIntTotalMedidas, Mode=OneWay}" labelContent="Total Medidas:" isReadOnly="True" textAlignment="Center" isCurrency="False" HorizontalAlignment="Right" Grid.Row="1" />
+
+                        <GroupBox VerticalAlignment="Top" Grid.Column="1">
+                            <StackPanel>
+                                <Button Content="Agregar" HorizontalAlignment="Center" Command="{Binding comMedidasNuevaMedida}" />
+                                <Button Content="Editar" HorizontalAlignment="Center" Command="{Binding comMedidasEditarMedida}" />
+                                <Button Content="Cambiar Estado" HorizontalAlignment="Center" Command="{Binding comMedidasCambiarEstado}" />
+                            </StackPanel>
+                        </GroupBox>
+                    </Grid>
+                </TabItem>
+
+
+
+                <TabItem Header="Retiros" Visibility="{Binding Source={x:Static options:Settings.Default}, Path=MenuRetiros, Converter={StaticResource BooltoVisConvert}}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="3*" />
+                        </Grid.ColumnDefinitions>
+
+                        <DataGrid ItemsSource="{Binding retirosListFechas}" SelectedItem="{Binding retirosSelectedFecha}" Grid.Column="0">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="*" Header="Fecha" Binding="{Binding Fecha}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+
+
+                        <DataGrid ItemsSource="{Binding retirosListRetirosPerFecha}" Grid.Column="1">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Fecha" Binding="{Binding Fecha.Fecha}" />
+                                <DataGridTextColumn Header="Hora" Binding="{Binding Hora}" />
+                                <DataGridTextColumn Header="Responsable" Binding="{Binding UsuarioRetira.Usuario}" />
+                                <DataGridTextColumn Header="Motivo" Binding="{Binding Motivo.Motivo}" />
+                                <DataGridTextColumn Width="*" Header="Detalles" Binding="{Binding Detalle}" />
+                                <DataGridTemplateColumn MinWidth="70" Width="auto" Header="Efectivo" SortMemberPath="CajaActual">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="$" />
+                                                <TextBlock Text="{Binding Caja.CajaActual}" HorizontalAlignment="Right" Grid.Column="1" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn MinWidth="70" Width="auto" Header="MercadoPago" SortMemberPath="MercadoPago">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="$" />
+                                                <TextBlock Text="{Binding Caja.MercadoPago}" HorizontalAlignment="Right" Grid.Column="1" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                    
+                    
+
+
+                    <!--
+                    <TabControl>
+                        <TabItem Header="Lista">
+                            <DataGrid ItemsSource="{Binding retirosListALLRetiros}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Fecha" Binding="{Binding Fecha.Fecha}" />
+                                    <DataGridTextColumn Header="Hora" Binding="{Binding Hora}" />
+                                    <DataGridTextColumn Header="Responsable" Binding="{Binding UsuarioRetira.Usuario}" />
+                                    <DataGridTextColumn Header="Motivo" Binding="{Binding Motivo.Motivo}" />
+                                    <DataGridTextColumn Width="*" Header="Detalles" Binding="{Binding Detalle}" />
+                                    <DataGridTemplateColumn MinWidth="70" Width="auto" Header="Efectivo" SortMemberPath="CajaActual">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="$" />
+                                                    <TextBlock Text="{Binding Caja.CajaActual}" HorizontalAlignment="Right" Grid.Column="1" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn MinWidth="70" Width="auto" Header="MercadoPago" SortMemberPath="MercadoPago">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="$" />
+                                                    <TextBlock Text="{Binding Caja.MercadoPago}" HorizontalAlignment="Right" Grid.Column="1" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </TabItem>
+                    </TabControl>
+                    -->
+                </TabItem>
+
+
+
+                <TabItem Header="Conteo de Caja" Visibility="{Binding Source={x:Static options:Settings.Default}, Path=MenuCaja, Converter={StaticResource BooltoVisConvert}}">
+                    <TabControl>
+                        <TabItem Header="Por Fecha">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="3*" />
+                                </Grid.ColumnDefinitions>
+                                <DataGrid ItemsSource="{Binding cajaListFechas}" SelectedItem="{Binding cajaSelectedFecha}" Grid.Column="0">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Width="*" Header="Fecha" Binding="{Binding Fecha}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                
+                                <DataGrid ItemsSource="{Binding cajaListCajasPerFecha}" Grid.Column="1">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Fecha" Binding="{Binding Caja.Fecha.Fecha}" />
+                                        <DataGridTextColumn Header="Hora" Binding="{Binding Caja.Hora}" />
+                                        <DataGridTextColumn Header="Usuario" Binding="{Binding Usuario.Usuario}" />
+                                        <DataGridTextColumn Header="Detalle" Width="*" Binding="{Binding Detalle}" />
+                                        <DataGridTemplateColumn MinWidth="70" Width="auto" Header="Efectivo" SortMemberPath="MercadoPago">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="$" />
+                                                        <TextBlock Text="{Binding Caja.MercadoPago}" HorizontalAlignment="Right" Grid.Column="1" />
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn MinWidth="70" Width="auto" Header="Sistema" SortMemberPath="CajaActual">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="$" />
+                                                        <TextBlock Text="{Binding Caja.CajaActual}" HorizontalAlignment="Right" Grid.Column="1" />
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn MinWidth="70" Width="auto" Header="Diferencia" SortMemberPath="Vuelto">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="$" />
+                                                        <TextBlock Text="{Binding Caja.Vuelto}" HorizontalAlignment="Right" Grid.Column="1" />
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </TabItem>
+
+
+                        <TabItem Header="Por Usuario">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="AUTO" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="AUTO" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="AUTO" />
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <ComboBox ItemsSource="{Binding cajaListALLUsuarios}" DisplayMemberPath="Usuario" SelectedItem="{Binding cajaSelectedUsuario}" Width="250" Margin="5"/>
+                                </StackPanel>
+
+                                <DataGrid ItemsSource="{Binding cajaSelectedUsuario.CajaConteosPerUsuario}" Grid.Row="1">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Fecha" Binding="{Binding Caja.Fecha.Fecha}" />
+                                        <DataGridTextColumn Header="Hora" Binding="{Binding Caja.Hora}" />
+                                        <DataGridTextColumn Header="Detalle" Width="*" Binding="{Binding Detalle}" />
+                                        <DataGridTemplateColumn MinWidth="70" Width="auto" Header="Efectivo" SortMemberPath="MercadoPago">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="$" />
+                                                        <TextBlock Text="{Binding Caja.MercadoPago}" HorizontalAlignment="Right" Grid.Column="1" />
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn MinWidth="70" Width="auto" Header="Sistema" SortMemberPath="CajaActual">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="$" />
+                                                        <TextBlock Text="{Binding Caja.CajaActual}" HorizontalAlignment="Right" Grid.Column="1" />
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn MinWidth="70" Width="auto" Header="Diferencia" SortMemberPath="Vuelto">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="$" />
+                                                        <TextBlock Text="{Binding Caja.Vuelto}" HorizontalAlignment="Right" Grid.Column="1" />
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                
+                                <GroupBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+                                    <StackPanel>
+                                        <Button Content="Editar Recuento" HorizontalAlignment="Center" Command="{Binding comCajaEditarRecuento}"/>
+                                    </StackPanel>
+                                </GroupBox>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </TabItem>
+
+
+                <TabItem Header="Proveedores" Visibility="{Binding Source={x:Static options:Settings.Default}, Path=MenuProveedores, Converter={StaticResource BooltoVisConvert}}">
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="AUTO" />
+                        </Grid.ColumnDefinitions>
+
+                        <DataGrid ItemsSource="{Binding proveedoresListProveedores}" SelectedItem="{Binding proveedoresSelectedProveedor}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="100" Header="Nombre" Binding="{Binding Nombre}" />
+                                <DataGridTextColumn MinWidth="30" Width="*" Header="Direccion" Binding="{Binding Direccion}" />
+                                <DataGridTextColumn MinWidth="100" Header="NumeroDeCliente" Binding="{Binding NumeroDeCliente}" />
+                                <DataGridTextColumn MinWidth="70" Width="*" Header="Detalles" Binding="{Binding Detalles}" />
+                                <DataGridTextColumn Width="70" Header="Telefono" Binding="{Binding Telefono}" />
+                                <DataGridTextColumn MinWidth="80" Width="AUTO" Header="Celular" Binding="{Binding Celular}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <GroupBox Header="Edición" VerticalAlignment="Top" Grid.Column="1">
+                            <StackPanel>
+                                <Button Content="Nuevo" Grid.Row="2" Command="{Binding comProveedoresNuevoProveedor}" HorizontalAlignment="Center" />
+                                <Button Content="Editar" Command="{Binding comProveedoresEditarProveedor}" HorizontalAlignment="Center" />
+                                <Button Content="Cambiar Estado" Command="{Binding comProveedoresDesactivarProveedor}" HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </GroupBox>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+
+        </Grid>
+    </DockPanel>
+</Window>

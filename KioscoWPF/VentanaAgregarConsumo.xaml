@@ -1,0 +1,33 @@
+﻿<Window x:Class="KioscoWPF.VentanaAgregarConsumo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KioscoWPF"
+        xmlns:options="clr-namespace:KioscoWPF.Properties"
+        xmlns:VM="clr-namespace:KioscoWPF.ViewModels"
+        xmlns:UC="clr-namespace:KioscoWPF.userControl"
+        mc:Ignorable="d"
+        Background="{Binding Source={x:Static options:Settings.Default}, Path=WindowBackground}"
+        Title="Consumos" SizeToContent="WidthAndHeight" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <VM:VMAgregarConsumo />
+    </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Key="F1" Command="{Binding comGuardar}" />
+        <KeyBinding Key="F4" Command="{Binding comIngresoManual}" />
+        <KeyBinding Key="Esc" Command="{Binding comCancelar}" />
+    </Window.InputBindings>
+    
+    
+    <GroupBox Header="Nuevo Consumo">
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Producto" Command="{Binding comIngresoManual}" VerticalAlignment="Bottom" Margin="0" />
+
+            <UC:textBoxCurrency textboxText="{Binding strCodigo}" labelContent="Código:" isMaster="True" textAlignment="Left" isHeaderTop="True" isCurrency="False" enterCommand="{Binding comProducto}" />
+            <UC:textBoxCurrency textboxText="{Binding selectedConsumo.Producto.Descripcion, Mode=OneWay}" labelContent="Descripción:" isReadOnly="True" textAlignment="Left" isCurrency="False" isHeaderTop="True" Width="230" />
+            <UC:textBoxCurrency textboxText="{Binding selectedConsumo.Producto.PrecioActual, Mode=OneWay}" labelContent="Precio:" isReadOnly="True" isHeaderTop="True" Visibility="Collapsed"/>
+            <UC:textBoxCurrency textboxText="{Binding selectedConsumo.Cantidad}" labelContent="Cantidad:" textAlignment="Center" isCurrency="False" inputType="1" isHeaderTop="True" enterCommand="{Binding comGuardar}" />
+        </StackPanel>
+    </GroupBox>
+</Window>

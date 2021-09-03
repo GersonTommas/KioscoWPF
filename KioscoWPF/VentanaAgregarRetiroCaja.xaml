@@ -1,0 +1,77 @@
+﻿<Window x:Class="KioscoWPF.VentanaAgregarRetiroCaja"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KioscoWPF"
+        xmlns:VM="clr-namespace:KioscoWPF.ViewModels"
+        xmlns:UC="clr-namespace:KioscoWPF.userControl"
+        mc:Ignorable="d"
+        Title="Retiro de Caja" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Window.DataContext>
+        <VM:VMAgregarRetiroCaja />
+    </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Key="F1" Command="{Binding comGuardar}" CommandParameter="{Binding ElementName=pass}" />
+        <KeyBinding Key="Esc" Command="{Binding comCancelar}" />
+    </Window.InputBindings>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO" />
+            <RowDefinition Height="AUTO" />
+            <RowDefinition Height="AUTO" />
+            <RowDefinition Height="AUTO" />
+            <RowDefinition Height="AUTO" />
+            <RowDefinition Height="AUTO" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <UC:textBoxCurrency textboxText="{Binding newMotivo.Motivo}" labelContent="Nuevo Motivo de Retiro:" textAlignment="Left" isCurrency="False" IsTabStop="False" />
+            <Button Content="Agregar" Command="{Binding comAgregarMotivo}" />
+        </StackPanel>
+
+        <Border BorderBrush="Gray" BorderThickness="0.5" Margin="5" Grid.Row="1"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <StackPanel>
+                <Label Content="Motivo:" Style="{StaticResource LabelSobreTextBox}" />
+                <ComboBox ItemsSource="{Binding listMotivos}" SelectedItem="{Binding selectedRetiroCaja.Motivo}" DisplayMemberPath="Motivo" Width="130"/>
+            </StackPanel>
+            
+            <UC:textBoxCurrency textboxText="{Binding selectedRetiroCaja.Caja.CajaActual}" labelContent="Efectivo:" inputType="2" isHeaderTop="True" enterCommand="{Binding comNextTarget}" />
+
+            <UC:textBoxCurrency textboxText="{Binding selectedRetiroCaja.Caja.MercadoPago}" labelContent="MercadoPago:" inputType="2" isHeaderTop="True" enterCommand="{Binding comNextTarget}" />
+        </StackPanel>
+        
+        
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="AUTO" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Detalle:" />
+            <TextBox Text="{Binding selectedRetiroCaja.Detalle}" Height="50" Grid.Column="1">
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding comNextTarget}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=TextBox}}" Key="Return" />
+                </TextBox.InputBindings>
+            </TextBox>
+        </Grid>
+
+        <Border BorderBrush="Gray" BorderThickness="0.5" Margin="5" Grid.Row="4" />
+
+        <StackPanel Grid.Row="5">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Responsable:" />
+                <ComboBox ItemsSource="{Binding listUsuarios}" SelectedItem="{Binding selectedRetiroCaja.UsuarioRetira}" DisplayMemberPath="Usuario" Width="120" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Autoriza:" />
+                <ComboBox ItemsSource="{Binding listAutorizantes}" SelectedItem="{Binding selectedRetiroCaja.UsuarioAutoriza}" DisplayMemberPath="Usuario" Width="120" />
+                <PasswordBox x:Name="pass" Width="120" Margin="5" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

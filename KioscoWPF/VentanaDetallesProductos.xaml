@@ -1,0 +1,81 @@
+﻿<Window x:Class="KioscoWPF.VentanaDetallesProductos"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KioscoWPF"
+        xmlns:UC="clr-namespace:KioscoWPF.userControl"
+        xmlns:VM="clr-namespace:KioscoWPF.ViewModels"
+        mc:Ignorable="d"
+        Title="Detalles de Producto" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Window.DataContext>
+        <VM:VMDetallesProductos />
+    </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Key="Esc" Command="{Binding comCancelar}" />
+    </Window.InputBindings>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <UniformGrid Columns="3">
+            <UC:textBoxCurrency textboxText="{Binding selectedProducto.Codigo, Mode=OneWay}" labelContent="Código:" textAlignment="Left" isReadOnly="True" isCurrency="False" />
+            <UC:textBoxCurrency textboxText="{Binding selectedProducto.Descripcion, Mode=OneWay}" labelContent="Producto:" textAlignment="Left" isReadOnly="True" isCurrency="False" />
+            <UC:textBoxCurrency textboxText="{Binding selectedProducto.PrecioActual, Mode=OneWay}" labelContent="Precio:" isReadOnly="True" />
+            <UC:textBoxCurrency textboxText="{Binding selectedProducto.Stock, Mode=OneWay}" labelContent="Stock:" textAlignment="Center" isReadOnly="True" isCurrency="False" />
+            <UC:textBoxCurrency textboxText="{Binding selectedProducto.Tag.fullTag, Mode=OneWay}" labelContent="Tag:" textAlignment="Left" isReadOnly="True" isCurrency="False" />
+            <UC:textBoxCurrency textboxText="{Binding selectedProducto.Medida.fullMedida, Mode=OneWay}" labelContent="Medida:" textAlignment="Left" isReadOnly="True" isCurrency="False" />
+        </UniformGrid>
+
+        <TabControl Grid.Row="1">
+            <TabItem Header="Ventas">
+                <DataGrid ItemsSource="{Binding selectedProducto.VentaProductosPerProducto}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn SortDirection="Descending" Header="Fecha" Binding="{Binding Venta.Fecha.Fecha}" />
+                        <DataGridTextColumn Header="Hora" Binding="{Binding Venta.Hora}" />
+                        <DataGridTextColumn Header="Cantidad" ElementStyle="{StaticResource TextCenter}" Binding="{Binding Cantidad}" />
+                        <DataGridTextColumn Header="Precio" Binding="{Binding Precio}" />
+                        <DataGridTextColumn Header="Deudor" Binding="{Binding Deudor.Nombre}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            
+            <TabItem Header="Ingresos">
+                <DataGrid ItemsSource="{Binding selectedProducto.IngresoProductosPerProducto}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Fecha" Binding="{Binding Ingreso.Fecha.Fecha}" />
+                        <DataGridTextColumn Header="Hora" Binding="{Binding Ingreso.Hora}" />
+                        <DataGridTextColumn Header="Cantidad" ElementStyle="{StaticResource TextCenter}" Binding="{Binding Cantidad}" />
+                        <DataGridTextColumn Header="Pagado Compra" Binding="{Binding PrecioPagado}" />
+                        <DataGridTextColumn Header="Precio Venta" Binding="{Binding PrecioActual}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            
+            <TabItem Header="Consumos">
+                <DataGrid ItemsSource="{Binding selectedProducto.ConsumoProductosPerProducto}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Fecha" Binding="{Binding Fecha.Fecha}" />
+                        <DataGridTextColumn Header="Cantidad" ElementStyle="{StaticResource TextCenter}" Binding="{Binding Cantidad}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+
+            <TabItem Header="Modificaciones">
+                <DataGrid ItemsSource="{Binding selectedProducto.ModificadoProductosPerProducto}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Fecha" Binding="{Binding Fecha.Fecha}" />
+                        <DataGridTextColumn Header="Hora" Binding="{Binding Cantidad}" />
+                        <DataGridTextColumn Header="Usuario" Binding="{Binding Usuario.Usuario}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
