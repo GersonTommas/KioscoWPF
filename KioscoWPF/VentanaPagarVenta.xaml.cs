@@ -22,7 +22,7 @@ namespace KioscoWPF
         public Double resultMercadoPago = 0;
         public Double resultVuelto = 0;
         public bool resultPagarDeuda = false;
-        public DBDeudoresClass resultDeudor = null;
+        public deudoresModel resultDeudor = null;
 
         public VentanaPagarVenta(Double sentTotal)
         {
@@ -67,8 +67,8 @@ namespace KioscoWPF.ViewModels
         bool _bolSinVuelto;
         public bool bolSinVuelto { get => _bolSinVuelto; set { if (_bolSinVuelto != value) { _bolSinVuelto = value; OnPropertyChanged(); updateEverything(); } } }
 
-        DBDeudoresClass _selectedDeudor = null;
-        public DBDeudoresClass selectedDeudor { get => _selectedDeudor; set { if (_selectedDeudor != value) { _selectedDeudor = value; OnPropertyChanged(); updateEverything(); } } }
+        deudoresModel _selectedDeudor = null;
+        public deudoresModel selectedDeudor { get => _selectedDeudor; set { if (_selectedDeudor != value) { _selectedDeudor = value; OnPropertyChanged(); updateEverything(); } } }
 
 
         public string windowBackground => doubleVuelto >= 0 || (bolDeudor && selectedDeudor != null) ? Variables.colorWindowBackgroundOK : Variables.colorWindowBackkgroundNO;

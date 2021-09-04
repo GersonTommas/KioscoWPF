@@ -64,7 +64,7 @@ namespace KioscoWPF.userControl
                 if (item == null) { return false; }
                 else
                 {
-                    DBProductosClass tempItem = item as DBProductosClass;
+                    productosModel tempItem = item as productosModel;
                     return !string.IsNullOrWhiteSpace(strSearchProducto)
                         ? bolSelectorSoloStock
                             ? bolSearchDescripcionCodigo ? tempItem.stockVsMinimo != 1 && tempItem.Descripcion.ToLower().Contains(strSearchProducto.ToLower()) : tempItem.stockVsMinimo != 1 && tempItem.Codigo.ToLower().Contains(strSearchProducto.ToLower())
@@ -108,8 +108,8 @@ namespace KioscoWPF.userControl
         bool _bolSearchDescripcionCodigo = true;
         public bool bolSearchDescripcionCodigo { get => _bolSearchDescripcionCodigo; set { if (_bolSearchDescripcionCodigo != value) { _bolSearchDescripcionCodigo = value; OnPropChanged(); OnPropChanged(nameof(strSearchDescripcionCodigo)); } } }
 
-        DBProductosClass _selectedSelectorProducto;
-        public DBProductosClass selectedSelectorProducto { get => _selectedSelectorProducto; set { if (_selectedSelectorProducto != value) { _selectedSelectorProducto = value; OnPropChanged(); } } }
+        productosModel _selectedSelectorProducto;
+        public productosModel selectedSelectorProducto { get => _selectedSelectorProducto; set { if (_selectedSelectorProducto != value) { _selectedSelectorProducto = value; OnPropChanged(); } } }
 
 
         public string windowBackground => !ventaFallo ? Variables.colorWindowBackgroundOK : Variables.colorWindowBackkgroundNO;
@@ -123,7 +123,7 @@ namespace KioscoWPF.userControl
 
 
         #region Commands
-        public Command comAbrirProducto => new Command((object parameter) => { if (parameter != null) { VentanaAgregarConvertido vTemp = new VentanaAgregarConvertido(parameter as DBProductosClass); _ = vTemp.ShowDialog(); } });
+        public Command comAbrirProducto => new Command((object parameter) => { if (parameter != null) { VentanaAgregarConvertido vTemp = new VentanaAgregarConvertido(parameter as productosModel); _ = vTemp.ShowDialog(); } });
 
         public Command comSearchDescripcionCodigo => new Command((object parameter) => { bolSearchDescripcionCodigo = !bolSearchDescripcionCodigo; OnPropChanged(nameof(strSearchDescripcionCodigo)); strSearchProducto = ""; });
 

@@ -47,7 +47,7 @@ namespace KioscoWPF.ViewModels
         public string strCodigo { get => _strCodigo; set { if (_strCodigo != value) { _strCodigo = value; OnPropertyChanged(); if (selectedConsumo.Producto != null) { selectedConsumo.Producto = null; selectedConsumo.Precio = 0; } } } }
 
 
-        public DBConsumoProductosClass selectedConsumo { get; } = new DBConsumoProductosClass() { Fecha = Db.returnFecha(), Cantidad = 1 };
+        public consumoProductoModel selectedConsumo { get; } = new consumoProductoModel() { Fecha = Db.returnFecha(), Cantidad = 1 };
         #endregion // Variables
 
 

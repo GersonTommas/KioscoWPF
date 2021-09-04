@@ -33,13 +33,13 @@ namespace KioscoWPF
                 //thisWindow = tempWindow; Variables.Inventario.Tags.Local.CollectionChanged += delegate { listTagsView.Refresh(); };
                 listTags = Variables.Inventario.Tags.Local.Where(x => x.Minimo < 5); OnPropertyChanged(nameof(listTags));
                 
-                listTagsView.Filter = delegate (object item) { return (item as DBTagsClass).Minimo < 5; };
+                listTagsView.Filter = delegate (object item) { return (item as tagsModel).Minimo < 5; };
             }
 
             int _someInt;
             int _otherInt;
-            DBTagsClass _selectedTag;
-            DBTagsClass _selectedTagView;
+            tagsModel _selectedTag;
+            tagsModel _selectedTagView;
             CollectionViewSource collectionViewSource => new CollectionViewSource() { Source = Variables.Inventario.Usuarios.Local.ToObservableCollection() };
 
             public ICollectionView firstList
@@ -63,18 +63,18 @@ namespace KioscoWPF
 
             ICollectionView _listTagsView = new CollectionViewSource { Source = Variables.Inventario.Tags.Local.ToObservableCollection() }.View;
 
-            public IEnumerable<DBTagsClass> listTags { get; set; }
-            public ICollection<DBTagsClass> tempListTags  => Variables.Inventario.Tags.Local.ToObservableCollection();
+            public IEnumerable<tagsModel> listTags { get; set; }
+            public ICollection<tagsModel> tempListTags  => Variables.Inventario.Tags.Local.ToObservableCollection();
             public ICollectionView listTagsView => _listTagsView;
             
 
 
-            public DBTagsClass selectedTag { get => _selectedTag; set { if (_selectedTag != value) { _selectedTag = value; OnPropertyChanged(); } } }
-            public DBTagsClass selectedTagView { get => _selectedTagView; set { if (_selectedTagView != value) { _selectedTagView = value; OnPropertyChanged(); } } }
+            public tagsModel selectedTag { get => _selectedTag; set { if (_selectedTag != value) { _selectedTag = value; OnPropertyChanged(); } } }
+            public tagsModel selectedTagView { get => _selectedTagView; set { if (_selectedTagView != value) { _selectedTagView = value; OnPropertyChanged(); } } }
             public int someInt { get => _someInt; set { if (_someInt != value) { _someInt = value; OnPropertyChanged(); } } }
             public int otherInt { get => _otherInt; set { if (_otherInt != value) { _otherInt = value; OnPropertyChanged(); } } }
 
-            public Command comCreate => new Command((object parameter) => { Variables.Inventario.Tags.Local.Add(new DBTagsClass() { Activo = true, Minimo = someInt, Tag = "Test " + someInt }); Variables.Inventario.SaveChanges(); });
+            public Command comCreate => new Command((object parameter) => { Variables.Inventario.Tags.Local.Add(new tagsModel() { Activo = true, Minimo = someInt, Tag = "Test " + someInt }); Variables.Inventario.SaveChanges(); });
             public Command comDelete => new Command((object parameter) => { Variables.Inventario.Tags.Local.Remove(selectedTagView); Variables.Inventario.SaveChanges(); });
             public Command comChangeTag => new Command((object parameter) => { selectedTag.Minimo = someInt; Variables.Inventario.SaveChanges(); });
             public Command comChangeTagView => new Command((object parameter) => { selectedTagView.Minimo = otherInt; Variables.Inventario.SaveChanges(); });

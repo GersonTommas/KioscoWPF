@@ -20,7 +20,7 @@ namespace KioscoWPF
     /// </summary>
     public partial class VentanaPagarDeuda : Window
     {
-        public VentanaPagarDeuda(DBDeudoresClass sentDeudor)
+        public VentanaPagarDeuda(deudoresModel sentDeudor)
         { InitializeComponent(); if (sentDeudor == null) { Close(); } (DataContext as ViewModels.VMPagarDeuda).setInitialize(this, sentDeudor); }
 
     }
@@ -33,7 +33,7 @@ namespace KioscoWPF.ViewModels
         #region Initialize
         VentanaPagarDeuda thisWindow;
 
-        public void setInitialize(VentanaPagarDeuda tempWindow, DBDeudoresClass tempDeudor)
+        public void setInitialize(VentanaPagarDeuda tempWindow, deudoresModel tempDeudor)
         {
             thisWindow = tempWindow; selectedDeudor = tempDeudor;
         }
@@ -42,10 +42,10 @@ namespace KioscoWPF.ViewModels
 
 
         #region Variables
-        readonly DBCajaClass _selectedNewCaja = new DBCajaClass() { Fecha = Db.returnFecha(), Hora = Variables.strHora };
+        readonly cajaModel _selectedNewCaja = new cajaModel() { Fecha = Db.returnFecha(), Hora = Variables.strHora };
 
-        DBDeudoresClass _selectedDeudor;
-        public DBDeudoresClass selectedDeudor { get => _selectedDeudor; set { if (_selectedDeudor != value) { _selectedDeudor = value; OnPropertyChanged(); OnPropertyChanged(nameof(_listDeuda)); OnPropertyChanged(nameof(doubleQuedaACuenta)); OnPropertyChanged(nameof(sumFaltante)); OnPropertyChanged(nameof(sumDeuda)); } } }
+        deudoresModel _selectedDeudor;
+        public deudoresModel selectedDeudor { get => _selectedDeudor; set { if (_selectedDeudor != value) { _selectedDeudor = value; OnPropertyChanged(); OnPropertyChanged(nameof(_listDeuda)); OnPropertyChanged(nameof(doubleQuedaACuenta)); OnPropertyChanged(nameof(sumFaltante)); OnPropertyChanged(nameof(sumDeuda)); } } }
 
         Double _doubleEfectivo = 0;
         public Double doubleEfectivo { get => _doubleEfectivo; set { if (_doubleEfectivo != value) { _doubleEfectivo = value; OnPropertyChanged(); OnPropertyChanged(nameof(doubleQuedaACuenta)); OnPropertyChanged(nameof(isVuelto)); } } }
@@ -55,7 +55,7 @@ namespace KioscoWPF.ViewModels
 
         public Double doubleQuedaACuenta => selectedDeudor != null ? sumDeuda - (doubleEfectivo + doubleMercadoPago + selectedDeudor.Resto) : 0;
 
-        IEnumerable<DBVentaProductosClass> _listDeuda => selectedDeudor?.VentaProductosPerDeudor.Where(x => x.BolPagado == false);
+        IEnumerable<ventaProductosModel> _listDeuda => selectedDeudor?.VentaProductosPerDeudor.Where(x => x.BolPagado == false);
 
         public Double sumDeuda => _listDeuda != null ? _listDeuda.Sum(x => x.TotalFaltante) : 0;
         public Double sumFaltante => selectedDeudor != null ? sumDeuda - selectedDeudor.Resto : 0;
@@ -75,7 +75,7 @@ namespace KioscoWPF.ViewModels
             bool tempBolACuenta = true;
             if (doubleQuedaACuenta < 0) { tempBolACuenta = false; }
 
-            foreach (DBVentaProductosClass deuda in _listDeuda)
+            foreach (ventaProductosModel deuda in _listDeuda)
             {
                 bool tempBoolAgregarCaja = false;
 

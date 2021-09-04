@@ -71,7 +71,7 @@ namespace KioscoWPF.ViewModels
 
         public Double Diferencia => pesosTotal - selectedCaja.Caja.CajaActual;
 
-        public DBCajaConteosClass selectedCaja { get; } = new DBCajaConteosClass() { Caja = new DBCajaClass() { CajaActual = Db.globalCajaActual.CajaActual, Fecha = Db.returnFecha(), Hora = Variables.strHora }, Usuario = Variables.UsuarioLogueado, UsuarioID = Variables.UsuarioLogueado.Id };
+        public cajaConteosModel selectedCaja { get; } = new cajaConteosModel() { Caja = new cajaModel() { CajaActual = Db.globalCajaActual.CajaActual, Fecha = Db.returnFecha(), Hora = Variables.strHora }, Usuario = Variables.UsuarioLogueado, UsuarioID = Variables.UsuarioLogueado.Id };
 
         void helperUpdatePesos()
         {
@@ -105,7 +105,7 @@ namespace KioscoWPF.ViewModels
 
         bool checkLastUser()
         {
-            DBCajaConteosClass tempCaja = null;
+            cajaConteosModel tempCaja = null;
             try { tempCaja = Variables.Inventario.CajaConteos.Local.Single(x => x.UsuarioID == Variables.UsuarioLogueado.Id && x.Caja.Fecha.Fecha == Variables.strFecha && x.Salida == selectedCaja.Salida); }
             catch { }
 

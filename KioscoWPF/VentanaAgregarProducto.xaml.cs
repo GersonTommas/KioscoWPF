@@ -22,7 +22,7 @@ namespace KioscoWPF
     /// </summary>
     public partial class VentanaAgregarProducto : Window
     {
-        public VentanaAgregarProducto(DBProductosClass sentProduct) { InitializeComponent(); (DataContext as ViewModels.VMAgregarProducto).setInitialize(this, sentProduct); }
+        public VentanaAgregarProducto(productosModel sentProduct) { InitializeComponent(); (DataContext as ViewModels.VMAgregarProducto).setInitialize(this, sentProduct); }
         public VentanaAgregarProducto(string sentCodigo) { InitializeComponent(); (DataContext as ViewModels.VMAgregarProducto).setInitialize(this, sentCodigo); }
         public VentanaAgregarProducto() { InitializeComponent(); (DataContext as ViewModels.VMAgregarProducto).setInitialize(this); }
     }
@@ -48,13 +48,13 @@ namespace KioscoWPF.ViewModels
                 productSelected.Codigo = tempCodigo;
             }
         }
-        public void setInitialize(VentanaAgregarProducto tempWindow, DBProductosClass tempProducto)
+        public void setInitialize(VentanaAgregarProducto tempWindow, productosModel tempProducto)
         {
             thisWindow = tempWindow;
 
             _productToEdit = tempProducto;
 
-            productSelected = new DBProductosClass() { Activo = tempProducto.Activo, Codigo = tempProducto.Codigo, Descripcion = tempProducto.Descripcion, Medida = tempProducto.Medida, MedidaID = tempProducto.MedidaID, PrecioActual = tempProducto.PrecioActual, PrecioIngreso = tempProducto.PrecioIngreso, Tag = tempProducto.Tag, TagID = tempProducto.TagID };
+            productSelected = new productosModel() { Activo = tempProducto.Activo, Codigo = tempProducto.Codigo, Descripcion = tempProducto.Descripcion, Medida = tempProducto.Medida, MedidaID = tempProducto.MedidaID, PrecioActual = tempProducto.PrecioActual, PrecioIngreso = tempProducto.PrecioIngreso, Tag = tempProducto.Tag, TagID = tempProducto.TagID };
 
             bolEdit = true;
         }
@@ -63,7 +63,7 @@ namespace KioscoWPF.ViewModels
 
 
         #region Variables
-        DBProductosClass _productToEdit;
+        productosModel _productToEdit;
 
 
         bool _bolEdit = false;
@@ -78,8 +78,8 @@ namespace KioscoWPF.ViewModels
         int _intStockInicial = 0;
         public int intStockInicial { get => _intStockInicial; set { if (_intStockInicial != value) { _intStockInicial = value; OnPropertyChanged(); } } }
 
-        DBProductosClass _productSelected = new DBProductosClass() { Activo = true };
-        public DBProductosClass productSelected { get => _productSelected; set { if (_productSelected != value) { _productSelected = value; OnPropertyChanged(); } } }
+        productosModel _productSelected = new productosModel() { Activo = true };
+        public productosModel productSelected { get => _productSelected; set { if (_productSelected != value) { _productSelected = value; OnPropertyChanged(); } } }
 
 
         public bool bolMantenerAbierto { get; set; }
@@ -118,8 +118,8 @@ namespace KioscoWPF.ViewModels
         #region Helpers
         void helperGuardar()
         {
-            DBProductosClass compareProductCodigo = null;
-            DBProductosClass compareProductDescripcion = null;
+            productosModel compareProductCodigo = null;
+            productosModel compareProductDescripcion = null;
 
             if (!string.IsNullOrWhiteSpace(productSelected.Codigo)) { productSelected.Codigo = productSelected.Codigo.Trim(); }
             if (!string.IsNullOrWhiteSpace(productSelected.Descripcion)) { productSelected.Descripcion = productSelected.Descripcion.Trim(); }
@@ -162,7 +162,7 @@ namespace KioscoWPF.ViewModels
                     _ = Variables.Inventario.SaveChanges();
                     if (!bolMantenerAbierto) { thisWindow.DialogResult = true; }
 
-                    productSelected = new DBProductosClass() { Activo = true, Stock = 0, StockInicial = 0 };
+                    productSelected = new productosModel() { Activo = true, Stock = 0, StockInicial = 0 };
                     intStockInicial = 0;
                     compareProductCodigo = null;
                     compareProductDescripcion = null;
@@ -191,7 +191,7 @@ namespace KioscoWPF.ViewModels
                 if (!string.IsNullOrWhiteSpace(productSelected.Codigo))
                 {
                     try { productSelected.Codigo = productSelected.Codigo.Trim(); } catch { }
-                    DBProductosClass compareProductCodigo = Variables.Inventario.Productos.Single(x => x.Codigo.ToLower() == productSelected.Codigo.ToLower());
+                    productosModel compareProductCodigo = Variables.Inventario.Productos.Single(x => x.Codigo.ToLower() == productSelected.Codigo.ToLower());
                     return bolEdit && compareProductCodigo.Id == _productToEdit.Id ? false : true;
                 }
                 else { return false; }

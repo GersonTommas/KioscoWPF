@@ -56,24 +56,24 @@ namespace KioscoWPF.ViewModels
 
         #region Variables
         VentanaHelperPrecioPrecioCantidad vHelperPrecioPercioCantidad;
-        readonly ObservableCollection<DBProductosClass> _listProductosAgregados = new ObservableCollection<DBProductosClass>();
+        readonly ObservableCollection<productosModel> _listProductosAgregados = new ObservableCollection<productosModel>();
 
 
         int _indexProveedor = 0;
         public int indexProveedor { get => _indexProveedor; set { if (_indexProveedor != value) { _indexProveedor = value; OnPropertyChanged(); OnPropertyChanged(nameof(windowBackground)); OnPropertyChanged(nameof(listRetirosPerProveedor)); } } }
 
-        DBRetirosCaja _selectedRetiroPerProveedor;
-        public DBRetirosCaja selectedRetiroPerProveedor { get => _selectedRetiroPerProveedor; set { if (_selectedRetiroPerProveedor != value) { _selectedRetiroPerProveedor = value; OnPropertyChanged(); } } }
+        retirosCajaModel _selectedRetiroPerProveedor;
+        public retirosCajaModel selectedRetiroPerProveedor { get => _selectedRetiroPerProveedor; set { if (_selectedRetiroPerProveedor != value) { _selectedRetiroPerProveedor = value; OnPropertyChanged(); } } }
 
-        DBProductosClass _selectedProduct;
-        public DBProductosClass selectedProduct { get => _selectedProduct; set { if (_selectedProduct != value) { _selectedProduct = value; OnPropertyChanged(); } } }
+        productosModel _selectedProduct;
+        public productosModel selectedProduct { get => _selectedProduct; set { if (_selectedProduct != value) { _selectedProduct = value; OnPropertyChanged(); } } }
 
-        DBIngresoProductosClass _selectedIngreso;
-        public DBIngresoProductosClass selectedIngreso { get => _selectedIngreso; set { if (_selectedIngreso != value) { _selectedIngreso = value; OnPropertyChanged(); } } }
+        ingresoProductosModel _selectedIngreso;
+        public ingresoProductosModel selectedIngreso { get => _selectedIngreso; set { if (_selectedIngreso != value) { _selectedIngreso = value; OnPropertyChanged(); } } }
 
 
-        public DBIngresosClass listNuevoIngreso { get; } = new DBIngresosClass() { Usuario = Variables.UsuarioLogueado };
-        public DBCajaClass ingresoCaja { get; } = new DBCajaClass();
+        public ingresosModel listNuevoIngreso { get; } = new ingresosModel() { Usuario = Variables.UsuarioLogueado };
+        public cajaModel ingresoCaja { get; } = new cajaModel();
         public int intAgregadosCount => _listProductosAgregados.Count();
         public int intTotal => listNuevoIngreso.IngresoProductosPerIngreso.Count();
         public string windowBackground => indexProveedor >= 0 && listNuevoIngreso.IngresoProductosPerIngreso.Count > 0 && !listNuevoIngreso.IngresoProductosPerIngreso.Any(x => x.Cantidad < 1) ? Variables.colorWindowBackgroundOK : Variables.colorWindowBackkgroundNO;
@@ -82,7 +82,7 @@ namespace KioscoWPF.ViewModels
         readonly CollectionViewSource listProveedoresSource = new CollectionViewSource() { Source = Variables.Inventario.Proveedores.Local.ToObservableCollection() };
         public ICollectionView listProveedores => listProveedoresSource.View;
 
-        public IEnumerable<DBRetirosCaja> listRetirosPerProveedor => listNuevoIngreso.Proveedor?.RetirosCajaPerProveedor.Where(x => x.Pendiente);
+        public IEnumerable<retirosCajaModel> listRetirosPerProveedor => listNuevoIngreso.Proveedor?.RetirosCajaPerProveedor.Where(x => x.Pendiente);
         #endregion // Variables
 
 
@@ -90,7 +90,7 @@ namespace KioscoWPF.ViewModels
         #region Helpers
         void helperAgregarQuitarProducto(object sentParameter)
         {
-            if (sentParameter is DBProductosClass tempProducto && tempProducto != null)
+            if (sentParameter is productosModel tempProducto && tempProducto != null)
             {
                 if (tempProducto.Agregado)
                 {
@@ -108,7 +108,7 @@ namespace KioscoWPF.ViewModels
                         vHelperPrecioPercioCantidad = new VentanaHelperPrecioPrecioCantidad(1, tempProducto.PrecioActual, tempProducto.PrecioIngreso);
                         if (vHelperPrecioPercioCantidad.ShowDialog().Value)
                         {
-                            listNuevoIngreso.IngresoProductosPerIngreso.Add(new DBIngresoProductosClass()
+                            listNuevoIngreso.IngresoProductosPerIngreso.Add(new ingresoProductosModel()
                             { Cantidad = vHelperPrecioPercioCantidad.resultCantidad, PrecioActual = vHelperPrecioPercioCantidad.resultPrecioActual, Producto = tempProducto, PrecioPagado = vHelperPrecioPercioCantidad.resultPrecioPagado });
                             tempProducto.Agregado = true;
                         }
@@ -122,18 +122,18 @@ namespace KioscoWPF.ViewModels
 
         void helperAgregarProducto()
         {
-            DBProductosClass prd = selectedProduct;
+            productosModel prd = selectedProduct;
             if (!_listProductosAgregados.Contains(prd))
             {
                 prd.Agregado = true;
                 _listProductosAgregados.Add(prd);
 
-                listNuevoIngreso.IngresoProductosPerIngreso.Add(new DBIngresoProductosClass() { Cantidad = 0, PrecioActual = prd.PrecioActual, Producto = prd });
+                listNuevoIngreso.IngresoProductosPerIngreso.Add(new ingresoProductosModel() { Cantidad = 0, PrecioActual = prd.PrecioActual, Producto = prd });
                 OnPropertyChanged(nameof(intAgregadosCount)); OnPropertyChanged(nameof(intTotal));
             }
         }
 
-        void helperQuitarProducto(DBProductosClass prd)
+        void helperQuitarProducto(productosModel prd)
         {
             try
             {
@@ -148,7 +148,7 @@ namespace KioscoWPF.ViewModels
             catch { }
         }
 
-        void helperQuitarIngreso(DBIngresoProductosClass sentIngresoProducto)
+        void helperQuitarIngreso(ingresoProductosModel sentIngresoProducto)
         {
             try
             {
@@ -165,7 +165,7 @@ namespace KioscoWPF.ViewModels
         void helperGuardar()
         {
             _ = Variables.Inventario.Ingresos.Add(listNuevoIngreso);
-            foreach (DBIngresoProductosClass ingreso in listNuevoIngreso.IngresoProductosPerIngreso)
+            foreach (ingresoProductosModel ingreso in listNuevoIngreso.IngresoProductosPerIngreso)
             {
                 ingreso.Producto.PrecioActual = ingreso.PrecioActual;
                 ingreso.Producto.Stock += ingreso.Cantidad;

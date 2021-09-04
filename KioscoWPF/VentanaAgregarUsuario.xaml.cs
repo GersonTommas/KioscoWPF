@@ -19,7 +19,7 @@ namespace KioscoWPF
     public partial class VentanaAgregarUsuario : Window
     {
         public VentanaAgregarUsuario() { InitializeComponent(); (DataContext as ViewModels.VMAgregarUsuario).setInitialize(this); }
-        public VentanaAgregarUsuario(DBUsuariosClass sentUsuario) { InitializeComponent(); (DataContext as ViewModels.VMAgregarUsuario).setInitialize(this, sentUsuario); }
+        public VentanaAgregarUsuario(usuariosModel sentUsuario) { InitializeComponent(); (DataContext as ViewModels.VMAgregarUsuario).setInitialize(this, sentUsuario); }
     }
 }
 
@@ -36,13 +36,13 @@ namespace KioscoWPF.ViewModels
         {
             thisWindow = tempWindow;
         }
-        public void setInitialize(VentanaAgregarUsuario tempWindow, DBUsuariosClass tempUsuario)
+        public void setInitialize(VentanaAgregarUsuario tempWindow, usuariosModel tempUsuario)
         {
             thisWindow = tempWindow;
             if (tempUsuario != null)
             {
                 _toEditUsusario = tempUsuario;
-                selectedUsuario = new DBUsuariosClass()
+                selectedUsuario = new usuariosModel()
                 {
                     Apellido = tempUsuario.Apellido,
                     Contraseña = tempUsuario.Contraseña,
@@ -65,14 +65,14 @@ namespace KioscoWPF.ViewModels
 
 
         #region Variables
-        DBUsuariosClass _toEditUsusario = new DBUsuariosClass();
+        usuariosModel _toEditUsusario = new usuariosModel();
 
 
         bool _bolEdit = false;
         public bool bolEdit { get => _bolEdit; set { if (_bolEdit != value) { _bolEdit = value; OnPropertyChanged(); OnPropertyChanged(nameof(strWindowTitle)); OnPropertyChanged(nameof(strBorderTitle)); } } }
 
-        DBUsuariosClass _selectedUsuario = new DBUsuariosClass() { Nivel = 5, Activo = true, FechaIngreso = Variables.strFecha, Resto = 0 };
-        public DBUsuariosClass selectedUsuario { get => _selectedUsuario; set { if (_selectedUsuario != value) { _selectedUsuario = value; OnPropertyChanged(); } } }
+        usuariosModel _selectedUsuario = new usuariosModel() { Nivel = 5, Activo = true, FechaIngreso = Variables.strFecha, Resto = 0 };
+        public usuariosModel selectedUsuario { get => _selectedUsuario; set { if (_selectedUsuario != value) { _selectedUsuario = value; OnPropertyChanged(); } } }
 
 
         public string strWindowTitle => bolEdit ? "Editar Usuario" : "Nuevo Usuario";
@@ -85,7 +85,7 @@ namespace KioscoWPF.ViewModels
         #region Helpers
         void helperGuardarUsuario()
         {
-            DBUsuariosClass checkUsuario = null;
+            usuariosModel checkUsuario = null;
 
             try { selectedUsuario.Apellido = selectedUsuario.Apellido.Trim(); } catch { }
             try { selectedUsuario.Detalle = selectedUsuario.Detalle.Trim(); } catch { }

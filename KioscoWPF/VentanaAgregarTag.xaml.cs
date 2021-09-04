@@ -19,7 +19,7 @@ namespace KioscoWPF
     public partial class VentanaAgregarTag : Window
     {
         public VentanaAgregarTag() { InitializeComponent(); (DataContext as ViewModels.VMAgregarTag).setInitialize(this); }
-        public VentanaAgregarTag(DBTagsClass sentTag) { InitializeComponent(); (DataContext as ViewModels.VMAgregarTag).setInitialize(this, sentTag); }
+        public VentanaAgregarTag(tagsModel sentTag) { InitializeComponent(); (DataContext as ViewModels.VMAgregarTag).setInitialize(this, sentTag); }
     }
 }
 
@@ -34,7 +34,7 @@ namespace KioscoWPF.ViewModels
         {
             thisWindow = tempWindow;
         }
-        public void setInitialize(VentanaAgregarTag tempWindow, DBTagsClass tempTag)
+        public void setInitialize(VentanaAgregarTag tempWindow, tagsModel tempTag)
         {
             thisWindow = tempWindow;
 
@@ -42,7 +42,7 @@ namespace KioscoWPF.ViewModels
             {
                 _tagToEdit = tempTag;
 
-                tagSelected = new DBTagsClass() { Activo = tempTag.Activo, Id = tempTag.Id, Minimo = tempTag.Minimo, Tag = tempTag.Tag };
+                tagSelected = new tagsModel() { Activo = tempTag.Activo, Id = tempTag.Id, Minimo = tempTag.Minimo, Tag = tempTag.Tag };
 
                 bolEdit = true;
             }
@@ -52,14 +52,14 @@ namespace KioscoWPF.ViewModels
 
 
         #region Variables
-        DBTagsClass _tagToEdit;
+        tagsModel _tagToEdit;
 
 
         bool _bolEdit = false;
         public bool bolEdit { get => _bolEdit; set { if (_bolEdit != value) { _bolEdit = value; OnPropertyChanged(); OnPropertyChanged(nameof(strWindowTitle)); } } }
 
-        DBTagsClass _tagSelected = new DBTagsClass() { Minimo = 0, Activo = true };
-        public DBTagsClass tagSelected { get => _tagSelected; set { if (_tagSelected != value) { _tagSelected = value; OnPropertyChanged(); } } }
+        tagsModel _tagSelected = new tagsModel() { Minimo = 0, Activo = true };
+        public tagsModel tagSelected { get => _tagSelected; set { if (_tagSelected != value) { _tagSelected = value; OnPropertyChanged(); } } }
 
         bool _bolMantenerAbierto = false;
         public bool bolMantenerAbierto { get => _bolMantenerAbierto; set { if (_bolMantenerAbierto != value) { _bolMantenerAbierto = value; OnPropertyChanged(); } } }
@@ -77,7 +77,7 @@ namespace KioscoWPF.ViewModels
         #region Helpers
         void helperGuardarTag()
         {
-            DBTagsClass compareTag = null;
+            tagsModel compareTag = null;
             if (!string.IsNullOrWhiteSpace(tagSelected.Tag)) { tagSelected.Tag = tagSelected.Tag.Trim(); }
 
             try { compareTag = Variables.Inventario.Tags.Single(x => x.Tag.ToLower() == tagSelected.Tag.ToLower() && x.Minimo == tagSelected.Minimo); } catch { }
@@ -105,7 +105,7 @@ namespace KioscoWPF.ViewModels
 
                 if (!bolMantenerAbierto) { thisWindow.Close(); }
 
-                tagSelected = new DBTagsClass() { Minimo = 1, Activo = true };
+                tagSelected = new tagsModel() { Minimo = 1, Activo = true };
 
                 compareTag = null;
             }

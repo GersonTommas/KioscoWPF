@@ -116,7 +116,7 @@ namespace KioscoWPF.ViewModels
 
         #region ReadOnly
         public Visibility visAdmin => Variables.UsuarioLogueado.Nivel < 2 ? Visibility.Visible : Visibility.Collapsed;
-        public DBUsuariosClass usuarioActivo => Variables.UsuarioLogueado;
+        public usuariosModel usuarioActivo => Variables.UsuarioLogueado;
         #endregion // ReadOnly
 
 
@@ -138,7 +138,7 @@ namespace KioscoWPF.ViewModels
         readonly CollectionViewSource globalListUsuariosSource = new CollectionViewSource() { Source = Variables.Inventario.Usuarios.Local.ToObservableCollection() };
         public ICollectionView globalListUsuarios => globalListUsuariosSource.View;
 
-        public DBCajaClass CajaActual => Db.globalCajaActual;
+        public cajaModel CajaActual => Db.globalCajaActual;
         #endregion // Global
 
 
@@ -153,7 +153,7 @@ namespace KioscoWPF.ViewModels
                 if (item == null) { return false; }
                 else
                 {
-                    DBProductosClass tempItem = item as DBProductosClass;
+                    productosModel tempItem = item as productosModel;
                     return !string.IsNullOrWhiteSpace(stockStrSearch)
                         ? stockBolInactivos != null
                             ? stockBolCodigoDescripcion ? tempItem.Activo == stockBolInactivos && tempItem.Descripcion.ToLower().Contains(stockStrSearch.ToLower()) : tempItem.Activo == stockBolInactivos && tempItem.Codigo.ToLower().Contains(stockStrSearch.ToLower())
@@ -170,8 +170,8 @@ namespace KioscoWPF.ViewModels
         }
 
 
-        DBProductosClass _stockSelectedProduct;
-        public DBProductosClass stockSelectedProducto { get => _stockSelectedProduct; set { if (_stockSelectedProduct != value) { _stockSelectedProduct = value; OnPropertyChanged(); } } }
+        productosModel _stockSelectedProduct;
+        public productosModel stockSelectedProducto { get => _stockSelectedProduct; set { if (_stockSelectedProduct != value) { _stockSelectedProduct = value; OnPropertyChanged(); } } }
 
         string _stockStrSearch = "";
         public string stockStrSearch { get => _stockStrSearch; set { if (_stockStrSearch != value) { _stockStrSearch = value; OnPropertyChanged(); searchTimerRestart(); } } }
@@ -225,15 +225,15 @@ namespace KioscoWPF.ViewModels
         void ventasFiltersSorters()
         {
             ventasListFechas.SortDescriptions.Clear();
-            ventasListFechas.Filter += delegate (object item) { DBFechasClass tempFecha = item as DBFechasClass; return tempFecha.Fecha == Variables.strFecha || tempFecha.VentasPerFecha.Count() > 0; };
+            ventasListFechas.Filter += delegate (object item) { fechasModel tempFecha = item as fechasModel; return tempFecha.Fecha == Variables.strFecha || tempFecha.VentasPerFecha.Count() > 0; };
             ventasListFechas.SortDescriptions.Add(new SortDescription("Fecha", ListSortDirection.Descending));
         }
 
-        DBFechasClass _ventasSelectedFecha;
-        public DBFechasClass ventasSelectedFecha { get => _ventasSelectedFecha; set { if (_ventasSelectedFecha != value) { _ventasSelectedFecha = value; OnPropertyChanged(); OnPropertyChanged(nameof(intVentasDiariaTotal)); OnPropertyChanged(nameof(doubleVentasDiariasPesos)); } } }
+        fechasModel _ventasSelectedFecha;
+        public fechasModel ventasSelectedFecha { get => _ventasSelectedFecha; set { if (_ventasSelectedFecha != value) { _ventasSelectedFecha = value; OnPropertyChanged(); OnPropertyChanged(nameof(intVentasDiariaTotal)); OnPropertyChanged(nameof(doubleVentasDiariasPesos)); } } }
 
-        DBVentasClass _ventasSelectedVenta;
-        public DBVentasClass ventasSelectedVenta { get => _ventasSelectedVenta; set { if (_ventasSelectedVenta != value) { _ventasSelectedVenta = value; OnPropertyChanged(); OnPropertyChanged(nameof(ventaVisDeudor)); } } }
+        ventasModel _ventasSelectedVenta;
+        public ventasModel ventasSelectedVenta { get => _ventasSelectedVenta; set { if (_ventasSelectedVenta != value) { _ventasSelectedVenta = value; OnPropertyChanged(); OnPropertyChanged(nameof(ventaVisDeudor)); } } }
 
 
         public Visibility ventaVisDeudor => ventasSelectedVenta?.Deudor != null ? Visibility.Visible : Visibility.Collapsed;
@@ -254,15 +254,15 @@ namespace KioscoWPF.ViewModels
         void ingresosFiltersSorters()
         {
             ingresosListFechas.SortDescriptions.Clear();
-            ingresosListFechas.Filter += delegate (object item) { DBFechasClass tempFecha = item as DBFechasClass; return tempFecha.Fecha == Variables.strFecha ? true : tempFecha.IngresosPerFecha.Count() > 0; };
+            ingresosListFechas.Filter += delegate (object item) { fechasModel tempFecha = item as fechasModel; return tempFecha.Fecha == Variables.strFecha ? true : tempFecha.IngresosPerFecha.Count() > 0; };
             ingresosListFechas.SortDescriptions.Add(new SortDescription("Fecha", ListSortDirection.Descending));
         }
 
-        DBFechasClass _ingresosSelectedFecha;
-        public DBFechasClass ingresosSelectedFecha { get { return _ingresosSelectedFecha; } set { if (_ingresosSelectedFecha != value) { _ingresosSelectedFecha = value; OnPropertyChanged(); } } }
+        fechasModel _ingresosSelectedFecha;
+        public fechasModel ingresosSelectedFecha { get { return _ingresosSelectedFecha; } set { if (_ingresosSelectedFecha != value) { _ingresosSelectedFecha = value; OnPropertyChanged(); } } }
 
-        DBIngresosClass _ingresosSelectedIngreso;
-        public DBIngresosClass ingresosSelectedIngreso { get { return _ingresosSelectedIngreso; } set { if (_ingresosSelectedIngreso != value) { _ingresosSelectedIngreso = value; OnPropertyChanged(); } } }
+        ingresosModel _ingresosSelectedIngreso;
+        public ingresosModel ingresosSelectedIngreso { get { return _ingresosSelectedIngreso; } set { if (_ingresosSelectedIngreso != value) { _ingresosSelectedIngreso = value; OnPropertyChanged(); } } }
 
 
         public int intIngresosIngresoTotal => ingresosSelectedIngreso != null ? ingresosSelectedIngreso.IngresoProductosPerIngreso.Sum(x => x.Cantidad) : 0;
@@ -280,16 +280,16 @@ namespace KioscoWPF.ViewModels
         #region Sacado
         void sacadoFiltersSorters()
         {
-            listSacado.Filter = delegate (object item) { return (item as DBSacadoProductosClass).Usuario == sacadoSelectedUsuario; };
+            listSacado.Filter = delegate (object item) { return (item as sacadoProductosModel).Usuario == sacadoSelectedUsuario; };
         }
 
-        DBUsuariosClass _sacadoSelectedUsuario;
-        public DBUsuariosClass sacadoSelectedUsuario { get => _sacadoSelectedUsuario; set { if (_sacadoSelectedUsuario != value) { _sacadoSelectedUsuario = value; OnPropertyChanged(); listSacado.Refresh(); OnPropertyChanged(nameof(TotalSacado)); } } }
+        usuariosModel _sacadoSelectedUsuario;
+        public usuariosModel sacadoSelectedUsuario { get => _sacadoSelectedUsuario; set { if (_sacadoSelectedUsuario != value) { _sacadoSelectedUsuario = value; OnPropertyChanged(); listSacado.Refresh(); OnPropertyChanged(nameof(TotalSacado)); } } }
 
 
         readonly CollectionViewSource _sacadoListSacadoSource = new CollectionViewSource { Source = Variables.Inventario.SacadoProductos.Local.ToObservableCollection() };
         public ICollectionView listSacado => _sacadoListSacadoSource.View;
-        public Double TotalSacado => listSacado != null ? listSacado.Cast<DBSacadoProductosClass>().Sum(x => x.PrecioTotal) : 0;
+        public Double TotalSacado => listSacado != null ? listSacado.Cast<sacadoProductosModel>().Sum(x => x.PrecioTotal) : 0;
 
 
         public Command comAgregarSacado => new Command(
@@ -303,13 +303,13 @@ namespace KioscoWPF.ViewModels
         void consumosFiltersSorters()
         {
             consumosListFechas.SortDescriptions.Clear();
-            consumosListFechas.Filter += delegate (object item) { DBFechasClass tempFecha = item as DBFechasClass; return tempFecha.Fecha == Variables.strFecha ? true : tempFecha.ConsumosProductosPerFecha.Count() > 0; };
+            consumosListFechas.Filter += delegate (object item) { fechasModel tempFecha = item as fechasModel; return tempFecha.Fecha == Variables.strFecha ? true : tempFecha.ConsumosProductosPerFecha.Count() > 0; };
             consumosListFechas.SortDescriptions.Add(new SortDescription("Fecha", ListSortDirection.Descending));
         }
 
 
-        DBFechasClass _consumosSelectedFecha;
-        public DBFechasClass consumosSelectedFecha { get => _consumosSelectedFecha; set { if (_consumosSelectedFecha != value) { _consumosSelectedFecha = value; OnPropertyChanged(); } } }
+        fechasModel _consumosSelectedFecha;
+        public fechasModel consumosSelectedFecha { get => _consumosSelectedFecha; set { if (_consumosSelectedFecha != value) { _consumosSelectedFecha = value; OnPropertyChanged(); } } }
 
         readonly CollectionViewSource consumosListFechasSource = new CollectionViewSource() { Source = Variables.Inventario.Fechas.Local.ToObservableCollection() };
         public ICollectionView consumosListFechas => consumosListFechasSource.View;
@@ -327,14 +327,14 @@ namespace KioscoWPF.ViewModels
             deudasListDeudores.SortDescriptions.Clear(); deudasListDeudores.SortDescriptions.Add(new SortDescription("Nombre", ListSortDirection.Ascending));
 
 
-            deudasListFechas.Filter += delegate (object item) { return (item as DBFechasClass).Fecha == Variables.strFecha || deudasSelectedDeudor != null && (item as DBFechasClass).VentasPerFecha.Any(x => x.Deudor == deudasSelectedDeudor); };
+            deudasListFechas.Filter += delegate (object item) { return (item as fechasModel).Fecha == Variables.strFecha || deudasSelectedDeudor != null && (item as fechasModel).VentasPerFecha.Any(x => x.Deudor == deudasSelectedDeudor); };
             deudasListFechas.SortDescriptions.Clear(); deudasListFechas.SortDescriptions.Add(new SortDescription("Fecha", ListSortDirection.Descending));
 
 
-            deudasListVentasPerFecha.Filter += delegate (object item) { return _deudasSelectedDeudor != null && _deudasSelectedFecha != null && (item as DBVentasClass).Deudor == _deudasSelectedDeudor && (item as DBVentasClass).Fecha == _deudasSelectedFecha; };
+            deudasListVentasPerFecha.Filter += delegate (object item) { return _deudasSelectedDeudor != null && _deudasSelectedFecha != null && (item as ventasModel).Deudor == _deudasSelectedDeudor && (item as ventasModel).Fecha == _deudasSelectedFecha; };
 
 
-            deudasListPagosPerDeudor.Filter += delegate (object item) { return deudasSelectedDeudor != null && (item as DBCajaClass).VentaProductosPerCaja.Any(x => x.Deudor == deudasSelectedDeudor); };
+            deudasListPagosPerDeudor.Filter += delegate (object item) { return deudasSelectedDeudor != null && (item as cajaModel).VentaProductosPerCaja.Any(x => x.Deudor == deudasSelectedDeudor); };
             deudasListPagosPerDeudor.SortDescriptions.Clear(); deudasListPagosPerDeudor.SortDescriptions.Add(new SortDescription("Fecha.Fecha", ListSortDirection.Descending));
         }
 
@@ -343,14 +343,14 @@ namespace KioscoWPF.ViewModels
             if (deudasSelectedDeudor != null) { deudasSelectedDeudor.updateDeudor(); }
         }
 
-        DBDeudoresClass _deudasSelectedDeudor;
-        public DBDeudoresClass deudasSelectedDeudor { get => _deudasSelectedDeudor; set { if (_deudasSelectedDeudor != value) { _deudasSelectedDeudor = value; OnPropertyChanged(); deudasListFechas.Refresh(); deudasListVentasPerFecha.Refresh(); OnPropertyChanged(nameof(deudasListVentasPerFecha)); deudasListPagosPerDeudor.Refresh(); OnPropertyChanged(nameof(deudasListPagosPerDeudor)); } } }
+        deudoresModel _deudasSelectedDeudor;
+        public deudoresModel deudasSelectedDeudor { get => _deudasSelectedDeudor; set { if (_deudasSelectedDeudor != value) { _deudasSelectedDeudor = value; OnPropertyChanged(); deudasListFechas.Refresh(); deudasListVentasPerFecha.Refresh(); OnPropertyChanged(nameof(deudasListVentasPerFecha)); deudasListPagosPerDeudor.Refresh(); OnPropertyChanged(nameof(deudasListPagosPerDeudor)); } } }
 
-        DBFechasClass _deudasSelectedFecha;
-        public DBFechasClass deudasSelectedFecha { get => _deudasSelectedFecha; set { if (_deudasSelectedFecha != value) { _deudasSelectedFecha = value; OnPropertyChanged(); deudasListVentasPerFecha.Refresh(); } } }
+        fechasModel _deudasSelectedFecha;
+        public fechasModel deudasSelectedFecha { get => _deudasSelectedFecha; set { if (_deudasSelectedFecha != value) { _deudasSelectedFecha = value; OnPropertyChanged(); deudasListVentasPerFecha.Refresh(); } } }
 
-        DBVentasClass _deudasSelectedVenta;
-        public DBVentasClass deudasSelectedVenta { get => _deudasSelectedVenta; set { if (_deudasSelectedVenta != value) { _deudasSelectedVenta = value; OnPropertyChanged(); } } }
+        ventasModel _deudasSelectedVenta;
+        public ventasModel deudasSelectedVenta { get => _deudasSelectedVenta; set { if (_deudasSelectedVenta != value) { _deudasSelectedVenta = value; OnPropertyChanged(); } } }
 
 
         readonly CollectionViewSource _deudasListDeudoresSource = new CollectionViewSource() { Source = Variables.Inventario.Deudores.Local.ToObservableCollection() };
@@ -381,8 +381,8 @@ namespace KioscoWPF.ViewModels
 
 
         #region Usuarios
-        DBUsuariosClass _usuariosSelectedUsuario;
-        public DBUsuariosClass usuariosSelectedUsuario { get => _usuariosSelectedUsuario; set { if (_usuariosSelectedUsuario != value) { _usuariosSelectedUsuario = value; OnPropertyChanged(); } } }
+        usuariosModel _usuariosSelectedUsuario;
+        public usuariosModel usuariosSelectedUsuario { get => _usuariosSelectedUsuario; set { if (_usuariosSelectedUsuario != value) { _usuariosSelectedUsuario = value; OnPropertyChanged(); } } }
 
 
         public Command comUsuariosNuevoUsuario => new Command((object parameter) => abrirAgregarUsuario());
@@ -411,8 +411,8 @@ namespace KioscoWPF.ViewModels
         }
 
 
-        DBTagsClass _tagsSelectedTag;
-        public DBTagsClass tagsSelectedTag { get => _tagsSelectedTag; set { if (_tagsSelectedTag != value) { _tagsSelectedTag = value; OnPropertyChanged(); } } }
+        tagsModel _tagsSelectedTag;
+        public tagsModel tagsSelectedTag { get => _tagsSelectedTag; set { if (_tagsSelectedTag != value) { _tagsSelectedTag = value; OnPropertyChanged(); } } }
 
 
         public int tagsIntTotalTags => tagsListTags.Cast<object>().Count();
@@ -444,8 +444,8 @@ namespace KioscoWPF.ViewModels
         }
 
 
-        DBMedidasClass _medidasSelectedMedida;
-        public DBMedidasClass medidasSelectedMedida { get => _medidasSelectedMedida; set { if (_medidasSelectedMedida != value) { _medidasSelectedMedida = value; OnPropertyChanged(); } } }
+        medidasModel _medidasSelectedMedida;
+        public medidasModel medidasSelectedMedida { get => _medidasSelectedMedida; set { if (_medidasSelectedMedida != value) { _medidasSelectedMedida = value; OnPropertyChanged(); } } }
 
 
         public int medidasIntTotalMedidas => medidasListMedidas.Cast<object>().Count();
@@ -471,10 +471,10 @@ namespace KioscoWPF.ViewModels
         #region Retiros
         void retirosFiltersSorters()
         {
-            retirosListFechas.Filter = delegate (object item) { return (item as DBFechasClass).Fecha == Variables.strFecha || (item as DBFechasClass).RetirosPerFecha.Count > 0; };
+            retirosListFechas.Filter = delegate (object item) { return (item as fechasModel).Fecha == Variables.strFecha || (item as fechasModel).RetirosPerFecha.Count > 0; };
             retirosListFechas.SortDescriptions.Clear(); retirosListFechas.SortDescriptions.Add(new SortDescription("Fecha", ListSortDirection.Descending));
 
-            retirosListRetirosPerFecha.Filter = delegate (object item) { return retirosSelectedFecha != null && (item as DBRetirosCaja).Fecha == retirosSelectedFecha; };
+            retirosListRetirosPerFecha.Filter = delegate (object item) { return retirosSelectedFecha != null && (item as retirosCajaModel).Fecha == retirosSelectedFecha; };
             retirosListRetirosPerFecha.SortDescriptions.Clear(); retirosListRetirosPerFecha.SortDescriptions.Add(new SortDescription("Hora", ListSortDirection.Descending));
 
             retirosListALLRetiros.SortDescriptions.Clear();
@@ -482,8 +482,8 @@ namespace KioscoWPF.ViewModels
             retirosListALLRetiros.SortDescriptions.Add(new SortDescription("Hora", ListSortDirection.Descending));
         }
 
-        DBFechasClass _retirosSelectedFecha;
-        public DBFechasClass retirosSelectedFecha { get => _retirosSelectedFecha; set { if (_retirosSelectedFecha != value) { _retirosSelectedFecha = value; OnPropertyChanged(); retirosListRetirosPerFecha.Refresh(); } } }
+        fechasModel _retirosSelectedFecha;
+        public fechasModel retirosSelectedFecha { get => _retirosSelectedFecha; set { if (_retirosSelectedFecha != value) { _retirosSelectedFecha = value; OnPropertyChanged(); retirosListRetirosPerFecha.Refresh(); } } }
 
         readonly CollectionViewSource _retirosListFechasSource = new CollectionViewSource { Source = Variables.Inventario.Fechas.Local.ToObservableCollection() };
         public ICollectionView retirosListFechas => _retirosListFechasSource.View;
@@ -503,11 +503,11 @@ namespace KioscoWPF.ViewModels
         #region Caja
         void cajaFiltersSorters()
         {
-            cajaListFechas.Filter = delegate (object item) { return (item as DBFechasClass).Fecha == Variables.strFecha || (item as DBFechasClass).CajasPerFecha.Any(x => x.CajaConteoForCaja != null); };
+            cajaListFechas.Filter = delegate (object item) { return (item as fechasModel).Fecha == Variables.strFecha || (item as fechasModel).CajasPerFecha.Any(x => x.CajaConteoForCaja != null); };
             cajaListFechas.SortDescriptions.Clear();
             cajaListFechas.SortDescriptions.Add(new SortDescription("Fecha", ListSortDirection.Descending));
 
-            cajaListCajasPerFecha.Filter = delegate (object item) { return cajaSelectedFecha != null && (item as DBCajaConteosClass).Caja.Fecha == cajaSelectedFecha; };
+            cajaListCajasPerFecha.Filter = delegate (object item) { return cajaSelectedFecha != null && (item as cajaConteosModel).Caja.Fecha == cajaSelectedFecha; };
             cajaListCajasPerFecha.SortDescriptions.Clear(); cajaListCajasPerFecha.SortDescriptions.Add(new SortDescription("Caja.Hora", ListSortDirection.Descending));
 
 
@@ -518,11 +518,11 @@ namespace KioscoWPF.ViewModels
         }
 
 
-        DBUsuariosClass _cajaSelectedUsuario;
-        public DBUsuariosClass cajaSelectedUsuario { get => _cajaSelectedUsuario; set { if (_cajaSelectedUsuario != value) { _cajaSelectedUsuario = value; OnPropertyChanged(); } } }
+        usuariosModel _cajaSelectedUsuario;
+        public usuariosModel cajaSelectedUsuario { get => _cajaSelectedUsuario; set { if (_cajaSelectedUsuario != value) { _cajaSelectedUsuario = value; OnPropertyChanged(); } } }
 
-        DBFechasClass _cajaSelectedFecha;
-        public DBFechasClass cajaSelectedFecha { get => _cajaSelectedFecha; set { if (_cajaSelectedFecha != value) { _cajaSelectedFecha = value; OnPropertyChanged(); cajaListCajasPerFecha.Refresh(); } } }
+        fechasModel _cajaSelectedFecha;
+        public fechasModel cajaSelectedFecha { get => _cajaSelectedFecha; set { if (_cajaSelectedFecha != value) { _cajaSelectedFecha = value; OnPropertyChanged(); cajaListCajasPerFecha.Refresh(); } } }
 
 
         readonly CollectionViewSource _cajaListFechasSource = new CollectionViewSource { Source = Variables.Inventario.Fechas.Local.ToObservableCollection() };
@@ -544,8 +544,8 @@ namespace KioscoWPF.ViewModels
         }
 
 
-        DBProveedorClass _proveedoresSelectedProveedor;
-        public DBProveedorClass proveedoresSelectedProveedor { get => _proveedoresSelectedProveedor; set { if (_proveedoresSelectedProveedor != value) { _proveedoresSelectedProveedor = value; OnPropertyChanged(); } } }
+        proveedoresModel _proveedoresSelectedProveedor;
+        public proveedoresModel proveedoresSelectedProveedor { get => _proveedoresSelectedProveedor; set { if (_proveedoresSelectedProveedor != value) { _proveedoresSelectedProveedor = value; OnPropertyChanged(); } } }
 
 
         readonly CollectionViewSource _proveedoresListProveedoresSource = new CollectionViewSource() { Source = Variables.Inventario.Proveedores.Local.ToObservableCollection() };

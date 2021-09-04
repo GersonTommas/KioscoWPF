@@ -27,10 +27,10 @@ namespace KioscoWPF
         public MainWindow()
         {
             InitializeComponent(); Db.loadInventario(); DataContext = new WBinding(this);
-            try { _ = Variables.Inventario.Fechas.Local.Single(x => x.Fecha == Variables.strFecha); } catch { Variables.Inventario.Fechas.Local.Add(new DBFechasClass() { Fecha = Variables.strFecha }); _ = Variables.Inventario.SaveChanges(); }
+            try { _ = Variables.Inventario.Fechas.Local.Single(x => x.Fecha == Variables.strFecha); } catch { Variables.Inventario.Fechas.Local.Add(new fechasModel() { Fecha = Variables.strFecha }); _ = Variables.Inventario.SaveChanges(); }
             if (Variables.Inventario.Fechas.Local.Any(x => x.Fecha == Variables.strFecha))
             {
-                DBFechasClass tempFecha = Variables.Inventario.Fechas.Local.Single(x => x.Fecha == Variables.strFecha);
+                fechasModel tempFecha = Variables.Inventario.Fechas.Local.Single(x => x.Fecha == Variables.strFecha);
                 if (tempFecha.VentasPerFecha.Count() > 0) { Variables.firstVenta = false; }
                 if (tempFecha.CajasPerFecha.Count() > 0) { Variables.firstCaja = false; }
                 if (tempFecha.AbiertoProductosPerFecha.Count() > 0) { Variables.firstAbiertoProducto = false; }

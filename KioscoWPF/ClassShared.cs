@@ -21,7 +21,7 @@ namespace KioscoWPF
         public static DBInventarioContext Inventario;
         public static VentanaPrincipal globalVentanaPrincipal;
 
-        public static DBUsuariosClass UsuarioLogueado;
+        public static usuariosModel UsuarioLogueado;
         public static string strFecha => DateTime.Today.ToString(@"yyyy/MM/dd");
         public static string strHora => DateTime.Now.ToString(@"HH:mm:ss");
         public static string varImageLector = "/Resources/Images/Lector01.png";
@@ -172,7 +172,7 @@ namespace KioscoWPF
             return vTemp.ShowDialog().Value;
         }
 
-        public bool abrirAgregarConvertido(DBProductosClass sentProducto)
+        public bool abrirAgregarConvertido(productosModel sentProducto)
         {
             VentanaAgregarConvertido vTemp = new VentanaAgregarConvertido(sentProducto);
             return vTemp.ShowDialog().Value;
@@ -183,7 +183,7 @@ namespace KioscoWPF
             VentanaAgregarDeudor vTemp = new VentanaAgregarDeudor();
             return vTemp.ShowDialog().Value;
         }
-        public bool abrirAgregarDeudor(DBDeudoresClass sentDeudor)
+        public bool abrirAgregarDeudor(deudoresModel sentDeudor)
         {
             VentanaAgregarDeudor vTemp = new VentanaAgregarDeudor(sentDeudor);
             return vTemp.ShowDialog().Value;
@@ -199,7 +199,7 @@ namespace KioscoWPF
             VentanaAgregarMedidas vTemp = new VentanaAgregarMedidas();
             return vTemp.ShowDialog().Value;
         }
-        public bool abrirAgregarMedidas(DBMedidasClass sentmedida)
+        public bool abrirAgregarMedidas(medidasModel sentmedida)
         {
             VentanaAgregarMedidas vTemp = new VentanaAgregarMedidas(sentmedida);
             return vTemp.ShowDialog().Value;
@@ -215,7 +215,7 @@ namespace KioscoWPF
             VentanaAgregarProducto vTemp = new VentanaAgregarProducto(sentString);
             return vTemp.ShowDialog().Value;
         }
-        public bool abrirAgregarProducto(DBProductosClass sentProducto)
+        public bool abrirAgregarProducto(productosModel sentProducto)
         {
             VentanaAgregarProducto vTemp = new VentanaAgregarProducto(sentProducto);
             return vTemp.ShowDialog().Value;
@@ -226,7 +226,7 @@ namespace KioscoWPF
             VentanaAgregarProveedor vTemp = new VentanaAgregarProveedor();
             return vTemp.ShowDialog().Value;
         }
-        public bool abrirAgregarProveedor(DBProveedorClass sentProveedor)
+        public bool abrirAgregarProveedor(proveedoresModel sentProveedor)
         {
             VentanaAgregarProveedor vTemp = new VentanaAgregarProveedor(sentProveedor);
             return vTemp.ShowDialog().Value;
@@ -238,7 +238,7 @@ namespace KioscoWPF
             return vTemp.ShowDialog().Value;
         }
 
-        public bool abrirAgregarSacado(DBUsuariosClass sentUsuario)
+        public bool abrirAgregarSacado(usuariosModel sentUsuario)
         {
             VentanaAgregarSacado vTemp = new VentanaAgregarSacado(sentUsuario);
             return vTemp.ShowDialog().Value;
@@ -249,7 +249,7 @@ namespace KioscoWPF
             VentanaAgregarTag vTemp = new VentanaAgregarTag();
             return vTemp.ShowDialog().Value;
         }
-        public bool abrirAgregarTag(DBTagsClass sentTag)
+        public bool abrirAgregarTag(tagsModel sentTag)
         {
             VentanaAgregarTag vTemp = new VentanaAgregarTag(sentTag);
             return vTemp.ShowDialog().Value;
@@ -260,7 +260,7 @@ namespace KioscoWPF
             VentanaAgregarUsuario vTemp = new VentanaAgregarUsuario();
             return vTemp.ShowDialog().Value;
         }
-        public bool abrirAgregarUsuario(DBUsuariosClass sentUsuario)
+        public bool abrirAgregarUsuario(usuariosModel sentUsuario)
         {
             VentanaAgregarUsuario vTemp = new VentanaAgregarUsuario(sentUsuario);
             return vTemp.ShowDialog().Value;
@@ -277,25 +277,25 @@ namespace KioscoWPF
             return vTemp.ShowDialog().Value;
         }
 
-        public bool abrirDetallesProductos(DBProductosClass sentProducto)
+        public bool abrirDetallesProductos(productosModel sentProducto)
         {
             VentanaDetallesProductos vTemp = new VentanaDetallesProductos(sentProducto);
             return vTemp.ShowDialog().Value;
         }
 
-        public bool abrirModificarStockProducto(DBProductosClass sentProducto)
+        public bool abrirModificarStockProducto(productosModel sentProducto)
         {
             VentanaModificarStockProducto vTemp = new VentanaModificarStockProducto(sentProducto);
             return vTemp.ShowDialog().Value;
         }
 
-        public bool abrirPagarDeuda(DBDeudoresClass sentDeudor)
+        public bool abrirPagarDeuda(deudoresModel sentDeudor)
         {
             VentanaPagarDeuda vTemp = new VentanaPagarDeuda(sentDeudor);
             return vTemp.ShowDialog().Value;
         }
 
-        public bool abrirPagarSacado(DBUsuariosClass sentUsuario)
+        public bool abrirPagarSacado(usuariosModel sentUsuario)
         {
             VentanaPagarSacado vTemp = new VentanaPagarSacado(sentUsuario);
             return vTemp.ShowDialog().Value;
@@ -391,14 +391,14 @@ namespace KioscoWPF
 
 
 
-    [ValueConversion(typeof(DBProductosClass), typeof(bool))]
+    [ValueConversion(typeof(productosModel), typeof(bool))]
     public class ProductStockComparerZero : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             try
             {
-                int tempStock = ((DBProductosClass)value).Stock;
+                int tempStock = ((productosModel)value).Stock;
 
                 return tempStock == 0;
             } catch { return false; }
@@ -407,15 +407,15 @@ namespace KioscoWPF
     }
 
 
-    [ValueConversion(typeof(DBProductosClass), typeof(bool))]
+    [ValueConversion(typeof(productosModel), typeof(bool))]
     public class ProductStockComparerMin : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             try
             {
-                var tempStock = ((DBProductosClass)value).Stock;
-                var tempMinimo = ((DBProductosClass)value).Tag.Minimo;
+                var tempStock = ((productosModel)value).Stock;
+                var tempMinimo = ((productosModel)value).Tag.Minimo;
 
                 return tempStock > 0 && tempStock < tempMinimo;
             }
@@ -425,15 +425,15 @@ namespace KioscoWPF
     }
 
 
-    [ValueConversion(typeof(DBProductosClass), typeof(bool))]
+    [ValueConversion(typeof(productosModel), typeof(bool))]
     public class ProductStockComparerEqual : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             try
             {
-                var tempStock = ((DBProductosClass)value).Stock;
-                var tempMinimo = ((DBProductosClass)value).Tag.Minimo;
+                var tempStock = ((productosModel)value).Stock;
+                var tempMinimo = ((productosModel)value).Tag.Minimo;
 
                 return tempStock == tempMinimo;
             }
@@ -443,15 +443,15 @@ namespace KioscoWPF
     }
 
 
-    [ValueConversion(typeof(DBProductosClass), typeof(bool))]
+    [ValueConversion(typeof(productosModel), typeof(bool))]
     public class ProductStockComparerMax : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             try
             {
-                var tempStock = ((DBProductosClass)value).Stock;
-                var tempMinimo = ((DBProductosClass)value).Tag.Minimo;
+                var tempStock = ((productosModel)value).Stock;
+                var tempMinimo = ((productosModel)value).Tag.Minimo;
 
                 return tempStock > tempMinimo;
             }

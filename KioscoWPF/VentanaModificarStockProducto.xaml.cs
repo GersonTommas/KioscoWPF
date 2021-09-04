@@ -18,7 +18,7 @@ namespace KioscoWPF
     /// </summary>
     public partial class VentanaModificarStockProducto : Window
     {
-        public VentanaModificarStockProducto(DBProductosClass sentProducto)
+        public VentanaModificarStockProducto(productosModel sentProducto)
         {
             InitializeComponent(); try { (DataContext as ViewModels.VMModificarStockProducto).setInitialize(this, sentProducto); } catch { }
         }
@@ -32,7 +32,7 @@ namespace KioscoWPF.ViewModels
         #region Initialize
         VentanaModificarStockProducto thisWindow;
 
-        public void setInitialize(VentanaModificarStockProducto tempWindow, DBProductosClass tempProducto)
+        public void setInitialize(VentanaModificarStockProducto tempWindow, productosModel tempProducto)
         {
             thisWindow = tempWindow;
             selectedStockProducto.Producto = tempProducto;
@@ -47,7 +47,7 @@ namespace KioscoWPF.ViewModels
 
 
         #region Variables
-        public DBModificadoProductosClass selectedStockProducto { get; } = new DBModificadoProductosClass() { Fecha = Db.returnFecha() };
+        public modificadoProductoModel selectedStockProducto { get; } = new modificadoProductoModel() { Fecha = Db.returnFecha() };
 
         readonly CollectionViewSource _listUsuariosSource = new CollectionViewSource();
         public ICollectionView listUsuarios => _listUsuariosSource.View;

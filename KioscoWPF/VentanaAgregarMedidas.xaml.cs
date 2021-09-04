@@ -18,7 +18,7 @@ namespace KioscoWPF
     /// </summary>
     public partial class VentanaAgregarMedidas : Window
     {
-        public VentanaAgregarMedidas(DBMedidasClass sentMedida) { InitializeComponent(); (DataContext as ViewModels.VMAgregarMedidas).setInitialize(this, sentMedida); }
+        public VentanaAgregarMedidas(medidasModel sentMedida) { InitializeComponent(); (DataContext as ViewModels.VMAgregarMedidas).setInitialize(this, sentMedida); }
         public VentanaAgregarMedidas() { InitializeComponent(); (DataContext as ViewModels.VMAgregarMedidas).setInitialize(this); }
 
         private void TextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e) { TextBox tb = (TextBox)sender; tb.SelectAll(); }
@@ -36,7 +36,7 @@ namespace KioscoWPF.ViewModels
         {
             thisWindow = tempWindow;
         }
-        public void setInitialize(VentanaAgregarMedidas tempWindow, DBMedidasClass tempMedida)
+        public void setInitialize(VentanaAgregarMedidas tempWindow, medidasModel tempMedida)
         {
             thisWindow = tempWindow;
 
@@ -53,14 +53,14 @@ namespace KioscoWPF.ViewModels
 
 
         #region Variables
-        DBMedidasClass _editMedida = null;
+        medidasModel _editMedida = null;
 
 
         bool _bolEdit = false;
         public bool bolEdit { get => _bolEdit; set { if (_bolEdit != value) { _bolEdit = value; OnPropertyChanged(); OnPropertyChanged(nameof(strWindowTitle)); OnPropertyChanged(nameof(strGroupTitle)); } } }
 
 
-        public DBMedidasClass selectedMedida { get; } = new DBMedidasClass() { Activo = true };
+        public medidasModel selectedMedida { get; } = new medidasModel() { Activo = true };
         public string strWindowTitle => bolEdit ? "Editar Medida" : "Nueva Medida";
         public string strGroupTitle => bolEdit ? "Id: " + _editMedida.Id : "Nueva Medida";
         #endregion // Variables
@@ -70,7 +70,7 @@ namespace KioscoWPF.ViewModels
         #region Helpers
         void helperGuardarMedida()
         {
-            DBMedidasClass compareMedida = null;
+            medidasModel compareMedida = null;
             if (!string.IsNullOrWhiteSpace(selectedMedida.Medida)) { selectedMedida.Medida = selectedMedida.Medida.Trim(); }
 
             try { compareMedida = Variables.Inventario.Medidas.Single(x => x.Medida.ToLower() == selectedMedida.Medida.ToLower() && x.Tipo == selectedMedida.Tipo); } catch { }

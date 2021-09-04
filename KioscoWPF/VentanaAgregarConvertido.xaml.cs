@@ -17,7 +17,7 @@ namespace KioscoWPF
     /// </summary>
     public partial class VentanaAgregarConvertido : Window
     {
-        public VentanaAgregarConvertido(DBProductosClass sentProducto) { InitializeComponent(); (DataContext as ViewModels.VMAgregarConvertido).setInitialize(this, sentProducto);  }
+        public VentanaAgregarConvertido(productosModel sentProducto) { InitializeComponent(); (DataContext as ViewModels.VMAgregarConvertido).setInitialize(this, sentProducto);  }
     }
 }
 
@@ -28,14 +28,14 @@ namespace KioscoWPF.ViewModels
         #region Initialize
         VentanaAgregarConvertido thisWindow;
 
-        public void setInitialize(VentanaAgregarConvertido tempWindow, DBProductosClass sentProducto)
+        public void setInitialize(VentanaAgregarConvertido tempWindow, productosModel sentProducto)
         {
             thisWindow = tempWindow; selectedAbierto.ProductoSacado = sentProducto;
         }
         #endregion // Initialize
 
         #region Variables
-        public DBAbiertoProductosClass selectedAbierto { get; } = new DBAbiertoProductosClass() { CantidadSacado = 1, CantidadAgregado = 0, Fecha = Db.returnFecha(), Usuario = Variables.UsuarioLogueado };
+        public abiertoProductosModel selectedAbierto { get; } = new abiertoProductosModel() { CantidadSacado = 1, CantidadAgregado = 0, Fecha = Db.returnFecha(), Usuario = Variables.UsuarioLogueado };
         #endregion // Variables
 
 

@@ -38,20 +38,20 @@ namespace KioscoWPF
             bool _stockBolInactivos = false;
             bool _stockBolAlarma = false;
 
-            public BindingList<DBProductosClass> stockListProducts { get { return _stockListProducts(); } }
+            public BindingList<productosModel> stockListProducts { get { return _stockListProducts(); } }
 
 
             public string stockTextoBusqueda { get { return _stockTextoBusqueda; } set { if (_stockTextoBusqueda != value) { _stockTextoBusqueda = value; OnPropertyChanged(); OnPropertyChanged(nameof(stockListProducts)); } } }
             public bool stockBolInactivos { get { return _stockBolInactivos; } set { if (_stockBolInactivos != value) { _stockBolInactivos = value; OnPropertyChanged(); OnPropertyChanged(nameof(stockListProducts)); } } }
             public bool stockBolAlarma { get { return _stockBolAlarma; } set { if (_stockBolAlarma != value) { _stockBolAlarma = value; OnPropertyChanged(); OnPropertyChanged(nameof(stockListProducts)); } } }
 
-            BindingList<DBProductosClass> _stockListProducts()
+            BindingList<productosModel> _stockListProducts()
             {
-                BindingList<DBProductosClass> tempListProducts = new BindingList<DBProductosClass>(Variables.Inventario.Productos.Local.ToBindingList());
+                BindingList<productosModel> tempListProducts = new BindingList<productosModel>(Variables.Inventario.Productos.Local.ToBindingList());
 
-                if (!string.IsNullOrWhiteSpace(stockTextoBusqueda)) { tempListProducts = new BindingList<DBProductosClass>(tempListProducts.Where(x => x.Descripcion.ToLower().Contains(stockTextoBusqueda.ToLower())).ToList()); }
-                if (!stockBolAlarma) { tempListProducts = new BindingList<DBProductosClass>(tempListProducts.Where(x => x.Tag.Activo == true).ToList()); }
-                if (!stockBolInactivos) { tempListProducts = new BindingList<DBProductosClass>(tempListProducts.Where(x => x.Activo == true).ToList()); }
+                if (!string.IsNullOrWhiteSpace(stockTextoBusqueda)) { tempListProducts = new BindingList<productosModel>(tempListProducts.Where(x => x.Descripcion.ToLower().Contains(stockTextoBusqueda.ToLower())).ToList()); }
+                if (!stockBolAlarma) { tempListProducts = new BindingList<productosModel>(tempListProducts.Where(x => x.Tag.Activo == true).ToList()); }
+                if (!stockBolInactivos) { tempListProducts = new BindingList<productosModel>(tempListProducts.Where(x => x.Activo == true).ToList()); }
                 return tempListProducts;
             }
 

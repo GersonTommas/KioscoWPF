@@ -20,7 +20,7 @@ namespace KioscoWPF
     /// </summary>
     public partial class VentanaPagarSacado : Window
     {
-        public VentanaPagarSacado(DBUsuariosClass sentUsuario) { InitializeComponent(); if (sentUsuario == null) { Close(); } try { (DataContext as ViewModels.VMPagarSacado).setInitialize(this, sentUsuario); } catch { } }
+        public VentanaPagarSacado(usuariosModel sentUsuario) { InitializeComponent(); if (sentUsuario == null) { Close(); } try { (DataContext as ViewModels.VMPagarSacado).setInitialize(this, sentUsuario); } catch { } }
     }
 }
 
@@ -31,13 +31,13 @@ namespace KioscoWPF.ViewModels
         #region Initialize
         VentanaPagarSacado thisWindow;
 
-        public void setInitialize(VentanaPagarSacado tempWindow, DBUsuariosClass tempUsuario)
+        public void setInitialize(VentanaPagarSacado tempWindow, usuariosModel tempUsuario)
         {
             thisWindow = tempWindow; selectedUsuario = tempUsuario;
 
             _listAdminsSource.Source = Variables.Inventario.Usuarios.Local.ToObservableCollection(); OnPropertyChanged(nameof(listAdmins));
 
-            listAdmins.Filter += delegate (object item) { return (item as DBUsuariosClass).Nivel == 1; };
+            listAdmins.Filter += delegate (object item) { return (item as usuariosModel).Nivel == 1; };
             listAdmins.SortDescriptions.Clear(); listAdmins.SortDescriptions.Add(new SortDescription("Usuario", ListSortDirection.Ascending));
         }
         #endregion // Initialize
@@ -45,14 +45,14 @@ namespace KioscoWPF.ViewModels
 
 
         #region Variables
-        DBUsuariosClass _selectedUsuario;
-        public DBUsuariosClass selectedUsuario { get => _selectedUsuario; set { if (_selectedUsuario != value) { _selectedUsuario = value; OnPropertyChanged(); } } }
+        usuariosModel _selectedUsuario;
+        public usuariosModel selectedUsuario { get => _selectedUsuario; set { if (_selectedUsuario != value) { _selectedUsuario = value; OnPropertyChanged(); } } }
 
-        DBUsuariosClass _selectedAdmin;
-        public DBUsuariosClass selectedAdmin { get => _selectedAdmin; set { if (_selectedAdmin != value) { _selectedAdmin = value; OnPropertyChanged(); } } }
+        usuariosModel _selectedAdmin;
+        public usuariosModel selectedAdmin { get => _selectedAdmin; set { if (_selectedAdmin != value) { _selectedAdmin = value; OnPropertyChanged(); } } }
 
-        DBCajaClass _selectedCaja;
-        public DBCajaClass selectedCaja { get => _selectedCaja; set { if (_selectedCaja != value) { _selectedCaja = value; OnPropertyChanged(); } } }
+        cajaModel _selectedCaja;
+        public cajaModel selectedCaja { get => _selectedCaja; set { if (_selectedCaja != value) { _selectedCaja = value; OnPropertyChanged(); } } }
 
         int _intAPagar;
         public int intAPagar { get => _intAPagar; set { if (_intAPagar != value) { _intAPagar = value; OnPropertyChanged(); } } }
@@ -64,7 +64,7 @@ namespace KioscoWPF.ViewModels
         readonly CollectionViewSource _listAdminsSource = new CollectionViewSource();
         public ICollectionView listAdmins => _listAdminsSource.View;
 
-        IEnumerable<DBSacadoProductosClass> _listSacado => selectedUsuario.SacadoProductosPerUsuario.Where(x => x.BolPagado == false);
+        IEnumerable<sacadoProductosModel> _listSacado => selectedUsuario.SacadoProductosPerUsuario.Where(x => x.BolPagado == false);
 
 
 
@@ -82,7 +82,7 @@ namespace KioscoWPF.ViewModels
 
                 if (_listSacado != null)
                 {
-                    foreach (DBSacadoProductosClass sac in _listSacado)
+                    foreach (sacadoProductosModel sac in _listSacado)
                     {
                         if (tempTotalPlata > sac.PrecioTotal)
                         {

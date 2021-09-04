@@ -19,7 +19,7 @@ namespace KioscoWPF
     public partial class VentanaAgregarProveedor : Window
     {
         public VentanaAgregarProveedor() { InitializeComponent(); (DataContext as ViewModels.VMAgregarProveedor).setInitialize(this); }
-        public VentanaAgregarProveedor(DBProveedorClass sentProveedor) { InitializeComponent(); (DataContext as ViewModels.VMAgregarProveedor).setInitialize(this, sentProveedor); }
+        public VentanaAgregarProveedor(proveedoresModel sentProveedor) { InitializeComponent(); (DataContext as ViewModels.VMAgregarProveedor).setInitialize(this, sentProveedor); }
     }
 }
 
@@ -34,13 +34,13 @@ namespace KioscoWPF.ViewModels
         {
             thisWindow = tempWindow;
         }
-        public void setInitialize(VentanaAgregarProveedor tempWindow, DBProveedorClass tempProveedor)
+        public void setInitialize(VentanaAgregarProveedor tempWindow, proveedoresModel tempProveedor)
         {
             thisWindow = tempWindow;
             if (tempProveedor != null)
             {
                 _ToEditProveedor = tempProveedor;
-                selectedProveedor = new DBProveedorClass() { Celular = tempProveedor.Celular, Detalles = tempProveedor.Detalles, Direccion = tempProveedor.Direccion, Nombre = tempProveedor.Nombre, Telefono = tempProveedor.Telefono };
+                selectedProveedor = new proveedoresModel() { Celular = tempProveedor.Celular, Detalles = tempProveedor.Detalles, Direccion = tempProveedor.Direccion, Nombre = tempProveedor.Nombre, Telefono = tempProveedor.Telefono };
                 bolEdit = true;
             }
         }
@@ -48,11 +48,11 @@ namespace KioscoWPF.ViewModels
 
 
         #region Variables
-        DBProveedorClass _ToEditProveedor;
+        proveedoresModel _ToEditProveedor;
 
 
-        DBProveedorClass _selectedProveedor = new DBProveedorClass() { };
-        public DBProveedorClass selectedProveedor { get => _selectedProveedor; set { if (_selectedProveedor != value) { _selectedProveedor = value; OnPropertyChanged(); } } }
+        proveedoresModel _selectedProveedor = new proveedoresModel() { };
+        public proveedoresModel selectedProveedor { get => _selectedProveedor; set { if (_selectedProveedor != value) { _selectedProveedor = value; OnPropertyChanged(); } } }
 
         bool _bolEdit = false;
         public bool bolEdit { get => _bolEdit; set { if (_bolEdit != value) { _bolEdit = value; OnPropertyChanged(); OnPropertyChanged(nameof(strBorderTitle)); OnPropertyChanged(nameof(strWindowTitle)); } } }
@@ -70,7 +70,7 @@ namespace KioscoWPF.ViewModels
         #region Helper
         void helperGuardar()
         {
-            DBProveedorClass tempProveedor = null;
+            proveedoresModel tempProveedor = null;
             if (selectedProveedor.Detalles != null) { selectedProveedor.Detalles = selectedProveedor.Detalles.Trim(); }
             if (selectedProveedor.Direccion != null) { selectedProveedor.Direccion = selectedProveedor.Direccion.Trim(); }
             if (selectedProveedor.Nombre != null) { selectedProveedor.Nombre = selectedProveedor.Nombre.Trim(); }

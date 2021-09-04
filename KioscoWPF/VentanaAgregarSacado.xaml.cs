@@ -20,7 +20,7 @@ namespace KioscoWPF
     /// </summary>
     public partial class VentanaAgregarSacado : Window
     {
-        public VentanaAgregarSacado(DBUsuariosClass sentUsuario)
+        public VentanaAgregarSacado(usuariosModel sentUsuario)
         {
             InitializeComponent(); try { (DataContext as ViewModels.VMAgregarSacado).setInitialize(this, sentUsuario); } catch { }
         }
@@ -34,7 +34,7 @@ namespace KioscoWPF.ViewModels
         #region Initialize
         VentanaAgregarSacado thisWindow;
 
-        public void setInitialize(VentanaAgregarSacado tempWindow, DBUsuariosClass tempUsuario)
+        public void setInitialize(VentanaAgregarSacado tempWindow, usuariosModel tempUsuario)
         {
             thisWindow = tempWindow; selectedUsuario = tempUsuario;
 
@@ -45,16 +45,16 @@ namespace KioscoWPF.ViewModels
 
 
         #region Variables
-        readonly DBFechasClass _today = Db.returnFecha();
+        readonly fechasModel _today = Db.returnFecha();
 
-        DBUsuariosClass _selectedUsuario;
-        public DBUsuariosClass selectedUsuario { get => _selectedUsuario; set { if (_selectedUsuario != value) { _selectedUsuario = value; OnPropertyChanged(); } } }
+        usuariosModel _selectedUsuario;
+        public usuariosModel selectedUsuario { get => _selectedUsuario; set { if (_selectedUsuario != value) { _selectedUsuario = value; OnPropertyChanged(); } } }
 
-        DBSacadoProductosClass _selectedSacado;
-        public DBSacadoProductosClass selectedSacado { get => _selectedSacado; set { if (_selectedSacado != value) { _selectedSacado = value; OnPropertyChanged(); } } }
+        sacadoProductosModel _selectedSacado;
+        public sacadoProductosModel selectedSacado { get => _selectedSacado; set { if (_selectedSacado != value) { _selectedSacado = value; OnPropertyChanged(); } } }
 
 
-        public ObservableCollection<DBSacadoProductosClass> listNuevoSacado { get; } = new ObservableCollection<DBSacadoProductosClass>();
+        public ObservableCollection<sacadoProductosModel> listNuevoSacado { get; } = new ObservableCollection<sacadoProductosModel>();
         public int intAgregadosCount => listNuevoSacado.Count();
         public Double doubleTotal => listNuevoSacado.Sum(x => x.PrecioTotal);
         #endregion // Variables
@@ -64,7 +64,7 @@ namespace KioscoWPF.ViewModels
         #region Helpers
         void helperAgregarQuitarProducto(object sentProducto)
         {
-            DBProductosClass tempProducto = sentProducto as DBProductosClass;
+            productosModel tempProducto = sentProducto as productosModel;
 
             if (tempProducto.Agregado)
             {
@@ -82,7 +82,7 @@ namespace KioscoWPF.ViewModels
                     vHelperCantidad = new VentanaHelperCantidad();
                     if (vHelperCantidad.ShowDialog().Value)
                     {
-                        listNuevoSacado.Add(new DBSacadoProductosClass()
+                        listNuevoSacado.Add(new sacadoProductosModel()
                         { Cantidad = vHelperCantidad.intCantidad, Precio = tempProducto.PrecioActual, Producto = tempProducto, Usuario = selectedUsuario, FechaSacado = _today});
                         tempProducto.Agregado = true;
                     }
@@ -101,7 +101,7 @@ namespace KioscoWPF.ViewModels
         void helperGuardar()
         {
             Variables.Inventario.SacadoProductos.AddRange(listNuevoSacado);
-            foreach (DBSacadoProductosClass sacado in listNuevoSacado)
+            foreach (sacadoProductosModel sacado in listNuevoSacado)
             {
                 sacado.Producto.Stock -= sacado.Cantidad;
             }

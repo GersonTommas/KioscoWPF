@@ -41,8 +41,8 @@ namespace KioscoWPF.ViewModels
 
 
         #region Variables
-        DBUsuariosClass _selectedUser;
-        public DBUsuariosClass selectedUser { get { return _selectedUser; } set { if (_selectedUser != value) { _selectedUser = value; OnPropertyChanged(); } } }
+        usuariosModel _selectedUser;
+        public usuariosModel selectedUser { get { return _selectedUser; } set { if (_selectedUser != value) { _selectedUser = value; OnPropertyChanged(); } } }
 
         string _enteredPassword;
         public string enteredPassword { get { return _enteredPassword; } set { if (_enteredPassword != value) { _enteredPassword = value; OnPropertyChanged(); } } }

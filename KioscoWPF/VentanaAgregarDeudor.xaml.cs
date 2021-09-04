@@ -19,7 +19,7 @@ namespace KioscoWPF
     /// </summary>
     public partial class VentanaAgregarDeudor : Window
     {
-        public VentanaAgregarDeudor(DBDeudoresClass sentDeudor) { InitializeComponent(); (DataContext as ViewModels.VMAgregarDeudor).setInitialize(this, sentDeudor); }
+        public VentanaAgregarDeudor(deudoresModel sentDeudor) { InitializeComponent(); (DataContext as ViewModels.VMAgregarDeudor).setInitialize(this, sentDeudor); }
         public VentanaAgregarDeudor() { InitializeComponent(); (DataContext as ViewModels.VMAgregarDeudor).setInitialize(this); }
     }
 }
@@ -35,14 +35,14 @@ namespace KioscoWPF.ViewModels
         {
             thisWindow = tempWindow;
         }
-        public void setInitialize(VentanaAgregarDeudor tempWindow, DBDeudoresClass tempDeudor)
+        public void setInitialize(VentanaAgregarDeudor tempWindow, deudoresModel tempDeudor)
         {
             thisWindow = tempWindow;
 
             if (tempDeudor != null)
             {
                 _toEditDeudor = tempDeudor;
-                _selectedDeudor = new DBDeudoresClass() { Id = tempDeudor.Id, Detalles = tempDeudor.Detalles, Nivel = tempDeudor.Nivel, Nombre = tempDeudor.Nombre, Resto = tempDeudor.Resto, UsuarioID = tempDeudor.UsuarioID, Usuario = tempDeudor.Usuario }; OnPropertyChanged(nameof(selectedDeudor));
+                _selectedDeudor = new deudoresModel() { Id = tempDeudor.Id, Detalles = tempDeudor.Detalles, Nivel = tempDeudor.Nivel, Nombre = tempDeudor.Nombre, Resto = tempDeudor.Resto, UsuarioID = tempDeudor.UsuarioID, Usuario = tempDeudor.Usuario }; OnPropertyChanged(nameof(selectedDeudor));
                 OnPropertyChanged(nameof(strWindowTitle)); OnPropertyChanged(nameof(strGroupTitle));
             }
             else
@@ -54,13 +54,13 @@ namespace KioscoWPF.ViewModels
 
 
         #region Private
-        DBDeudoresClass _toEditDeudor = null;
+        deudoresModel _toEditDeudor = null;
         #endregion // Private
 
 
         #region Public
-        DBDeudoresClass _selectedDeudor = new DBDeudoresClass() { Nivel = 1, Resto = 0, Usuario = Variables.UsuarioLogueado };
-        public DBDeudoresClass selectedDeudor => _selectedDeudor;
+        deudoresModel _selectedDeudor = new deudoresModel() { Nivel = 1, Resto = 0, Usuario = Variables.UsuarioLogueado };
+        public deudoresModel selectedDeudor => _selectedDeudor;
         #endregion // Public
 
 
@@ -76,7 +76,7 @@ namespace KioscoWPF.ViewModels
         #region Helpers
         void helperGuardarDeudor()
         {
-            DBDeudoresClass checkDeudor = null;
+            deudoresModel checkDeudor = null;
 
             if (!string.IsNullOrWhiteSpace(selectedDeudor.Detalles)) { selectedDeudor.Detalles = selectedDeudor.Detalles.Trim(); }
             try { selectedDeudor.Nombre = selectedDeudor.Nombre.Trim(); } catch { }

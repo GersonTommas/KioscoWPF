@@ -40,16 +40,16 @@ namespace KioscoWPF.ViewModels
         void resetForm()
         {
             Db.resetProductoAgregado();
-            DBFechasClass tempFecha = Db.returnFecha();
+            fechasModel tempFecha = Db.returnFecha();
             string tempHora = Variables.strHora;
-            selectedVenta = new DBVentasClass() { Fecha = tempFecha, Hora = tempHora, Usuario = Variables.UsuarioLogueado, Caja = new DBCajaClass() { Fecha = tempFecha, Hora = tempHora } };
+            selectedVenta = new ventasModel() { Fecha = tempFecha, Hora = tempHora, Usuario = Variables.UsuarioLogueado, Caja = new cajaModel() { Fecha = tempFecha, Hora = tempHora } };
             resetNewProductoVenta();
         }
         void resetNewProductoVenta()
         {
             if (newProductoVenta == null || newProductoVenta.Producto != null)
             {
-                newProductoVenta = new DBVentaProductosClass() { Cantidad = 1 };
+                newProductoVenta = new ventaProductosModel() { Cantidad = 1 };
             }
         }
         #endregion // Initialize
@@ -83,7 +83,7 @@ namespace KioscoWPF.ViewModels
         #region Helpers
         void helperAgregarQuitarProducto(object sentParameter)
         {
-            if (sentParameter is DBProductosClass tempProducto)
+            if (sentParameter is productosModel tempProducto)
             {
                 if (tempProducto.Agregado)
                 {
@@ -100,7 +100,7 @@ namespace KioscoWPF.ViewModels
                         vHelperCantidad = new VentanaHelperCantidad();
                         if (vHelperCantidad.ShowDialog().Value)
                         {
-                            selectedVenta.VentaProductosPerVenta.Add(new DBVentaProductosClass()
+                            selectedVenta.VentaProductosPerVenta.Add(new ventaProductosModel()
                             { Cantidad = vHelperCantidad.intCantidad, Precio = tempProducto.PrecioActual, Producto = tempProducto });
                             tempProducto.Agregado = true;
                         }
@@ -136,17 +136,17 @@ namespace KioscoWPF.ViewModels
 
         public string strCodigo { get => _strCodigo; set { if (_strCodigo != value) { _strCodigo = value; resetNewProductoVenta(); OnPropertyChanged(); } } }
 
-        DBVentasClass _selectedVenta;
-        public DBVentasClass selectedVenta { get => _selectedVenta; set { if (_selectedVenta != value) { _selectedVenta = value; OnPropertyChanged(); } } }
+        ventasModel _selectedVenta;
+        public ventasModel selectedVenta { get => _selectedVenta; set { if (_selectedVenta != value) { _selectedVenta = value; OnPropertyChanged(); } } }
 
-        DBVentaProductosClass _newProductoVenta;
-        public DBVentaProductosClass newProductoVenta { get => _newProductoVenta; set { if (_newProductoVenta != value) { _newProductoVenta = value; OnPropertyChanged(); } } }
+        ventaProductosModel _newProductoVenta;
+        public ventaProductosModel newProductoVenta { get => _newProductoVenta; set { if (_newProductoVenta != value) { _newProductoVenta = value; OnPropertyChanged(); } } }
 
-        DBVentaProductosClass _selectedProductoVenta;
-        public DBVentaProductosClass selectedProductoVenta { get => _selectedProductoVenta; set { if (_selectedProductoVenta != value) { _selectedProductoVenta = value; OnPropertyChanged(); } } }
+        ventaProductosModel _selectedProductoVenta;
+        public ventaProductosModel selectedProductoVenta { get => _selectedProductoVenta; set { if (_selectedProductoVenta != value) { _selectedProductoVenta = value; OnPropertyChanged(); } } }
 
-        DBDeudoresClass _selectedDeudor = null;
-        public DBDeudoresClass selectedDeudor { get => _selectedDeudor; set { if (_selectedDeudor != value) { _selectedDeudor = value; OnPropertyChanged(); } } }
+        deudoresModel _selectedDeudor = null;
+        public deudoresModel selectedDeudor { get => _selectedDeudor; set { if (_selectedDeudor != value) { _selectedDeudor = value; OnPropertyChanged(); } } }
         #endregion // Variables
 
 
@@ -156,7 +156,7 @@ namespace KioscoWPF.ViewModels
         {
             try
             {
-                DBVentaProductosClass duplicate = selectedVenta.VentaProductosPerVenta.Single(x => x.Producto == newProductoVenta.Producto);
+                ventaProductosModel duplicate = selectedVenta.VentaProductosPerVenta.Single(x => x.Producto == newProductoVenta.Producto);
                 duplicate.Cantidad += newProductoVenta.Cantidad;
             }
             catch
@@ -164,7 +164,7 @@ namespace KioscoWPF.ViewModels
                 selectedVenta.VentaProductosPerVenta.Add(newProductoVenta);
                 newProductoVenta.Producto.Agregado = true;
             }
-            newProductoVenta = new DBVentaProductosClass() { Cantidad = 1 };
+            newProductoVenta = new ventaProductosModel() { Cantidad = 1 };
             strCodigo = "";
             selectedVenta.updatePrecios();
         }
@@ -173,7 +173,7 @@ namespace KioscoWPF.ViewModels
         {
             try
             {
-                DBProductosClass tempProd = Variables.Inventario.Productos.Local.Single(x => x.Codigo.ToLower() == strCodigo.ToLower());
+                productosModel tempProd = Variables.Inventario.Productos.Local.Single(x => x.Codigo.ToLower() == strCodigo.ToLower());
                 newProductoVenta.Producto = tempProd;
                 newProductoVenta.Precio = tempProd.PrecioActual;
                 if (newProductoVenta.Cantidad < 1) { Variables.nextTarget(sender); } _strCodigoFailed = null; _intCodigoFailedCount = 0;
@@ -218,7 +218,7 @@ namespace KioscoWPF.ViewModels
                 selectedVenta.Caja.Vuelto = 0;
                 selectedVenta.Deudor = null;
 
-                foreach (DBVentaProductosClass prod in selectedVenta.VentaProductosPerVenta) { prod.Producto.Stock -= prod.Cantidad; }
+                foreach (ventaProductosModel prod in selectedVenta.VentaProductosPerVenta) { prod.Producto.Stock -= prod.Cantidad; }
                 Db.contabilizarCaja(selectedVenta.Caja);
                 Variables.Inventario.Ventas.Local.Add(selectedVenta);
 
@@ -232,13 +232,13 @@ namespace KioscoWPF.ViewModels
 
                 if (vPagarVenta.ShowDialog().Value)
                 {
-                    DBCajaClass toDitchCaja = new DBCajaClass() { };
+                    cajaModel toDitchCaja = new cajaModel() { };
 
                     selectedVenta.Caja.MercadoPago = toDitchCaja.MercadoPago = vPagarVenta.resultMercadoPago;
                     selectedVenta.Caja.CajaActual = toDitchCaja.CajaActual = vPagarVenta.resultPagadoPesos;
                     selectedVenta.Caja.Vuelto = toDitchCaja.Vuelto = vPagarVenta.resultVuelto;
                     bool tempBoolPagarDeuda = vPagarVenta.resultPagarDeuda;
-                    DBDeudoresClass tempDeudor = vPagarVenta.resultDeudor;
+                    deudoresModel tempDeudor = vPagarVenta.resultDeudor;
 
                     selectedVenta.Deudor = tempDeudor;
 
@@ -250,9 +250,9 @@ namespace KioscoWPF.ViewModels
 
                     if (tempResultadoTotal <= selectedVenta.PrecioTotal)
                     {
-                        IOrderedEnumerable<DBVentaProductosClass> tempProductosVenta = selectedVenta.VentaProductosPerVenta.OrderBy(x => x.PrecioTotal);
+                        IOrderedEnumerable<ventaProductosModel> tempProductosVenta = selectedVenta.VentaProductosPerVenta.OrderBy(x => x.PrecioTotal);
 
-                        foreach (DBVentaProductosClass pv in tempProductosVenta)
+                        foreach (ventaProductosModel pv in tempProductosVenta)
                         {
                             if (tempResultadoTotal >= pv.Precio)
                             {
@@ -283,9 +283,9 @@ namespace KioscoWPF.ViewModels
 
                     if (tempBoolPagarDeuda && tempResultadoTotal > 0)
                     {
-                        IEnumerable<DBVentaProductosClass> tempListDeudaPendiente = tempDeudor.VentaProductosPerDeudor.Where(x => x.BolPagado == false);
+                        IEnumerable<ventaProductosModel> tempListDeudaPendiente = tempDeudor.VentaProductosPerDeudor.Where(x => x.BolPagado == false);
 
-                        foreach (DBVentaProductosClass deuda in tempListDeudaPendiente)
+                        foreach (ventaProductosModel deuda in tempListDeudaPendiente)
                         {
                             bool tempBoolAgregarCaja = false;
 
@@ -316,7 +316,7 @@ namespace KioscoWPF.ViewModels
                         }
                     }
 
-                    foreach (DBVentaProductosClass prod in selectedVenta.VentaProductosPerVenta) { prod.Producto.Stock -= prod.Cantidad; }
+                    foreach (ventaProductosModel prod in selectedVenta.VentaProductosPerVenta) { prod.Producto.Stock -= prod.Cantidad; }
                     Db.contabilizarCaja(selectedVenta.Caja);
                     _ = Variables.Inventario.Ventas.Add(selectedVenta);
 

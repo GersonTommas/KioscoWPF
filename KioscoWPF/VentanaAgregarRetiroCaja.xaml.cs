@@ -37,7 +37,7 @@ namespace KioscoWPF.ViewModels
         {
             thisWindow = tempWindow;
 
-            DBFechasClass tempFecha = Db.returnFecha();
+            fechasModel tempFecha = Db.returnFecha();
             String tempHora = Variables.strHora;
 
 
@@ -45,7 +45,7 @@ namespace KioscoWPF.ViewModels
             listUsuarios.SortDescriptions.Clear(); listUsuarios.SortDescriptions.Add(new SortDescription("Usuario", ListSortDirection.Ascending));
             listAutorizantes.SortDescriptions.Clear(); listAutorizantes.SortDescriptions.Add(new SortDescription("Usuario", ListSortDirection.Ascending));
 
-            selectedRetiroCaja.Fecha = tempFecha; selectedRetiroCaja.Hora = tempHora; selectedRetiroCaja.Caja = new DBCajaClass() { Fecha = tempFecha, Hora = tempHora };
+            selectedRetiroCaja.Fecha = tempFecha; selectedRetiroCaja.Hora = tempHora; selectedRetiroCaja.Caja = new cajaModel() { Fecha = tempFecha, Hora = tempHora };
             selectedRetiroCaja.Motivo = null;
         }
         #endregion // Initialize
@@ -53,11 +53,11 @@ namespace KioscoWPF.ViewModels
 
 
         #region Variables
-        DBMotivosRetirosCaja _newMotivo = new DBMotivosRetirosCaja();
-        public DBMotivosRetirosCaja newMotivo { get => _newMotivo; set { if (_newMotivo != value) { _newMotivo = value; OnPropertyChanged(); } } }
+        motivoRetirosModel _newMotivo = new motivoRetirosModel();
+        public motivoRetirosModel newMotivo { get => _newMotivo; set { if (_newMotivo != value) { _newMotivo = value; OnPropertyChanged(); } } }
 
 
-        public DBRetirosCaja selectedRetiroCaja { get; } = new DBRetirosCaja() { Pendiente = false };
+        public retirosCajaModel selectedRetiroCaja { get; } = new retirosCajaModel() { Pendiente = false };
 
 
 
@@ -102,10 +102,10 @@ namespace KioscoWPF.ViewModels
             if (newMotivo.Motivo != null) { newMotivo.Motivo = newMotivo.Motivo.Trim(); }
             try
             {
-                DBMotivosRetirosCaja tempMotivo = Variables.Inventario.RetiroMotivos.Local.Single(x => x.Motivo.ToLower() == newMotivo.Motivo.ToLower());
+                motivoRetirosModel tempMotivo = Variables.Inventario.RetiroMotivos.Local.Single(x => x.Motivo.ToLower() == newMotivo.Motivo.ToLower());
                 Variables.messageError.Existencia();
             }
-            catch { Variables.Inventario.RetiroMotivos.Local.Add(newMotivo); _ = Variables.Inventario.SaveChanges(); newMotivo = new DBMotivosRetirosCaja(); }
+            catch { Variables.Inventario.RetiroMotivos.Local.Add(newMotivo); _ = Variables.Inventario.SaveChanges(); newMotivo = new motivoRetirosModel(); }
         }
 
         bool checkGuardar => (selectedRetiroCaja.Caja.MercadoPago > 0 || selectedRetiroCaja.Caja.CajaActual > 0) && selectedRetiroCaja.Motivo != null && selectedRetiroCaja.UsuarioAutoriza != null && selectedRetiroCaja.UsuarioRetira != null;

@@ -18,7 +18,7 @@ namespace KioscoWPF
     /// </summary>
     public partial class VentanaDetallesProductos : Window
     {
-        public VentanaDetallesProductos(DBProductosClass sentProducto)
+        public VentanaDetallesProductos(productosModel sentProducto)
         {
             InitializeComponent(); try { (DataContext as ViewModels.VMDetallesProductos).setInitialize(this, sentProducto); } catch { }
         }
@@ -32,7 +32,7 @@ namespace KioscoWPF.ViewModels
         #region Initialize
         VentanaDetallesProductos thisWindow;
 
-        public void setInitialize(VentanaDetallesProductos tempWindow, DBProductosClass sentProducto)
+        public void setInitialize(VentanaDetallesProductos tempWindow, productosModel sentProducto)
         {
             thisWindow = tempWindow; _selectedProducto = sentProducto;
             OnPropertyChanged(nameof(selectedProducto));
@@ -40,8 +40,8 @@ namespace KioscoWPF.ViewModels
         #endregion // Initialize
 
         #region Variables
-        DBProductosClass _selectedProducto;
-        public DBProductosClass selectedProducto => _selectedProducto;
+        productosModel _selectedProducto;
+        public productosModel selectedProducto => _selectedProducto;
         #endregion // Variables
 
         #region Lists

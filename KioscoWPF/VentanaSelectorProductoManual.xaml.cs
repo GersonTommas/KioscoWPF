@@ -20,7 +20,7 @@ namespace KioscoWPF
     /// </summary>
     public partial class VentanaSelectorProductoManual : Window
     {
-        public DBProductosClass sendProduct;
+        public productosModel sendProduct;
 
         public VentanaSelectorProductoManual() { InitializeComponent(); (DataContext as ViewModels.VMSelectorProductoManual).setInitialize(this); }
     }
@@ -48,15 +48,15 @@ namespace KioscoWPF.ViewModels
 
         #region Commands
         public Command comAbrirProducto => new Command(
-            (object parameter) => { if (parameter != null) { abrirAgregarConvertido(parameter as DBProductosClass); } });
+            (object parameter) => { if (parameter != null) { abrirAgregarConvertido(parameter as productosModel); } });
 
         public Command comCancelar => new Command((object parameter) => thisWindow.DialogResult = false);
 
         public Command aComSelectorAgregarQuitar => new Command(
-            (object parameter) => { thisWindow.sendProduct = parameter as DBProductosClass; if (thisWindow.sendProduct != null) { thisWindow.DialogResult = true; } });
+            (object parameter) => { thisWindow.sendProduct = parameter as productosModel; if (thisWindow.sendProduct != null) { thisWindow.DialogResult = true; } });
 
         public Command aComUnSoloProducto => new Command(
-            (object parameter) => { thisWindow.sendProduct = parameter as DBProductosClass; if (thisWindow.sendProduct != null) { thisWindow.DialogResult = true; } },
+            (object parameter) => { thisWindow.sendProduct = parameter as productosModel; if (thisWindow.sendProduct != null) { thisWindow.DialogResult = true; } },
             (object parameter) => bolIsOnlyOne);
         #endregion // Commands
     }
