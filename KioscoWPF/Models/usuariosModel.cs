@@ -6,28 +6,26 @@ using System.Text;
 
 namespace KioscoWPF
 {
-    public class usuariosModel : Base.PropertyChangedBase
+    public class usuariosModel : Base.ModelBase
     {
         #region Private
         int _Nivel; Double _Resto; string _Nombre, _Apellido, _Detalle, _Contraseña, _Usuario; String _Fecha, _FechaSalida; bool _Activo;
         #endregion // Private
 
         #region Public
-        public int Id { get; set; }
+        public int Nivel { get => _Nivel; set { if (SetProperty(ref _Nivel, value)) { OnPropertyChanged(); } } }
+        public Double Resto { get => _Resto; set { if (SetProperty(ref _Resto, Math.Round(value, 2))) { OnPropertyChanged(); } } }
 
-        public int Nivel { get => _Nivel; set => SetProperty(ref _Nivel, value); }
-        public Double Resto { get => _Resto; set => SetProperty(ref _Resto, Math.Round(value, 2)); }
+        public string Nombre { get => _Nombre; set { if (SetProperty(ref _Nombre, value)) { OnPropertyChanged(); } } }
+        public string Apellido { get => _Apellido; set { if (SetProperty(ref _Apellido, value)) { OnPropertyChanged(); } } }
+        public string Usuario { get => _Usuario; set { if (SetProperty(ref _Usuario, value)) { OnPropertyChanged(); } } }
+        public string Detalle { get => _Detalle; set { if (SetProperty(ref _Detalle, value)) { OnPropertyChanged(); } } }
+        public string Contraseña { get => _Contraseña; set { if (SetProperty(ref _Contraseña, value)) { OnPropertyChanged(); } } }
 
-        public string Nombre { get => _Nombre; set => SetProperty(ref _Nombre, value); }
-        public string Apellido { get => _Apellido; set => SetProperty(ref _Apellido, value); }
-        public string Usuario { get => _Usuario; set => SetProperty(ref _Usuario, value); }
-        public string Detalle { get => _Detalle; set => SetProperty(ref _Detalle, value); }
-        public string Contraseña { get => _Contraseña; set => SetProperty(ref _Contraseña, value); }
+        public String FechaIngreso { get => _Fecha; set { if (SetProperty(ref _Fecha, Convert.ToDateTime(value).ToString("yyyy/MM/dd"))) { OnPropertyChanged(); } } }
+        public String FechaSalida { get => _FechaSalida; set { if (SetProperty(ref _FechaSalida, Convert.ToDateTime(value).ToString("yyyy/MM/dd"))) { OnPropertyChanged(); } } }
 
-        public String FechaIngreso { get => _Fecha; set => SetProperty(ref _Fecha, Convert.ToDateTime(value).ToString("yyyy/MM/dd")); }
-        public String FechaSalida { get => _FechaSalida; set => SetProperty(ref _FechaSalida, Convert.ToDateTime(value).ToString("yyyy/MM/dd")); }
-
-        public bool Activo { get => _Activo; set => SetProperty(ref _Activo, value); }
+        public bool Activo { get => _Activo; set { if (SetProperty(ref _Activo, value)) { OnPropertyChanged(); } } }
         #endregion // Public
 
         #region Navigation
@@ -44,5 +42,10 @@ namespace KioscoWPF
         [InverseProperty(nameof(retirosCajaModel.UsuarioRetira))]
         public virtual ICollection<retirosCajaModel> RetirosRetiraPerUsuario { get; private set; } = new ObservableCollection<retirosCajaModel>();
         #endregion // Navigation
+
+        public override void updateModel()
+        {
+            base.updateModel();
+        }
     }
 }

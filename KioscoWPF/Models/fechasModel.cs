@@ -11,18 +11,14 @@ using System.Windows.Data;
 
 namespace KioscoWPF
 {
-    public class fechasModel : Base.PropertyChangedBase
+    public class fechasModel : Base.ModelBase
     {
         #region Private
         String _Fecha;
         #endregion // Private
 
         #region Public
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
-        public String Fecha { get => _Fecha; set => SetProperty(ref _Fecha, Convert.ToDateTime(value).ToString("yyyy/MM/dd")); }
+        public String Fecha { get => _Fecha; set { if (SetProperty(ref _Fecha, Convert.ToDateTime(value).ToString("yyyy/MM/dd"))) { OnPropertyChanged(); } } }
         #endregion // Public
 
         #region Navigation
@@ -83,5 +79,10 @@ namespace KioscoWPF
             OnPropertyChanged(nameof(fechasModel));
         }
         #endregion // NotMapped
+
+        public override void updateModel()
+        {
+            base.updateModel();
+        }
     }
 }

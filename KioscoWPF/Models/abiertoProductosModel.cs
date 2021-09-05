@@ -1,32 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace KioscoWPF
 {
-    public class abiertoProductosModel : Base.PropertyChangedBase
+    public class abiertoProductosModel : Base.ModelBase
     {
         #region Private
         int _CantidadSacado, _CantidadAgregado; productosModel _ProductoSacado, _ProductoAgregado; fechasModel _Fecha; usuariosModel _Usuario;
         #endregion // Private
 
         #region Public
-        public int Id { get; set; }
-
-        public int CantidadSacado { get => _CantidadSacado; set => SetProperty(ref _CantidadSacado, value); }
-        public int CantidadAgregado { get => _CantidadAgregado; set => SetProperty(ref _CantidadAgregado, value); }
+        public int CantidadSacado { get => _CantidadSacado; set { if (SetProperty(ref _CantidadSacado, value)) { OnPropertyChanged(); } } }
+        public int CantidadAgregado { get => _CantidadAgregado; set { if (SetProperty(ref _CantidadAgregado, value)) { OnPropertyChanged(); } } }
 
         public int ProductoSacadoID { get; set; }
-        public virtual productosModel ProductoSacado { get => _ProductoSacado; set => SetProperty(ref _ProductoSacado, value); }
+        public virtual productosModel ProductoSacado { get => _ProductoSacado; set { if (SetProperty(ref _ProductoSacado, value)) { OnPropertyChanged(); } } }
 
         public int ProductoAgregadoID { get; set; }
-        public virtual productosModel ProductoAgregado { get => _ProductoAgregado; set => SetProperty(ref _ProductoAgregado, value); }
+        public virtual productosModel ProductoAgregado { get => _ProductoAgregado; set { if (SetProperty(ref _ProductoAgregado, value)) { OnPropertyChanged(); } } }
 
         public int FechaID { get; set; }
-        public virtual fechasModel Fecha { get => _Fecha; set => SetProperty(ref _Fecha, value); }
+        public virtual fechasModel Fecha { get => _Fecha; set { if (SetProperty(ref _Fecha, value)) { OnPropertyChanged(); } } }
 
         public int UsuarioID { get; set; }
-        public virtual usuariosModel Usuario { get => _Usuario; set => SetProperty(ref _Usuario, value); }
+        public virtual usuariosModel Usuario { get => _Usuario; set { if (SetProperty(ref _Usuario, value)) { OnPropertyChanged(); } } }
         #endregion // Public
+
+        public override void updateModel()
+        {
+            base.updateModel();
+        }
     }
 }

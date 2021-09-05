@@ -43,11 +43,9 @@ namespace KioscoWPF.ViewModels
 
 
     #region Binding
-    public class VMVentanaPrincipal : helperObservableClass
+    public class VMVentanaPrincipal : Base.ViewModelBase
     {
         #region Initialize
-        public VentanaPrincipal thisWindow;
-
         public VMVentanaPrincipal()
         {
             try
@@ -81,6 +79,24 @@ namespace KioscoWPF.ViewModels
         public string strClock { get => _strClock; set { if (_strClock != value) { _strClock = value; OnPropertyChanged(nameof(strClock)); } } }
         #endregion // Clock
 
+        #region Search
+        readonly System.Windows.Threading.DispatcherTimer _searchTimer = new System.Windows.Threading.DispatcherTimer();
+        void initilizeSearchTimer() { _searchTimer.Tick += new EventHandler(searchTimer_Click); _searchTimer.Interval = new TimeSpan(0, 0, 0, 0, 150); }
+        void searchTimer_Click(object sender, EventArgs e) { searchTimerClick(); _searchTimer.Stop(); }
+
+        void searchTimerRestart()
+        {
+            _searchTimer.Stop();
+            _searchTimer.Start();
+        }
+
+        void searchTimerClick()
+        {
+            stockListProductosView.Refresh();
+            OnPropertyChanged(nameof(stockIntProductosTotal));
+        }
+        #endregion // Search
+
 
         #region Menu
         bool _menuViewDeudas = true;
@@ -108,8 +124,7 @@ namespace KioscoWPF.ViewModels
 
 
         #region Private
-        VentanaCaja vCaja;
-        VentanaStock vStock;
+        Views.addConteoCajaView vCaja;
         #endregion Private
 
 
@@ -122,7 +137,7 @@ namespace KioscoWPF.ViewModels
 
 
         #region Commands
-        public Command comCerrarSesion => new Command((object parameter) => { vCaja = new VentanaCaja(true); vCaja.Show(); thisWindow.Close(); });
+        public Command comCerrarSesion => new Command((object parameter) => { vCaja = new Views.addConteoCajaView(true); vCaja.Show(); thisWindow.Close(); });
 
         public Command comOpciones => new Command((object parameter) => { XOpciones xOpciones = new XOpciones(); _ = xOpciones.ShowDialog(); });
         #endregion // Commands
@@ -163,12 +178,6 @@ namespace KioscoWPF.ViewModels
             };
         }
 
-        public override void searchTimerClick()
-        {
-            stockListProductosView.Refresh();
-            OnPropertyChanged(nameof(stockIntProductosTotal));
-        }
-
 
         productosModel _stockSelectedProduct;
         public productosModel stockSelectedProducto { get => _stockSelectedProduct; set { if (_stockSelectedProduct != value) { _stockSelectedProduct = value; OnPropertyChanged(); } } }
@@ -193,30 +202,28 @@ namespace KioscoWPF.ViewModels
 
 
         public Command comStockDetalleProducto => new Command(
-            (object parameter) => abrirDetallesProductos(stockSelectedProducto),
+            (object parameter) => gOpenDetallesProducto(stockSelectedProducto),
             (object parameter) => stockSelectedProducto != null);
 
         public Command comStockCodigoDescripcion => new Command((object parameter) => { stockStrSearch = ""; stockBolCodigoDescripcion = !stockBolCodigoDescripcion; });
 
         public Command comStockEditarProducto => new Command(
-            (object parameter) => abrirAgregarProducto(stockSelectedProducto),
+            (object parameter) => gOpenEditProducto(stockSelectedProducto),
             (object parameter) => stockSelectedProducto != null);
 
         public Command comStockDesactivarProducto => new Command(
             (object parameter) => { stockSelectedProducto.Activo = !stockSelectedProducto.Activo; _ = Variables.Inventario.SaveChanges(); stockListProductosView.Refresh(); },
             (object parameter) => stockSelectedProducto != null);
 
-        public Command comStockNuevoProducto => new Command((object parameter) => abrirAgregarProducto());
+        public Command comStockNuevoProducto => new Command((object parameter) => gOpenAddProducto());
 
         public Command comStockModificarStock => new Command(
-            (object parameter) => abrirModificarStockProducto(stockSelectedProducto),
+            (object parameter) => gOpenModificarStock(stockSelectedProducto),
             (object parameter) => stockSelectedProducto != null);
 
         public Command comStockAbrirProducto => new Command(
-            (object parameter) => abrirAgregarConvertido(stockSelectedProducto),
+            (object parameter) => gOpenAddConversion(stockSelectedProducto),
             (object parameter) => stockSelectedProducto != null);
-
-        public Command comStock => new Command((object parameter) => { vStock = new VentanaStock(); _ = vStock.ShowDialog(); });
         #endregion // Stock
 
 
@@ -245,7 +252,7 @@ namespace KioscoWPF.ViewModels
         public ICollectionView ventasListFechas => ventasListFechasSource.View;
 
 
-        public Command comVenta => new Command((object parameter) => { abrirAgregarVentas(); });
+        public Command comVenta => new Command((object parameter) => { gOpenAddVenta(); });
         #endregion // Ventas
 
 
@@ -272,7 +279,7 @@ namespace KioscoWPF.ViewModels
         public ICollectionView ingresosListFechas => ingresosListFechasSource.View;
 
 
-        public Command comIngreso => new Command((object parameter) => abrirAgregarIngresos());
+        public Command comIngreso => new Command((object parameter) => gOpenAddIngreso());
         #endregion // Ingresos
 
 
@@ -293,7 +300,7 @@ namespace KioscoWPF.ViewModels
 
 
         public Command comAgregarSacado => new Command(
-            (object parameter) => abrirAgregarSacado(sacadoSelectedUsuario),
+            (object parameter) => gOpenAddSacado(sacadoSelectedUsuario),
             (object parameter) => sacadoSelectedUsuario != null);
         #endregion // Sacado
 
@@ -315,7 +322,7 @@ namespace KioscoWPF.ViewModels
         public ICollectionView consumosListFechas => consumosListFechasSource.View;
 
 
-        public Command comConsumir => new Command((object parameter) => abrirAgregarConsumo());
+        public Command comConsumir => new Command((object parameter) => gOpenAddConsumo());
         #endregion // Consumos
 
 
@@ -340,7 +347,7 @@ namespace KioscoWPF.ViewModels
 
         public void updateDeudores()
         {
-            if (deudasSelectedDeudor != null) { deudasSelectedDeudor.updateDeudor(); }
+            if (deudasSelectedDeudor != null) { deudasSelectedDeudor.updateModel(); }
         }
 
         deudoresModel _deudasSelectedDeudor;
@@ -368,13 +375,13 @@ namespace KioscoWPF.ViewModels
 
 
         public Command comEditarDeudor => new Command(
-            (object parameter) => abrirAgregarDeudor(deudasSelectedDeudor),
+            (object parameter) => gOpenEditDeudor(deudasSelectedDeudor),
             (object parameter) => deudasSelectedDeudor != null);
 
-        public Command comNuevoDeudor => new Command((object parameter) => abrirAgregarDeudor());
+        public Command comNuevoDeudor => new Command((object parameter) => gOpenAddDeudor());
 
         public Command comDeduasPagar => new Command(
-            (object parameter) => { VentanaPagarDeuda vPagarDeuda = new VentanaPagarDeuda(deudasSelectedDeudor); _ = vPagarDeuda.ShowDialog(); deudasListDeudores.Refresh(); OnPropertyChanged(nameof(deudasSelectedDeudor)); },
+            (object parameter) => { Views.pagarDeudaView vPagarDeuda = new Views.pagarDeudaView(deudasSelectedDeudor); _ = vPagarDeuda.ShowDialog(); deudasListDeudores.Refresh(); OnPropertyChanged(nameof(deudasSelectedDeudor)); },
             (object parameter) => deudasSelectedDeudor != null);
         #endregion // Deudas
 
@@ -385,21 +392,15 @@ namespace KioscoWPF.ViewModels
         public usuariosModel usuariosSelectedUsuario { get => _usuariosSelectedUsuario; set { if (_usuariosSelectedUsuario != value) { _usuariosSelectedUsuario = value; OnPropertyChanged(); } } }
 
 
-        public Command comUsuariosNuevoUsuario => new Command((object parameter) => abrirAgregarUsuario());
+        public Command comUsuariosNuevoUsuario => new Command((object parameter) => gOpenAddUsuario());
 
         public Command comUsuariosEditarUsuario => new Command(
-            (object parameter) => abrirAgregarUsuario(usuariosSelectedUsuario),
+            (object parameter) => gOpenEditUsuario(usuariosSelectedUsuario),
             (object parameter) => usuariosSelectedUsuario != null);
 
-        public Command comUsuariosDesactivarUsuario
-        {
-            get
-            {
-                return new Command(
+        public Command comUsuariosDesactivarUsuario => new Command(
                 (object parameter) => { usuariosSelectedUsuario.Activo = !usuariosSelectedUsuario.Activo; _ = Variables.Inventario.SaveChanges(); },
                 (object parameter) => usuariosSelectedUsuario != null);
-            }
-        }
         #endregion // Usuarios
 
 
@@ -422,10 +423,10 @@ namespace KioscoWPF.ViewModels
         public ICollectionView tagsListTags => _tagsListTagsSource.View;
 
 
-        public Command comTagsNuevoTag => new Command((object parameter) => abrirAgregarTag());
+        public Command comTagsNuevoTag => new Command((object parameter) => gOpenAddTag());
 
         public Command comTagsEditarTag => new Command(
-            (object parameter) => { _ = abrirAgregarTag(tagsSelectedTag); OnPropertyChanged(nameof(stockListProductosView)); },
+            (object parameter) => { _ = gOpenEditTag(tagsSelectedTag); OnPropertyChanged(nameof(stockListProductosView)); },
             (object parameter) => tagsSelectedTag != null);
 
         public Command comTagsAlarmaTag => new Command(
@@ -455,10 +456,10 @@ namespace KioscoWPF.ViewModels
         public ICollectionView medidasListMedidas => _medidasListMedidasSource.View;
 
 
-        public Command comMedidasNuevaMedida => new Command((object parameter) => { _ = abrirAgregarMedidas(); OnPropertyChanged(nameof(medidasIntTotalMedidas)); });
+        public Command comMedidasNuevaMedida => new Command((object parameter) => { _ = gOpenAddMedida(); OnPropertyChanged(nameof(medidasIntTotalMedidas)); });
 
         public Command comMedidasEditarMedida => new Command(
-            (object parameter) => { _ = abrirAgregarMedidas(medidasSelectedMedida); OnPropertyChanged(nameof(medidasIntTotalMedidas)); },
+            (object parameter) => { _ = gOpenEditMedida(medidasSelectedMedida); OnPropertyChanged(nameof(medidasIntTotalMedidas)); },
             (object parameter) => medidasSelectedMedida != null);
 
         public Command comMedidasCambiarEstado => new Command(
@@ -495,7 +496,7 @@ namespace KioscoWPF.ViewModels
         public ICollectionView retirosListALLRetiros => _retirosListALLRetirosSource.View;
 
 
-        public Command comRetiro => new Command((object paramter) => abrirAgregarRetiroCaja());
+        public Command comRetiro => new Command((object paramter) => gOpenAddRetiroCaja());
         #endregion // Retiros
 
 
@@ -552,10 +553,10 @@ namespace KioscoWPF.ViewModels
         public ICollectionView proveedoresListProveedores => _proveedoresListProveedoresSource.View;
 
 
-        public Command comProveedoresNuevoProveedor => new Command((object parameter) => abrirAgregarProveedor());
+        public Command comProveedoresNuevoProveedor => new Command((object parameter) => gOpenAddProveedor());
 
         public Command comProveedoresEditarProveedor => new Command(
-            (object parameter) => abrirAgregarProveedor(proveedoresSelectedProveedor),
+            (object parameter) => gOpenEditProveedor(proveedoresSelectedProveedor),
             (object parameter) => proveedoresSelectedProveedor != null);
 
         public Command comProveedoresDesactivarProveedor => new Command((object parameter) => { proveedoresSelectedProveedor.Activo = !proveedoresSelectedProveedor.Activo; _ = Variables.Inventario.SaveChanges(); });

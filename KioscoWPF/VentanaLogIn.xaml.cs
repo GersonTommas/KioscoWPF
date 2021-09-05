@@ -50,7 +50,7 @@ namespace KioscoWPF.ViewModels
 
 
         #region Read Only
-        VentanaCaja vCaja;
+        Views.addConteoCajaView vCaja;
 
         readonly CollectionViewSource _listUsersSource = new CollectionViewSource();
         public ICollectionView listUsuarios => _listUsersSource.View;
@@ -66,7 +66,7 @@ namespace KioscoWPF.ViewModels
         {
             if (selectedUser != null && !string.IsNullOrWhiteSpace(((PasswordBox)sender).Password) && ((PasswordBox)sender).Password == selectedUser.Contraseña)
             {
-                Variables.UsuarioLogueado = selectedUser; vCaja = new VentanaCaja(); vCaja.Show(); thisWindow.Close();
+                Variables.UsuarioLogueado = selectedUser; vCaja = new Views.addConteoCajaView(); vCaja.Show(); thisWindow.Close();
             }
             else { Variables.messageError.LogIn(); if (sender != null) { ((PasswordBox)sender).SelectAll(); } }
         }

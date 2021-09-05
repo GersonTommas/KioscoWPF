@@ -7,7 +7,7 @@ using System.Text;
 
 namespace KioscoWPF
 {
-    public class ingresosModel : Base.PropertyChangedBase
+    public class ingresosModel : Base.ModelBase
     {
         #region Private
         Double _PagadoPesos, _PagadoMP; String _Hora; string _Detalle; proveedoresModel _Proveedor; usuariosModel _Usuario; fechasModel _Fecha;
@@ -15,22 +15,20 @@ namespace KioscoWPF
 
 
         #region Public
-        public int Id { get; set; }
+        public Double PagadoPesos { get => _PagadoPesos; set { if (SetProperty(ref _PagadoPesos, Math.Round(value, 2))) { OnPropertyChanged(); } } }
+        public Double PagadoMP { get => _PagadoMP; set { if (SetProperty(ref _PagadoMP, Math.Round(value, 2))) { OnPropertyChanged(); } } }
 
-        public Double PagadoPesos { get => _PagadoPesos; set => SetProperty(ref _PagadoPesos, Math.Round(value, 2)); }
-        public Double PagadoMP { get => _PagadoMP; set => SetProperty(ref _PagadoMP, Math.Round(value, 2)); }
-
-        public String Hora { get => _Hora; set => SetProperty(ref _Hora, Convert.ToDateTime(value).ToString("HH:mm:ss")); }
-        public string Detalle { get => _Detalle; set => SetProperty(ref _Detalle, value); }
+        public String Hora { get => _Hora; set { if (SetProperty(ref _Hora, Convert.ToDateTime(value).ToString("HH:mm:ss"))) { OnPropertyChanged(); } } }
+        public string Detalle { get => _Detalle; set { if (SetProperty(ref _Detalle, value)) { OnPropertyChanged(); } } }
 
         public int UsuarioID { get; set; }
-        public virtual usuariosModel Usuario { get => _Usuario; set => SetProperty(ref _Usuario, value); }
+        public virtual usuariosModel Usuario { get => _Usuario; set { if (SetProperty(ref _Usuario, value)) { OnPropertyChanged(); } } }
 
         public int ProveedorID { get; set; }
-        public virtual proveedoresModel Proveedor { get => _Proveedor; set => SetProperty(ref _Proveedor, value); }
+        public virtual proveedoresModel Proveedor { get => _Proveedor; set { if (SetProperty(ref _Proveedor, value)) { OnPropertyChanged(); } } }
 
         public int FechaID { get; set; }
-        public virtual fechasModel Fecha { get => _Fecha; set => SetProperty(ref _Fecha, value); }
+        public virtual fechasModel Fecha { get => _Fecha; set { if (SetProperty(ref _Fecha, value)) { OnPropertyChanged(); } } }
         #endregion // Public
 
         #region Navigation
@@ -44,5 +42,10 @@ namespace KioscoWPF
         [NotMapped]
         public int ingresosCantidadProductosPerIngreso => IngresoProductosPerIngreso.Count();
         #endregion // NotMapped
+
+        public override void updateModel()
+        {
+            base.updateModel();
+        }
     }
 }

@@ -14,16 +14,17 @@ namespace KioscoWPF.Base
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }
 
-        protected virtual bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string PropertyName = "")
+        protected virtual bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string PropertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(storage, value))
             {
                 return false;
             }
-
-            storage = value;
-            OnPropertyChanged(PropertyName);
-            return true;
+            else
+            {
+                storage = value;
+                return true;
+            }
         }
     }
 }

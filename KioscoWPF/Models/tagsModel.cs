@@ -6,20 +6,18 @@ using System.Text;
 
 namespace KioscoWPF
 {
-    public class tagsModel : Base.PropertyChangedBase
+    public class tagsModel : Base.ModelBase
     {
         #region Private
         int _Minimo; string _Tag; bool _Activo;
         #endregion // Private
 
         #region Public
-        public int Id { get; set; }
+        public int Minimo { get => _Minimo; set { if (SetProperty(ref _Minimo, value)) { OnPropertyChanged(); OnPropertyChanged(nameof(fullTag)); } } }
 
-        public int Minimo { get => _Minimo; set { if (SetProperty(ref _Minimo, value)) { OnPropertyChanged(nameof(fullTag)); } } }
+        public string Tag { get => _Tag; set { if (SetProperty(ref _Tag, value)) { OnPropertyChanged(); OnPropertyChanged(nameof(fullTag)); } } }
 
-        public string Tag { get => _Tag; set { if (SetProperty(ref _Tag, value)) { OnPropertyChanged(nameof(fullTag)); } } }
-
-        public bool Activo { get => _Activo; set => SetProperty(ref _Activo, value); }
+        public bool Activo { get => _Activo; set { if (SetProperty(ref _Activo, value)) { OnPropertyChanged(); } } }
         #endregion // Public
 
         #region Navigation
@@ -30,5 +28,10 @@ namespace KioscoWPF
         [NotMapped]
         public string fullTag => Tag + " " + Minimo.ToString();
         #endregion // Not Mapped
+
+        public override void updateModel()
+        {
+            base.updateModel();
+        }
     }
 }

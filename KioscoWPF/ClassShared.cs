@@ -142,14 +142,14 @@ namespace KioscoWPF
 
     public abstract class helperObservableClass : ObservableClass
     {
-        public VentanaHelperCantidad vHelperCantidad;
-        public VentanaHelperPrecio vHelperPrecio;
-        public VentanaHelperPrecioPrecioCantidad vHelperPrecioPrecioCantidad;
+        //public VentanaHelperCantidad vHelperCantidad;
+        //public VentanaHelperPrecio vHelperPrecio;
+        //public VentanaHelperPrecioPrecioCantidad vHelperPrecioPrecioCantidad;
         public VentanaImagen vImagen;
         public VentanaLogIn vLogIn;
         public VentanaPrincipal vPrincipal;
-        public VentanaSelectorProductoManual vSProductoManual;
-        public VentanaPagarVenta vPagarVenta;
+        //public VentanaSelectorProductoManual vSProductoManual;
+        //public VentanaPagarVenta vPagarVenta;
 
 
         public readonly System.Windows.Threading.DispatcherTimer _searchTimer = new System.Windows.Threading.DispatcherTimer();
@@ -166,150 +166,138 @@ namespace KioscoWPF
             _searchTimer.Start();
         }
 
-        public bool abrirAgregarConsumo()
+        public bool gOpenAddConsumo()
         {
-            VentanaAgregarConsumo vTemp = new VentanaAgregarConsumo();
+            Views.addConsumoView vTemp = new Views.addConsumoView();
             return vTemp.ShowDialog().Value;
         }
 
-        public bool abrirAgregarConvertido(productosModel sentProducto)
+        public bool gOpenAddConversion(productosModel sentProducto)
         {
-            VentanaAgregarConvertido vTemp = new VentanaAgregarConvertido(sentProducto);
+            Views.addConversionView vTemp = new Views.addConversionView(sentProducto);
             return vTemp.ShowDialog().Value;
         }
 
-        public bool abrirAgregarDeudor()
+        public bool gOpenAddDeudor()
         {
-            VentanaAgregarDeudor vTemp = new VentanaAgregarDeudor();
+            Views.addDeudorView vTemp = new Views.addDeudorView();
             return vTemp.ShowDialog().Value;
         }
-        public bool abrirAgregarDeudor(deudoresModel sentDeudor)
+        public bool gOpenAddDeudor(deudoresModel sentDeudor)
         {
-            VentanaAgregarDeudor vTemp = new VentanaAgregarDeudor(sentDeudor);
-            return vTemp.ShowDialog().Value;
-        }
-
-        public void abrirAgregarIngresos()
-        {
-            if (Application.Current.Windows.OfType<VentanaAgregarIngresos>().Any()) { _ = Application.Current.Windows.OfType<VentanaAgregarIngresos>().FirstOrDefault().Focus(); } else { VentanaAgregarIngresos temp = new VentanaAgregarIngresos(); temp.Show(); }
-        }
-
-        public bool abrirAgregarMedidas()
-        {
-            VentanaAgregarMedidas vTemp = new VentanaAgregarMedidas();
-            return vTemp.ShowDialog().Value;
-        }
-        public bool abrirAgregarMedidas(medidasModel sentmedida)
-        {
-            VentanaAgregarMedidas vTemp = new VentanaAgregarMedidas(sentmedida);
+            Views.addDeudorView vTemp = new Views.addDeudorView(sentDeudor);
             return vTemp.ShowDialog().Value;
         }
 
-        public bool abrirAgregarProducto()
+        public void gOpenAddIngreso()
         {
-            VentanaAgregarProducto vTemp = new VentanaAgregarProducto();
+            if (Application.Current.Windows.OfType<Views.addIngresoView>().Any()) { _ = Application.Current.Windows.OfType<Views.addIngresoView>().FirstOrDefault().Focus(); } else { Views.addIngresoView temp = new Views.addIngresoView(); temp.Show(); }
+        }
+
+        public bool gOpenAddMedida()
+        {
+            Views.addMedidaView vTemp = new Views.addMedidaView();
             return vTemp.ShowDialog().Value;
         }
-        public bool abrirAgregarProducto(string sentString)
+        public bool gOpenAddMedida(medidasModel sentmedida)
         {
-            VentanaAgregarProducto vTemp = new VentanaAgregarProducto(sentString);
-            return vTemp.ShowDialog().Value;
-        }
-        public bool abrirAgregarProducto(productosModel sentProducto)
-        {
-            VentanaAgregarProducto vTemp = new VentanaAgregarProducto(sentProducto);
+            Views.addMedidaView vTemp = new Views.addMedidaView(sentmedida);
             return vTemp.ShowDialog().Value;
         }
 
-        public bool abrirAgregarProveedor()
+        public bool gOpenAddProducto()
         {
-            VentanaAgregarProveedor vTemp = new VentanaAgregarProveedor();
+            Views.addProductoView vTemp = new Views.addProductoView();
             return vTemp.ShowDialog().Value;
         }
-        public bool abrirAgregarProveedor(proveedoresModel sentProveedor)
+        public bool gOpenAddProducto(string sentString)
         {
-            VentanaAgregarProveedor vTemp = new VentanaAgregarProveedor(sentProveedor);
+            Views.addProductoView vTemp = new Views.addProductoView(sentString);
             return vTemp.ShowDialog().Value;
         }
-
-        public bool abrirAgregarRetiroCaja()
+        public bool gOpenAddProducto(productosModel sentProducto)
         {
-            VentanaAgregarRetiroCaja vTemp = new VentanaAgregarRetiroCaja();
-            return vTemp.ShowDialog().Value;
-        }
-
-        public bool abrirAgregarSacado(usuariosModel sentUsuario)
-        {
-            VentanaAgregarSacado vTemp = new VentanaAgregarSacado(sentUsuario);
+            Views.addProductoView vTemp = new Views.addProductoView(sentProducto);
             return vTemp.ShowDialog().Value;
         }
 
-        public bool abrirAgregarTag()
+        public bool gOpenAddProveedor()
         {
-            VentanaAgregarTag vTemp = new VentanaAgregarTag();
+            Views.addProveedorView vTemp = new Views.addProveedorView();
             return vTemp.ShowDialog().Value;
         }
-        public bool abrirAgregarTag(tagsModel sentTag)
+        public bool gOpenAddProveedor(proveedoresModel sentProveedor)
         {
-            VentanaAgregarTag vTemp = new VentanaAgregarTag(sentTag);
-            return vTemp.ShowDialog().Value;
-        }
-
-        public bool abrirAgregarUsuario()
-        {
-            VentanaAgregarUsuario vTemp = new VentanaAgregarUsuario();
-            return vTemp.ShowDialog().Value;
-        }
-        public bool abrirAgregarUsuario(usuariosModel sentUsuario)
-        {
-            VentanaAgregarUsuario vTemp = new VentanaAgregarUsuario(sentUsuario);
+            Views.addProveedorView vTemp = new Views.addProveedorView(sentProveedor);
             return vTemp.ShowDialog().Value;
         }
 
-        public void abrirAgregarVentas()
+        public bool gOpenAddRetiro()
         {
-            if (Application.Current.Windows.OfType<VentanaAgregarVentas>().Any()) { Application.Current.Windows.OfType<VentanaAgregarVentas>().FirstOrDefault().Focus(); } else { VentanaAgregarVentas temp = new VentanaAgregarVentas(); temp.Show(); }
-        }
-
-        public bool abrirCaja(bool sentBol = false)
-        {
-            VentanaCaja vTemp = new VentanaCaja(sentBol);
+            Views.addRetiroCajaView vTemp = new Views.addRetiroCajaView();
             return vTemp.ShowDialog().Value;
         }
 
-        public bool abrirDetallesProductos(productosModel sentProducto)
+        public bool gOpenAddSacado(usuariosModel sentUsuario)
         {
-            VentanaDetallesProductos vTemp = new VentanaDetallesProductos(sentProducto);
+            Views.addSacadoView vTemp = new Views.addSacadoView(sentUsuario);
             return vTemp.ShowDialog().Value;
         }
 
-        public bool abrirModificarStockProducto(productosModel sentProducto)
+        public bool gOpenAddTag()
         {
-            VentanaModificarStockProducto vTemp = new VentanaModificarStockProducto(sentProducto);
+            Views.addTagView vTemp = new Views.addTagView();
+            return vTemp.ShowDialog().Value;
+        }
+        public bool gOpenAddTag(tagsModel sentTag)
+        {
+            Views.addTagView vTemp = new Views.addTagView(sentTag);
             return vTemp.ShowDialog().Value;
         }
 
-        public bool abrirPagarDeuda(deudoresModel sentDeudor)
+        public bool gOpenAddUsuario()
         {
-            VentanaPagarDeuda vTemp = new VentanaPagarDeuda(sentDeudor);
+            Views.addUsuarioView vTemp = new Views.addUsuarioView();
+            return vTemp.ShowDialog().Value;
+        }
+        public bool gOpenAddUsuario(usuariosModel sentUsuario)
+        {
+            Views.addUsuarioView vTemp = new Views.addUsuarioView(sentUsuario);
             return vTemp.ShowDialog().Value;
         }
 
-        public bool abrirPagarSacado(usuariosModel sentUsuario)
+        public void gOpenAddVenta()
         {
-            VentanaPagarSacado vTemp = new VentanaPagarSacado(sentUsuario);
+            if (Application.Current.Windows.OfType<Views.addVentaView>().Any()) { Application.Current.Windows.OfType<Views.addVentaView>().FirstOrDefault().Focus(); } else { Views.addVentaView temp = new Views.addVentaView(); temp.Show(); }
+        }
+
+        public bool gOpenAddCaja(bool sentBol = false)
+        {
+            Views.addConteoCajaView vTemp = new Views.addConteoCajaView(sentBol);
             return vTemp.ShowDialog().Value;
         }
 
-        public bool abrirRetirosCaja()
+        public bool gOpenDetailsProductos(productosModel sentProducto)
         {
-            VentanaRetirosCaja vTemp = new VentanaRetirosCaja();
+            Views.detallesProductoView vTemp = new Views.detallesProductoView(sentProducto);
             return vTemp.ShowDialog().Value;
         }
 
-        public bool abrirStock()
+        public bool gOpenStockProducto(productosModel sentProducto)
         {
-            VentanaStock vTemp = new VentanaStock();
+            Views.helperModificarStockView vTemp = new Views.helperModificarStockView(sentProducto);
+            return vTemp.ShowDialog().Value;
+        }
+
+        public bool gOpenPagarDeuda(deudoresModel sentDeudor)
+        {
+            Views.pagarDeudaView vTemp = new Views.pagarDeudaView(sentDeudor);
+            return vTemp.ShowDialog().Value;
+        }
+
+        public bool gOpenPagarSacado(usuariosModel sentUsuario)
+        {
+            Views.pagarSacadoView vTemp = new Views.pagarSacadoView(sentUsuario);
             return vTemp.ShowDialog().Value;
         }
 
@@ -320,9 +308,6 @@ namespace KioscoWPF
 
     }
     #endregion // Property Changed
-
-    #region Focus
-    #endregion // Focus
 
 
     #region Converters
@@ -464,21 +449,6 @@ namespace KioscoWPF
     #endregion // Helpers
     class ClassShared
     {
-    }
-
-    public static class SendKeys
-    {
-        public static void Send(Key key)
-        {
-            if (Keyboard.PrimaryDevice != null)
-            {
-                if (Keyboard.PrimaryDevice.ActiveSource != null)
-                {
-                    var e1 = new KeyEventArgs(Keyboard.PrimaryDevice, Keyboard.PrimaryDevice.ActiveSource, 0, key) { RoutedEvent = Keyboard.KeyDownEvent };
-                    InputManager.Current.ProcessInput(e1);
-                }
-            }
-        }
     }
 
 }

@@ -6,26 +6,24 @@ using System.Text;
 
 namespace KioscoWPF
 {
-    public class cajaModel : Base.PropertyChangedBase
+    public class cajaModel : Base.ModelBase
     {
         #region Private
         Double _CajaActual, _MercadoPago, _Vuelto; String _Hora; fechasModel _Fecha; cajaConteosModel _CajaConteoForCaja; ventasModel _VentaForCaja;
         #endregion // Private
 
         #region Public
-        public int Id { get; set; }
+        public Double CajaActual { get => _CajaActual; set { if (SetProperty(ref _CajaActual, Math.Round(value, 2))) { OnPropertyChanged(); privUpdateVenta(); } } }
+        public Double MercadoPago { get => _MercadoPago; set { if (SetProperty(ref _MercadoPago, Math.Round(value, 2))) { OnPropertyChanged(); privUpdateVenta(); } } }
+        public Double Vuelto { get => _Vuelto; set { if (SetProperty(ref _Vuelto, Math.Round(value, 2))) { OnPropertyChanged(); } } }
 
-        public Double CajaActual { get => _CajaActual; set { if (SetProperty(ref _CajaActual, Math.Round(value, 2))) { privUpdateVenta(); } } }
-        public Double MercadoPago { get => _MercadoPago; set { if (SetProperty(ref _MercadoPago, Math.Round(value, 2))) { privUpdateVenta(); } } }
-        public Double Vuelto { get => _Vuelto; set => SetProperty(ref _Vuelto, Math.Round(value, 2)); }
-
-        public String Hora { get => _Hora; set => SetProperty(ref _Hora, Convert.ToDateTime(value).ToString("HH:mm:ss")); }
+        public String Hora { get => _Hora; set { if (SetProperty(ref _Hora, Convert.ToDateTime(value).ToString("HH:mm:ss"))) { OnPropertyChanged(); } } }
 
         public int FechaID { get; set; }
-        public virtual fechasModel Fecha { get => _Fecha; set => SetProperty(ref _Fecha, value); }
+        public virtual fechasModel Fecha { get => _Fecha; set { if (SetProperty(ref _Fecha, value)) { OnPropertyChanged(); } } }
 
-        public virtual cajaConteosModel CajaConteoForCaja { get => _CajaConteoForCaja; set => SetProperty(ref _CajaConteoForCaja, value); }
-        public virtual ventasModel VentaForCaja { get => _VentaForCaja; set => SetProperty(ref _VentaForCaja, value); }
+        public virtual cajaConteosModel CajaConteoForCaja { get => _CajaConteoForCaja; set { if (SetProperty(ref _CajaConteoForCaja, value)) { OnPropertyChanged(); } } }
+        public virtual ventasModel VentaForCaja { get => _VentaForCaja; set { if (SetProperty(ref _VentaForCaja, value)) { OnPropertyChanged(); } } }
         #endregion // Public
 
         #region Navigation
@@ -51,5 +49,10 @@ namespace KioscoWPF
         [NotMapped]
         public Double doubleEfectivoTotal => CajaActual - Vuelto;
         #endregion // NotMapped
+
+        public override void updateModel()
+        {
+            base.updateModel();
+        }
     }
 }

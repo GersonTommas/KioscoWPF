@@ -1117,7 +1117,7 @@
                                 
                                 <GroupBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
                                     <StackPanel>
-                                        <Button Content="Editar Recuento" HorizontalAlignment="Center" Command="{Binding comCajaEditarRecuento}"/>
+                                        <Button Content="Editar Recuento" HorizontalAlignment="Center" Command="{Binding comCajaEditarRecuento}" Visibility="Collapsed"/>
                                     </StackPanel>
                                 </GroupBox>
                             </Grid>

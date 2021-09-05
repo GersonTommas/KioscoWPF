@@ -1,0 +1,56 @@
+﻿<Window x:Class="KioscoWPF.Views.pagarDeudaView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KioscoWPF.Views"
+        xmlns:options="clr-namespace:KioscoWPF.Properties"
+        xmlns:VM="clr-namespace:KioscoWPF.ViewModels"
+        xmlns:UC="clr-namespace:KioscoWPF.userControl"
+        mc:Ignorable="d"
+        Background="{Binding Source={x:Static options:Settings.Default}, Path=WindowBackground}"
+        Title="Pagar Deuda" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+    <Window.DataContext>
+        <VM:pagarDeudaViewModel />
+    </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Key="F1" Command="{Binding comGuardar}" />
+        <KeyBinding Key="Esc" Command="{Binding bComCancelar}" />
+    </Window.InputBindings>
+    <GroupBox Header="Deuda">
+        <StackPanel>
+            <UC:textBoxCurrency textboxText="{Binding selectedDeudor.Nombre, Mode=OneWay}" labelContent="Cliente:" isReadOnly="True" isCurrency="False" textAlignment="Left" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <UC:textBoxCurrency textboxText="{Binding sumDeuda, Mode=OneWay}" labelContent="Deuda:" isReadOnly="True" />
+                <UC:textBoxCurrency textboxText="{Binding selectedDeudor.Resto, Mode=OneWay}" labelContent="A cuenta:" isReadOnly="True" Grid.Column="1" />
+
+            </Grid>
+
+            <Border BorderBrush="Gray" BorderThickness="0.5" Margin="5" />
+
+            <UC:textBoxCurrency textboxText="{Binding sumFaltante, Mode=OneWay}" labelContent="Total Faltante:" isReadOnly="True" HorizontalAlignment="Center" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <UC:textBoxCurrency textboxText="{Binding doubleEfectivo}" labelContent="Efectivo:" isMaster="True" enterCommand="{Binding bComNextControl}" Grid.Column="0" />
+                <UC:textBoxCurrency textboxText="{Binding doubleMercadoPago}" labelContent="MercadoPago:" enterCommand="{Binding bComNextControl}" Grid.Column="1" />
+            </Grid>
+
+            <Border BorderBrush="Gray" BorderThickness="0.5" Margin="5" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <UC:textBoxCurrency textboxText="{Binding doubleQuedaACuenta, Mode=OneWay}" labelContent="Queda A Cuenta:" isReadOnly="True" HorizontalAlignment="Center" Visibility="{Binding isVuelto, Converter={StaticResource InvBoolToVisConvert}}" />
+                <UC:textBoxCurrency textboxText="{Binding doubleQuedaACuenta, Mode=OneWay, Converter={StaticResource doubleInverterConvert}}" labelContent="Vuelto:" isReadOnly="True" HorizontalAlignment="Center" Visibility="{Binding isVuelto, Converter={StaticResource BooltoVisConvert}}" />
+            </StackPanel>
+        </StackPanel>
+    </GroupBox>
+</Window>

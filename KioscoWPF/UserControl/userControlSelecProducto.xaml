@@ -26,7 +26,7 @@
             <Button Content="{Binding strSearchDescripcionCodigo}" MinWidth="70" Command="{Binding comSearchDescripcionCodigo}" />
             <TextBox x:Name="FirstTextBox" Text="{Binding strSearchProducto, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MainTextBox}" Width="200" VerticalAlignment="Center" Loaded="FirstTextBox_Loaded">
                 <TextBox.InputBindings>
-                    <KeyBinding Key="Return" Command="{Binding ElementName=thisUserControl, Path=DataContext.aComUnSoloProducto}" CommandParameter="{Binding ElementName=dataGridProducts, Path=SelectedItem}" />
+                    <KeyBinding Key="Return" Command="{Binding ElementName=thisUserControl, Path=DataContext.bComUnSoloProducto}" CommandParameter="{Binding ElementName=dataGridProducts, Path=SelectedItem}" />
                 </TextBox.InputBindings>
             </TextBox>
             <Button Content="Limpiar" Command="{Binding comLimpiar}" />
@@ -35,7 +35,7 @@
 
         <DataGrid x:Name="dataGridProducts" KeyboardNavigation.TabNavigation="None" IsTabStop="True" ItemsSource="{Binding selectorListProductos}" SelectedItem="{Binding selectedSelectorProducto}" IsSynchronizedWithCurrentItem="True" RowStyle="{StaticResource stockGridRow}" Grid.Row="1">
             <DataGrid.InputBindings>
-                <KeyBinding Key="Return" CommandParameter="{Binding ElementName=dataGridProducts, Path=SelectedItem}" Command="{Binding ElementName=thisUserControl, Path=DataContext.aComSelectorAgregarQuitar}" />
+                <KeyBinding Key="Return" CommandParameter="{Binding ElementName=dataGridProducts, Path=SelectedItem}" Command="{Binding ElementName=thisUserControl, Path=DataContext.bComSelectorAgregarQuitar}" />
                 <KeyBinding Key="F5" Command="{Binding comAbrirProducto}" CommandParameter="{Binding ElementName=dataGridProducts, Path=SelectedItem}" />
             </DataGrid.InputBindings>
             <DataGrid.Columns>

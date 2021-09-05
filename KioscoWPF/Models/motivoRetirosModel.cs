@@ -5,20 +5,23 @@ using System.Text;
 
 namespace KioscoWPF
 {
-    public class motivoRetirosModel : Base.PropertyChangedBase
+    public class motivoRetirosModel : Base.ModelBase
     {
         #region Private
         string _Motivo;
         #endregion // Private
 
         #region Public
-        public int Id { get; set; }
-
-        public string Motivo { get => _Motivo; set => SetProperty(ref _Motivo, value); }
+        public string Motivo { get => _Motivo; set { if (SetProperty(ref _Motivo, value)) { OnPropertyChanged(); } } }
         #endregion // Public
 
         #region Navigation
         public virtual ICollection<retirosCajaModel> Retiros { get; private set; } = new ObservableCollection<retirosCajaModel>();
         #endregion // Navigation
+
+        public override void updateModel()
+        {
+            base.updateModel();
+        }
     }
 }

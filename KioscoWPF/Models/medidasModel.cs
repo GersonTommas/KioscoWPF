@@ -6,20 +6,18 @@ using System.Text;
 
 namespace KioscoWPF
 {
-    public class medidasModel : Base.PropertyChangedBase
+    public class medidasModel : Base.ModelBase
     {
         #region Private
         int _Tipo; string _Medida; bool _Activo;
         #endregion // Private
 
         #region Public
-        public int Id { get; set; }
+        public int Tipo { get => _Tipo; set { if (SetProperty(ref _Tipo, value)) { OnPropertyChanged(); OnPropertyChanged(nameof(TipoShort)); OnPropertyChanged(nameof(fullMedida)); } } }
 
-        public int Tipo { get => _Tipo; set { if (SetProperty(ref _Tipo, value)) { OnPropertyChanged(nameof(TipoShort)); OnPropertyChanged(nameof(fullMedida)); } } }
+        public string Medida { get => _Medida; set { if (SetProperty(ref _Medida, value)) { OnPropertyChanged(); OnPropertyChanged(nameof(fullMedida)); } } }
 
-        public string Medida { get => _Medida; set { if (SetProperty(ref _Medida, value)) { OnPropertyChanged(nameof(fullMedida)); } } }
-
-        public bool Activo { get => _Activo; set => SetProperty(ref _Activo, value); }
+        public bool Activo { get => _Activo; set { if (SetProperty(ref _Activo, value)) { OnPropertyChanged(); } } }
         #endregion // Public
 
         #region Navigation
@@ -74,5 +72,10 @@ namespace KioscoWPF
         [NotMapped]
         public string fullMedida => Medida + TipoShort;
         #endregion // NotMapped
+
+        public override void updateModel()
+        {
+            base.updateModel();
+        }
     }
 }

@@ -9,24 +9,22 @@ using System.Windows.Data;
 
 namespace KioscoWPF
 {
-    public class deudoresModel : Base.PropertyChangedBase
+    public class deudoresModel : Base.ModelBase
     {
         #region Private
         int _Nivel; Double _Resto; string _Nombre, _Detalles; usuariosModel _Usuario;
         #endregion // Private
 
         #region Public
-        public int Id { get; set; }
+        public int Nivel { get => _Nivel; set { if (SetProperty(ref _Nivel, value)) { OnPropertyChanged(); } } }
+        public Double Resto { get => _Resto; set { if (SetProperty(ref _Resto, Math.Round(value, 2))) { OnPropertyChanged(); OnPropertyChanged(nameof(doubleFaltanteTotal)); } } }
 
-        public int Nivel { get => _Nivel; set => SetProperty(ref _Nivel, value); }
-        public Double Resto { get => _Resto; set { if (SetProperty(ref _Resto, Math.Round(value, 2))) { OnPropertyChanged(nameof(doubleFaltanteTotal)); } } }
+        public string Nombre { get => _Nombre; set { if (SetProperty(ref _Nombre, value)) { OnPropertyChanged(); } } }
 
-        public string Nombre { get => _Nombre; set => SetProperty(ref _Nombre, value); }
-
-        public string Detalles { get => _Detalles; set => SetProperty(ref _Detalles, value); }
+        public string Detalles { get => _Detalles; set { if (SetProperty(ref _Detalles, value)) { OnPropertyChanged(); } } }
 
         public int UsuarioID { get; set; }
-        public virtual usuariosModel Usuario { get => _Usuario; set => SetProperty(ref _Usuario, value); }
+        public virtual usuariosModel Usuario { get => _Usuario; set { if (SetProperty(ref _Usuario, value)) { OnPropertyChanged(); } } }
         #endregion // Public
 
         #region Navigation
@@ -57,7 +55,7 @@ namespace KioscoWPF
             }
         }
 
-        public void updateDeudor()
+        public override void updateModel()
         {
             OnPropertyChanged(nameof(doubleDeudaTotal));
             OnPropertyChanged(nameof(doubleFaltanteTotal));

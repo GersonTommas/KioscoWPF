@@ -123,7 +123,7 @@ namespace KioscoWPF.userControl
 
 
         #region Commands
-        public Command comAbrirProducto => new Command((object parameter) => { if (parameter != null) { VentanaAgregarConvertido vTemp = new VentanaAgregarConvertido(parameter as productosModel); _ = vTemp.ShowDialog(); } });
+        public Command comAbrirProducto => new Command((object parameter) => { if (parameter != null) { Views.addConversionView vTemp = new Views.addConversionView(parameter as productosModel); _ = vTemp.ShowDialog(); } });
 
         public Command comSearchDescripcionCodigo => new Command((object parameter) => { bolSearchDescripcionCodigo = !bolSearchDescripcionCodigo; OnPropChanged(nameof(strSearchDescripcionCodigo)); strSearchProducto = ""; });
 
