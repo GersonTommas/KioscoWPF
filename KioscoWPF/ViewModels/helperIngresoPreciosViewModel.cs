@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace KioscoWPF.ViewModels
+namespace Kiosco.WPF.ViewModels
 {
     class helperIngresoPreciosViewModel : Base.ViewModelBase
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace KioscoWPF.Base
+namespace Kiosco.WPF.Base
 {
     public class Command : ICommand
     {

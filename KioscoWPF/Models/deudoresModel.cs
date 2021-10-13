@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Data;
 
-namespace KioscoWPF
+namespace Kiosco.WPF
 {
     public class deudoresModel : Base.ModelBase
     {

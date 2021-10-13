@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 
-namespace KioscoWPF.ViewModels
+namespace Kiosco.WPF.ViewModels
 {
     class detallesProductoViewModel : Base.ViewModelBase
     {

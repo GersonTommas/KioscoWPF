@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media;
 
-namespace KioscoWPF.ViewModels
+namespace Kiosco.WPF.ViewModels
 {
     class XOpcionesViewModel : Base.ViewModelBase
     {

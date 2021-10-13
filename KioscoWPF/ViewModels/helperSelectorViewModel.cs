@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace KioscoWPF.ViewModels
+namespace Kiosco.WPF.ViewModels
 {
     class helperSelectorViewModel : Base.ViewModelBase
     {

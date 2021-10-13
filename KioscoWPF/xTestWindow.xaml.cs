@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace KioscoWPF
+namespace Kiosco.WPF
 {
     /// <summary>
     /// Interaction logic for xTestWindow.xaml

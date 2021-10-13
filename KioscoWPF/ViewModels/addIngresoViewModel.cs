@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
 
-namespace KioscoWPF.ViewModels
+namespace Kiosco.WPF.ViewModels
 {
     class addIngresoViewModel : Base.ViewModelBase
     {
@@ -13,6 +13,11 @@ namespace KioscoWPF.ViewModels
         {
             try
             {
+                fechasModel tempFecha = Db.returnFecha();
+                string tempHora = Variables.strHora;
+                listNuevoIngreso = new ingresosModel() { Fecha = tempFecha, Hora = tempHora, Usuario = Variables.UsuarioLogueado };
+                ingresoCaja = new cajaModel() { Fecha = tempFecha, Hora = tempHora };
+                
                 Db.resetProductoAgregado();
 
                 listProveedores.SortDescriptions.Clear(); listProveedores.SortDescriptions.Add(new SortDescription("Nombre", ListSortDirection.Ascending));
@@ -42,8 +47,8 @@ namespace KioscoWPF.ViewModels
         public ingresoProductosModel selectedIngreso { get => _selectedIngreso; set { if (SetProperty(ref _selectedIngreso, value)) { OnPropertyChanged(); } } }
 
 
-        public ingresosModel listNuevoIngreso { get; } = new ingresosModel() { Usuario = Variables.UsuarioLogueado };
-        public cajaModel ingresoCaja { get; } = new cajaModel() { Fecha = Db.returnFecha(), Hora = Variables.strHora };
+        public ingresosModel listNuevoIngreso { get; }
+        public cajaModel ingresoCaja { get; }
         public int intAgregadosCount => _listProductosAgregados.Count();
         public int intTotal => listNuevoIngreso.IngresoProductosPerIngreso.Count();
         public string windowBackground => indexProveedor >= 0 && listNuevoIngreso.IngresoProductosPerIngreso.Count > 0 && !listNuevoIngreso.IngresoProductosPerIngreso.Any(x => x.Cantidad < 1) ? Variables.colorWindowBackgroundOK : Variables.colorWindowBackkgroundNO;

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace KioscoWPF.ViewModels
+namespace Kiosco.WPF.ViewModels
 {
     class addConversionViewModel : Base.ViewModelBase
     {
@@ -12,6 +12,7 @@ namespace KioscoWPF.ViewModels
         public void setInitialize(Window sentWindow, productosModel sentProducto)
         {
             selectedAbierto.ProductoSacado = sentProducto;
+            thisWindow = sentWindow;
         }
         #endregion // Initialize
 

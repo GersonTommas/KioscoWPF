@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace KioscoWPF
+namespace Kiosco.WPF
 {
     public class productosModel : Base.ModelBase
     {

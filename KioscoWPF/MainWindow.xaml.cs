@@ -17,7 +17,7 @@ using System.ComponentModel;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 
-namespace KioscoWPF
+namespace Kiosco.WPF
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -28,15 +28,8 @@ namespace KioscoWPF
         {
             InitializeComponent(); Db.loadInventario(); DataContext = new WBinding(this);
             try { _ = Variables.Inventario.Fechas.Local.Single(x => x.Fecha == Variables.strFecha); } catch { Variables.Inventario.Fechas.Local.Add(new fechasModel() { Fecha = Variables.strFecha }); _ = Variables.Inventario.SaveChanges(); }
-            if (Variables.Inventario.Fechas.Local.Any(x => x.Fecha == Variables.strFecha))
-            {
-                fechasModel tempFecha = Variables.Inventario.Fechas.Local.Single(x => x.Fecha == Variables.strFecha);
-                if (tempFecha.VentasPerFecha.Count() > 0) { Variables.firstVenta = false; }
-                if (tempFecha.CajasPerFecha.Count() > 0) { Variables.firstCaja = false; }
-                if (tempFecha.AbiertoProductosPerFecha.Count() > 0) { Variables.firstAbiertoProducto = false; }
-                if (tempFecha.IngresosPerFecha.Count() > 0) { Variables.firstIngreso = false; }
-                if (tempFecha.RetirosPerFecha.Count() > 0) { Variables.firstRetiro = false; }
-            }
+
+            try { Variables.globalToday = Variables.Inventario.Fechas.Local.First(x => x.Fecha == Variables.strFecha); } catch { }
         }
 
         #region Binding
@@ -63,24 +56,9 @@ namespace KioscoWPF
 
 
 
-            #region Read Only
-            #endregion // Read Only
-
-
-
-            #region Public
-            #endregion // Public
-
-
-
             #region Helpers
             public void helperUpdateFinished() { vLogIn = new VentanaLogIn(); vLogIn.Show(); thisWindow.Close(); }
             #endregion // Helpers
-
-
-
-            #region Commands
-            #endregion // Commands
         }
         #endregion // Binding
     }

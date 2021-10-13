@@ -1,11 +1,11 @@
-﻿<Window x:Class="KioscoWPF.VentanaLogIn"
+﻿<Window x:Class="Kiosco.WPF.VentanaLogIn"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:KioscoWPF"
-        xmlns:options="clr-namespace:KioscoWPF.Properties"
-        xmlns:VM="clr-namespace:KioscoWPF.ViewModels"
+        xmlns:local="clr-namespace:Kiosco.WPF"
+        xmlns:options="clr-namespace:Kiosco.WPF.Properties"
+        xmlns:VM="clr-namespace:Kiosco.WPF.ViewModels"
         Background="{Binding Source={x:Static options:Settings.Default}, Path=WindowBackground}"
         Title="IDQ" SizeToContent="WidthAndHeight" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" FocusManager.FocusedElement="{Binding ElementName=pass}">
     <Window.DataContext>

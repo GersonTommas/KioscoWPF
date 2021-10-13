@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace KioscoWPF
+namespace Kiosco.WPF
 {
     public class usuariosModel : Base.ModelBase
     {

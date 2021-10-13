@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace KioscoWPF.Views
+namespace Kiosco.WPF.Views
 {
     /// <summary>
     /// Interaction logic for addIngresoView.xaml

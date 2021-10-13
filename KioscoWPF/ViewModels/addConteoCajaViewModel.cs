@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows;
 
-namespace KioscoWPF.ViewModels
+namespace Kiosco.WPF.ViewModels
 {
     class addConteoCajaViewModel : Base.ViewModelBase
     {

@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace KioscoWPF
+namespace Kiosco.WPF
 {
     /// <summary>
     /// Interaction logic for VentanaLogIn.xaml
@@ -23,7 +23,7 @@ namespace KioscoWPF
     }
 }
 
-namespace KioscoWPF.ViewModels
+namespace Kiosco.WPF.ViewModels
 {
     class VMLogIn : helperObservableClass
     {

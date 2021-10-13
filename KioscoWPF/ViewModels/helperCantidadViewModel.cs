@@ -1,4 +1,4 @@
-﻿namespace KioscoWPF.ViewModels
+﻿namespace Kiosco.WPF.ViewModels
 {
     class helperCantidadViewModel : Base.ViewModelBase
     {

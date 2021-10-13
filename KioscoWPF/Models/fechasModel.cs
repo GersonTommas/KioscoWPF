@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel;
 using System.Windows.Data;
 
-namespace KioscoWPF
+namespace Kiosco.WPF
 {
     public class fechasModel : Base.ModelBase
     {

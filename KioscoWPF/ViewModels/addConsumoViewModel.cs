@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Windows.Controls;
 
-namespace KioscoWPF.ViewModels
+namespace Kiosco.WPF.ViewModels
 {
     class addConsumoViewModel : Base.ViewModelBase
     {

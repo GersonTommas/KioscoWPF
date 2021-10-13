@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace KioscoWPF.Base.Enumerators
+namespace Kiosco.WPF.Base.Enumerators
 {
 
 }

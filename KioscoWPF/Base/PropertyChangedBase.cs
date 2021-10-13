@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace KioscoWPF.Base
+namespace Kiosco.WPF.Base
 {
     public class PropertyChangedBase : INotifyPropertyChanged
     {

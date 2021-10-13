@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace KioscoWPF
+namespace Kiosco.WPF
 {
     public class cajaConteosModel : Base.ModelBase
     {

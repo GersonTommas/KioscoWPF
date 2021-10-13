@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel;
 using System.Windows.Data;
 
-namespace KioscoWPF
+namespace Kiosco.WPF
 {
     class Db
     {
@@ -59,8 +59,12 @@ namespace KioscoWPF
 
         public static fechasModel returnFecha()
         {
-            try { return Variables.Inventario.Fechas.Local.Single(x => x.Fecha == Variables.strFecha); }
-            catch { return new fechasModel() { Fecha = Variables.strFecha }; }
+            if (Variables.globalToday != null) { return Variables.globalToday; }
+            else
+            {
+                try { return Variables.Inventario.Fechas.Local.Single(x => x.Fecha == Variables.strFecha); }
+                catch { return new fechasModel() { Fecha = Variables.strFecha }; }
+            }
         }
 
         public static void resetProductoAgregado()

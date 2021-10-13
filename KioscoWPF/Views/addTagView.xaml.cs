@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace KioscoWPF.Views
+namespace Kiosco.WPF.Views
 {
     /// <summary>
     /// Interaction logic for addTagView.xaml

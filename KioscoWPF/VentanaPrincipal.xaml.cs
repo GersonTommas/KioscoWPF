@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Collections.ObjectModel;
 
-namespace KioscoWPF
+namespace Kiosco.WPF
 {
     /// <summary>
     /// Interaction logic for VentanaPrincipal.xaml
@@ -38,7 +38,7 @@ namespace KioscoWPF
 }
 
 
-namespace KioscoWPF.ViewModels
+namespace Kiosco.WPF.ViewModels
 {
 
 

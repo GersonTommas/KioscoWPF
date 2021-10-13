@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
-namespace KioscoWPF
+namespace Kiosco.WPF
 {
     public class ingresosModel : Base.ModelBase
     {

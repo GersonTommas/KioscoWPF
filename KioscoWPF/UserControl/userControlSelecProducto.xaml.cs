@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace KioscoWPF.userControl
+namespace Kiosco.WPF.userControl
 {
     /// <summary>
     /// Interaction logic for userControlSelecProducto.xaml

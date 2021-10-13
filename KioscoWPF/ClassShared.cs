@@ -13,7 +13,7 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
 
-namespace KioscoWPF
+namespace Kiosco.WPF
 {
     #region Variables
     public class Variables
@@ -22,6 +22,8 @@ namespace KioscoWPF
         public static VentanaPrincipal globalVentanaPrincipal;
 
         public static usuariosModel UsuarioLogueado;
+        public static fechasModel globalToday;
+
         public static string strFecha => DateTime.Today.ToString(@"yyyy/MM/dd");
         public static string strHora => DateTime.Now.ToString(@"HH:mm:ss");
         public static string varImageLector = "/Resources/Images/Lector01.png";
@@ -29,15 +31,6 @@ namespace KioscoWPF
 
         public static string colorWindowBackgroundOK => Properties.Settings.Default.WindowBackgroundOK;
         public static string colorWindowBackkgroundNO => Properties.Settings.Default.WindowBackgroundNO;
-
-        public static bool firstVenta = true;
-        public static bool firstIngreso = true;
-        public static bool firstDeuda = true;
-        public static bool firstConsumo = true;
-        public static bool firstSacado = true;
-        public static bool firstCaja = true;
-        public static bool firstRetiro = true;
-        public static bool firstAbiertoProducto = true;
 
         public class messageError
         {

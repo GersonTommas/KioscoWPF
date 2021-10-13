@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Linq;
 
-namespace KioscoWPF
+namespace Kiosco.WPF
 {
     /// <summary>
     /// Interaction logic for XOpciones.xaml

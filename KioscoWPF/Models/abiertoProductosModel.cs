@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace KioscoWPF
+namespace Kiosco.WPF
 {
     public class abiertoProductosModel : Base.ModelBase
     {

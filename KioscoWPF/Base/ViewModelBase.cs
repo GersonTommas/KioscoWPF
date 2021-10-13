@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 
-namespace KioscoWPF.Base
+namespace Kiosco.WPF.Base
 {
     public class ViewModelBase : PropertyChangedBase
     {
